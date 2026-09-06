@@ -1,6 +1,6 @@
 # Kraskus BTC BLAKE2b Solo
 
-Native 5tratumOS Dev Store package for the Kraskus Bitcoin BLAKE2b
+Native 5tratumOS Dev Store package for the Kraskus BTC BLAKE2b
 true-solo appliance.
 
 ## Ports
