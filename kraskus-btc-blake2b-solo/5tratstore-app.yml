@@ -1,0 +1,27 @@
+id: kraskus-btc-blake2b-solo
+name: Kraskus BTC BLAKE2b Solo
+tagline: Bitcoin Knots BLAKE2b node, wallet, and true solo mining appliance
+description: >-
+  Kraskus BTC BLAKE2b Solo turns 5tratumOS into a self-contained Bitcoin
+  Knots BLAKE2b node, native wallet, and CONVOY DATUM true-solo mining
+  appliance. The app manages chain synchronization, BLAKE2b mining
+  readiness, Stratum V1 miner connections, payout selection, block
+  submissions, wallet receive workflows, node pruning, and appliance
+  telemetry from one local interface. A fixed 1 percent developer fee is
+  applied only to successfully mined blocks as a coinbase split.
+version: 0.1.0-dev1
+category: Mining
+developer: Kraskus Crypto
+website: https://kraskuscrypto.com/
+repo: https://github.com/kraskuscrypto/Kraskus-Crypto-Apps
+support: https://kraskuscrypto.com/
+icon: assets/icon.png
+port: 33066
+path: /
+uiMode: proxy
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: ui
+      APP_PORT: 8080
