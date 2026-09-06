@@ -1,0 +1,219 @@
+services:
+  app_proxy:
+    environment:
+      APP_HOST: ui
+      APP_PORT: 8080
+    networks:
+      - b2b_api
+
+  runtime-init:
+    image: alpine:3.22.1
+    restart: "no"
+    user: "0:0"
+    command:
+      - /bin/sh
+      - -ec
+      - |
+        mkdir -p /blockchain /runtime /secrets
+        chown 1000:999 /blockchain
+        chmod 0750 /blockchain
+        chown 0:2000 /runtime /secrets
+        chmod 0770 /runtime
+        chmod 0750 /secrets
+        if [ ! -s /secrets/rpc-password ]; then
+          umask 027
+          tr -dc 'A-Za-z0-9' </dev/urandom | head -c 48 > /secrets/rpc-password
+          printf '\n' >> /secrets/rpc-password
+        fi
+        if [ ! -s /secrets/datum-admin-password ]; then
+          umask 027
+          tr -dc 'A-Za-z0-9' </dev/urandom | head -c 48 > /secrets/datum-admin-password
+          printf '\n' >> /secrets/datum-admin-password
+        fi
+        chown 0:2000 /secrets/rpc-password /secrets/datum-admin-password
+        chmod 0640 /secrets/rpc-password /secrets/datum-admin-password
+        echo "BLAKE2B_STORE_RUNTIME_INIT=PASS"
+    volumes:
+      - ${APP_DATA_DIR}/blockchain:/blockchain
+      - ${APP_DATA_DIR}/runtime:/runtime
+      - ${APP_DATA_DIR}/secrets:/secrets
+    network_mode: "none"
+    security_opt:
+      - no-new-privileges:true
+
+  knots:
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-knots:dev
+    pull_policy: never
+    restart: unless-stopped
+    stop_grace_period: 3m
+    group_add:
+      - "2000"
+    depends_on:
+      runtime-init:
+        condition: service_completed_successfully
+    entrypoint:
+      - /bin/sh
+      - -ec
+      - |
+        export KNOTS_RPC_USER=kraskus
+        export KNOTS_RPC_PASSWORD="$$(cat /secrets/rpc-password)"
+        exec /usr/local/bin/knots-entrypoint
+    volumes:
+      - ${APP_DATA_DIR}/blockchain:/data
+      - ${APP_DATA_DIR}/runtime:/runtime:ro
+      - ${APP_DATA_DIR}/secrets:/secrets:ro
+    ports:
+      - "8333:8333/tcp"
+    healthcheck:
+      test: ["CMD-SHELL","bitcoin-cli -conf=/tmp/knots-config/bitcoin.conf -datadir=/data getblockchaininfo >/dev/null"]
+      interval: 30s
+      timeout: 15s
+      retries: 8
+      start_period: 90s
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - b2b_public
+      - b2b_private
+
+  wallet-init:
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-knots:dev
+    pull_policy: never
+    restart: "no"
+    group_add:
+      - "2000"
+    depends_on:
+      runtime-init:
+        condition: service_completed_successfully
+      knots:
+        condition: service_healthy
+    entrypoint:
+      - /bin/sh
+      - -ec
+      - |
+        export KNOTS_RPC_USER=kraskus
+        export KNOTS_RPC_PASSWORD="$$(cat /secrets/rpc-password)"
+        exec /bin/sh /usr/local/bin/wallet-init
+    volumes:
+      - ./data/wallet-init.sh:/usr/local/bin/wallet-init:ro
+      - ${APP_DATA_DIR}/runtime:/runtime
+      - ${APP_DATA_DIR}/secrets:/secrets:ro
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - b2b_private
+
+  datum:
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-datum:dev
+    pull_policy: never
+    restart: unless-stopped
+    group_add:
+      - "2000"
+    depends_on:
+      runtime-init:
+        condition: service_completed_successfully
+      knots:
+        condition: service_healthy
+      wallet-init:
+        condition: service_completed_successfully
+    entrypoint:
+      - /bin/sh
+      - -ec
+      - |
+        export KNOTS_RPC_USER=kraskus
+        export KNOTS_RPC_PASSWORD="$$(cat /secrets/rpc-password)"
+        export DATUM_ADMIN_PASSWORD="$$(cat /secrets/datum-admin-password)"
+        export BLAKE2B_PAYOUT_FILE=/runtime/payout_address
+        exec /usr/local/bin/datum-entrypoint
+    volumes:
+      - ${APP_DATA_DIR}/runtime:/runtime:ro
+      - ${APP_DATA_DIR}/secrets:/secrets:ro
+    ports:
+      - "23334:23334/tcp"
+    healthcheck:
+      test: ["CMD-SHELL","curl -fsS http://127.0.0.1:7152/ >/dev/null || test \"$$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:7152/)\" = 401"]
+      interval: 20s
+      timeout: 10s
+      retries: 6
+      start_period: 30s
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - b2b_private
+      - b2b_api
+
+  adapter:
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-adapter:dev
+    pull_policy: never
+    restart: unless-stopped
+    group_add:
+      - "2000"
+    depends_on:
+      runtime-init:
+        condition: service_completed_successfully
+      knots:
+        condition: service_healthy
+      datum:
+        condition: service_started
+      wallet-init:
+        condition: service_completed_successfully
+    entrypoint:
+      - /bin/sh
+      - -ec
+      - |
+        export KRASKUS_B2B_RPC_PASSWORD="$$(cat /secrets/rpc-password)"
+        exec python /app/adapter.py
+    environment:
+      KRASKUS_B2B_RPC_URL: http://knots:8332
+      KRASKUS_B2B_RPC_USER: kraskus
+      KRASKUS_B2B_DATUM_HOST: datum
+      KRASKUS_B2B_DATUM_API_PORT: "7152"
+      KRASKUS_B2B_STRATUM_PORT: "23334"
+      KRASKUS_B2B_PAYOUT_FILE: /runtime/payout_address
+      KRASKUS_B2B_NODE_PAYOUT_FILE: /runtime/node_payout_address
+      KRASKUS_B2B_EXTERNAL_PAYOUT_FILE: /runtime/external_payout_address
+      KRASKUS_B2B_NATIVE_MODE_FILE: /runtime/native_wallet_enabled
+      KRASKUS_B2B_PRUNE_FILE: /runtime/prune_target_mib
+      KRASKUS_B2B_WALLET_NAME: kraskus-mining
+      KRASKUS_B2B_DEV_FEE_ADDRESS: bc1qu8ya0usy3e3dft0gy7yzz2urx7pfkqeqxhugdt
+    volumes:
+      - ${APP_DATA_DIR}/runtime:/runtime
+      - ${APP_DATA_DIR}/secrets:/secrets:ro
+    healthcheck:
+      test: ["CMD-SHELL","python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:18430/health',timeout=5).read()\""]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - b2b_private
+      - b2b_api
+
+  ui:
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-ui:dev
+    pull_policy: never
+    restart: unless-stopped
+    depends_on:
+      adapter:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL","wget -qO- http://127.0.0.1:8080/health >/dev/null"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - b2b_api
+
+networks:
+  b2b_public:
+    driver: bridge
+  b2b_private:
+    driver: bridge
+    internal: true
+  b2b_api:
+    driver: bridge
