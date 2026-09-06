@@ -1,0 +1,54 @@
+schemaVersion: 1
+status: proposed
+appId: kraskus-btc-blake2b-solo
+appVersion: 0.1.0-dev1
+reviewedAt: ""
+reviewedBy: ""
+
+upstream:
+  sourceUrl: https://github.com/kraskuscrypto/Kraskus-Crypto-Apps
+  license: mixed
+  licenseEvidence: LICENSES.md
+
+rights:
+  packageOriginal: true
+  softwareDistributionCleared: true
+  containerUseCleared: true
+  listingTextCleared: true
+  artworkCleared: true
+  noticesIncluded: true
+
+delivery:
+  mode: development-container-appliance
+  storePayload: recipe-only
+  mirrorsThirdPartyPayload: false
+
+compatibility:
+  osVersions:
+    - Debian-13-5tratumOS-clean-room
+  architectures:
+    - amd64
+  installTested: false
+  startTested: false
+  updateTested: false
+  uninstallTested: false
+
+security:
+  privileged: false
+  hostNetwork: false
+  dockerSocket: false
+  hostMountsReviewed: true
+  devicesReviewed: true
+  networkEndpointsReviewed: true
+
+notes: >-
+  Initial VM120 Dev Store package for Kraskus BTC BLAKE2b Solo. Bitcoin
+  Knots P2P TCP 8333 and DATUM Stratum V1 TCP 23334 are intentionally
+  published. Knots RPC, DATUM API, and the Kraskus adapter remain on
+  application networks. Persistent blockchain, wallet, runtime, and secret
+  state live below APP_DATA_DIR. First-run secrets are generated locally
+  and are not embedded in this Store recipe. The package currently uses
+  development image tags and must not be promoted outside the Dev Store
+  until immutable GHCR digests and full VM120 install/update/uninstall/
+  reboot qualification are complete. The developer fee is fixed at 1% of
+  successful block coinbase value.
