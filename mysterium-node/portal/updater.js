@@ -5,20 +5,20 @@
 
   const style = document.createElement("style");
   style.textContent = `
-    .myst-update-card{margin-top:14px;background:#fff;border-radius:18px;padding:18px 20px;box-shadow:0 12px 30px rgba(60,90,108,.07)}
+    .myst-update-card{margin-top:18px;background:linear-gradient(145deg,rgba(18,20,33,.92),rgba(11,12,21,.92));border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:22px;box-shadow:0 24px 80px rgba(0,0,0,.28)}
     .myst-update-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px}
-    .myst-update-title{color:#d83b92;font-size:15px;font-weight:900}
-    .myst-update-badge{font-size:10px;font-weight:900;padding:6px 9px;border-radius:999px;background:#edf8ff;color:#073650}
+    .myst-update-title{color:#f8f7ff;font-size:17px;font-weight:900}
+    .myst-update-badge{font-size:10px;font-weight:900;padding:6px 9px;border-radius:999px;background:rgba(168,70,255,.12);border:1px solid rgba(168,70,255,.2);color:#d6a5ff}
     .myst-update-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .myst-update-box{background:#f8fcff;border:1px solid #dce8ef;border-radius:13px;padding:12px}
-    .myst-update-label{color:#738998;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
-    .myst-update-value{margin-top:5px;color:#073650;font-size:15px;font-weight:900}
-    .myst-update-status{margin-top:12px;color:#738998;font-size:11px;line-height:1.4}
-    .myst-update-status.good{color:#55b95a}.myst-update-status.bad{color:#e76571}
+    .myst-update-box{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:13px;padding:12px}
+    .myst-update-label{color:#74778b;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+    .myst-update-value{margin-top:5px;color:#f8f7ff;font-size:15px;font-weight:900}
+    .myst-update-status{margin-top:12px;color:#8e91a6;font-size:11px;line-height:1.4}
+    .myst-update-status.good{color:#4df0a6}.myst-update-status.bad{color:#ff7187}
     .myst-update-actions{display:flex;gap:10px;margin-top:12px;align-items:center}
-    .myst-update-button{min-height:42px;border:0;border-radius:11px;padding:0 16px;background:#d83b92;color:#fff;font-size:11px;font-weight:900;cursor:pointer}
+    .myst-update-button{min-height:42px;border:0;border-radius:11px;padding:0 16px;background:linear-gradient(100deg,#a846ff,#fa2e91);color:#fff;font-size:11px;font-weight:900;cursor:pointer}
     .myst-update-button:disabled{opacity:.5;cursor:not-allowed}
-    .myst-update-note{color:#738998;font-size:10px}
+    .myst-update-note{color:#74778b;font-size:10px}
     @media(max-width:850px){.myst-update-grid{grid-template-columns:1fr}.myst-update-actions{align-items:flex-start;flex-direction:column}}
   `;
   document.head.appendChild(style);
@@ -27,7 +27,7 @@
   card.className = "myst-update-card";
   card.innerHTML = `
     <div class="myst-update-head">
-      <div class="myst-update-title">Node Updates</div>
+      <div class="myst-update-title">Protected node runtime update</div>
       <div class="myst-update-badge" id="mystUpdateBadge">Checking…</div>
     </div>
     <div class="myst-update-grid">
@@ -47,8 +47,8 @@
     </div>
   `;
 
-  const anchor = document.querySelector(".network-guide") || document.querySelector(".actions");
-  if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(card, anchor);
+  const anchor = document.querySelector("#settings .service-settings");
+  if (anchor && anchor.parentNode) anchor.insertAdjacentElement("afterend", card);
   else return;
 
   const currentEl = document.getElementById("mystCurrentVersion");
