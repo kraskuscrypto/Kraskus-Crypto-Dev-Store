@@ -28,7 +28,7 @@ grep -q 'update-agent' "$APP_DIR/docker-compose.yml"
 grep -q '/var/run/docker.sock:/var/run/docker.sock' "$APP_DIR/docker-compose.yml"
 grep -q '0.0.0.0:33060:80' "$APP_DIR/docker-compose.yml"
 grep -q 'mysteriumnetwork/myst:1.39.5-alpine@sha256:d0c270c6bcb50c1004ba355c264f85aa16b3a5a414f8b9f8f5b0f449ea85a142' "$APP_DIR/docker-compose.yml"
-grep -q 'http://localhost:4050' "$APP_DIR/status-agent/status.sh"
+grep -q 'http://127.0.0.1:4050' "$APP_DIR/status-agent/status.sh"
 grep -q '/node/provider/series/earnings' "$APP_DIR/status-agent/status.sh"
 grep -q '/node/provider/sessions' "$APP_DIR/status-agent/status.sh"
 
