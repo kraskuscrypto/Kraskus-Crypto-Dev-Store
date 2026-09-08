@@ -1,14 +1,58 @@
 #!/bin/sh
 set -eu
 
-OUT_DIR="/status"
+OUT_DIR="${STATUS_OUT_DIR:-/status}"
 OUT="$OUT_DIR/status.json"
 TMP="$OUT.$$"
+API_DIR="$OUT_DIR/api"
+TEQUILAPI="${TEQUILAPI_URL:-http://localhost:4050}"
 
 INTERVAL="${STATUS_INTERVAL:-30}"
-APP_VERSION="${APP_VERSION:-2.4.0}"
+APP_VERSION="${APP_VERSION:-2.6.0}"
 
-mkdir -p "$OUT_DIR"
+mkdir -p "$OUT_DIR" "$API_DIR"
+
+snapshot_api() {
+    name="$1"
+    path="$2"
+    target="$API_DIR/$name.json"
+    temp="$target.$$"
+
+    if wget -q -T 5 -O "$temp" "$TEQUILAPI$path" 2>/dev/null && [ -s "$temp" ]; then
+        mv "$temp" "$target"
+        return 0
+    fi
+
+    rm -f "$temp"
+    return 1
+}
+
+collect_tequilapi() {
+    snapshot_api healthcheck "/healthcheck" || true
+    snapshot_api identities "/identities" || true
+    snapshot_api services "/services?include_all=true" || true
+    snapshot_api nat "/nat/type" || true
+    snapshot_api monitoring-status "/node/monitoring-status" || true
+    snapshot_api quality "/node/provider/quality" || true
+    snapshot_api activity "/node/provider/activity-stats" || true
+    snapshot_api service-earnings "/node/provider/service-earnings" || true
+
+    for range in 1d 7d 30d; do
+        snapshot_api "sessions-$range" "/node/provider/sessions?range=$range" || true
+        snapshot_api "sessions-count-$range" "/node/provider/sessions-count?range=$range" || true
+        snapshot_api "transferred-$range" "/node/provider/transferred-data?range=$range" || true
+        snapshot_api "earnings-series-$range" "/node/provider/series/earnings?range=$range" || true
+        snapshot_api "sessions-series-$range" "/node/provider/series/sessions?range=$range" || true
+        snapshot_api "data-series-$range" "/node/provider/series/data?range=$range" || true
+    done
+
+    if [ -s "$API_DIR/identities.json" ]; then
+        identity_id="$(tr -d '\n\r ' < "$API_DIR/identities.json" | sed -n 's/.*"id":"\([^"]*\)".*/\1/p' | head -n 1)"
+        if [ -n "$identity_id" ]; then
+            snapshot_api identity "/identities/$identity_id" || true
+        fi
+    fi
+}
 
 human_bytes() {
     awk -v n="${1:-0}" '
@@ -34,6 +78,8 @@ json_escape() {
 }
 
 collect() {
+
+    collect_tequilapi
 
     #
     # CPU LOAD
@@ -269,7 +315,7 @@ collect() {
     #
 
     cat > "$TMP" <<JSON
-{"cpu_load":"$(json_escape "$cpu_load")","memory_pct":"$mem_pct","disk_pct":"$disk_pct","disk_free":"$(json_escape "$disk_free")","host_uptime":"$(json_escape "$host_uptime")","host_ip":"$(json_escape "$host_ip")","mysterium":"$mysterium","portal":"Healthy","nodeui_proxy":"Healthy","node_ui":"$node_ui","portal_ui":"Reachable","identity":"$identity","node_runtime":"$node_runtime","app_version":"$APP_VERSION","network_io":"$(json_escape "$network_io")","download":"$(json_escape "$download")","upload":"$(json_escape "$upload")","network_interface":"$(json_escape "$net_if")","updated_at":"$updated_at"}
+{"cpu_load":"$(json_escape "$cpu_load")","memory_pct":"$mem_pct","disk_pct":"$disk_pct","disk_free":"$(json_escape "$disk_free")","host_uptime":"$(json_escape "$host_uptime")","host_ip":"$(json_escape "$host_ip")","mysterium":"$mysterium","portal":"Healthy","nodeui_proxy":"Healthy","node_ui":"$node_ui","portal_ui":"Reachable","identity":"$identity","node_runtime":"$node_runtime","node_version":"${NODE_VERSION:-1.39.5}","app_version":"$APP_VERSION","network_io":"$(json_escape "$network_io")","download":"$(json_escape "$download")","upload":"$(json_escape "$upload")","network_interface":"$(json_escape "$net_if")","updated_at":"$updated_at"}
 JSON
 
     mv "$TMP" "$OUT"
