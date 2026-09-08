@@ -29,6 +29,29 @@ Miner hashrate is not redirected.
 
 ## Development qualification
 
-0.1.0-dev1 is a VM120-only Dev Store candidate. It is not an Official
-Store release and must not be promoted until immutable image digests and
-full install/update/uninstall/reboot qualification are recorded.
+0.1.0-dev2 is a Developer test release. Runtime images are pinned by
+immutable GHCR digest (adapter and UI rebuilt from the qualified source
+commit; Knots and DATUM republished unchanged, not rebuilt — see
+`5tratstore-review.yml` for exact digests).
+
+Qualified:
+- Wallet V7
+- Native/External payout switching
+- receive/new-address/QR
+- wallet balance/history
+- theme inheritance across all 8 themes
+- encrypted send flow qualified on regtest
+- mainnet send/encryption disabled by default
+- 1% developer-fee policy packaged
+- 100 GB pruning
+
+Still under mining qualification:
+- full Knots sync/tip
+- BLAKE2b activation/tip behavior
+- real BLAKE2b ASIC accepted shares
+- real successful-block/dev-fee proof
+- found-block path
+- final reboot/recovery qualification
+
+This is not an Official Store release and must not be promoted until
+clean-install/update/uninstall/reboot qualification is complete.

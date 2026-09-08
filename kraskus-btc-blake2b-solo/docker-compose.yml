@@ -7,7 +7,7 @@ services:
       - b2b_api
 
   runtime-init:
-    image: alpine:3.22.1
+    image: alpine:3.22.1@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1
     restart: "no"
     user: "0:0"
     command:
@@ -42,7 +42,7 @@ services:
       - no-new-privileges:true
 
   knots:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-knots:dev
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-knots:0.1.0-dev2@sha256:0257fb30144bdd19bb1b9505456021ef01c645482df91430b630b069629a77ca
     pull_policy: never
     restart: unless-stopped
     stop_grace_period: 3m
@@ -77,7 +77,7 @@ services:
       - b2b_private
 
   wallet-init:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-knots:dev
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-knots:0.1.0-dev2@sha256:0257fb30144bdd19bb1b9505456021ef01c645482df91430b630b069629a77ca
     pull_policy: never
     restart: "no"
     group_add:
@@ -104,7 +104,7 @@ services:
       - b2b_private
 
   datum:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-datum:dev
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-datum:0.1.0-dev2@sha256:d3d74040f892b8e0ae8a012caf41786913bbdced416b63059bccc813c887e2a0
     pull_policy: never
     restart: unless-stopped
     group_add:
@@ -143,7 +143,7 @@ services:
       - b2b_api
 
   adapter:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-adapter:dev
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-adapter:0.1.0-dev2@sha256:3872268e75de5581973ad222009fa0a711c1c2495fac38da116d968b75e4e0b8
     pull_policy: never
     restart: unless-stopped
     group_add:
@@ -176,6 +176,11 @@ services:
       KRASKUS_B2B_PRUNE_FILE: /runtime/prune_target_mib
       KRASKUS_B2B_WALLET_NAME: kraskus-mining
       KRASKUS_B2B_DEV_FEE_ADDRESS: bc1qu8ya0usy3e3dft0gy7yzz2urx7pfkqeqxhugdt
+      # Both default to "0" (disabled) and must be explicitly overridden
+      # by an operator to enable wallet encryption or sending. Never set
+      # these to "1" in this Store package.
+      KRASKUS_B2B_ALLOW_WALLET_ENCRYPTION: "0"
+      KRASKUS_B2B_ALLOW_WALLET_SEND: "0"
     volumes:
       - ${APP_DATA_DIR}/runtime:/runtime
       - ${APP_DATA_DIR}/secrets:/secrets:ro
@@ -192,7 +197,7 @@ services:
       - b2b_api
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-ui:dev
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-ui:0.1.0-dev2@sha256:8e481ff4a7d6a94e5c6ded9c1b8aba59a6c8839e5d9720f2b99d2ed2bbcd44db
     pull_policy: never
     restart: unless-stopped
     depends_on:

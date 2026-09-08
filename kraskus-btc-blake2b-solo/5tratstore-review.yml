@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-btc-blake2b-solo
-appVersion: 0.1.0-dev1
+appVersion: 0.1.0-dev2
 reviewedAt: ""
 reviewedBy: ""
 
@@ -19,7 +19,7 @@ rights:
   noticesIncluded: true
 
 delivery:
-  mode: development-container-appliance
+  mode: immutable-container-appliance
   storePayload: recipe-only
   mirrorsThirdPartyPayload: false
 
@@ -42,13 +42,44 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
-  Initial VM120 Dev Store package for Kraskus BTC BLAKE2b Solo. Bitcoin
-  Knots P2P TCP 8333 and DATUM Stratum V1 TCP 23334 are intentionally
-  published. Knots RPC, DATUM API, and the Kraskus adapter remain on
-  application networks. Persistent blockchain, wallet, runtime, and secret
-  state live below APP_DATA_DIR. First-run secrets are generated locally
-  and are not embedded in this Store recipe. The package currently uses
-  development image tags and must not be promoted outside the Dev Store
-  until immutable GHCR digests and full VM120 install/update/uninstall/
-  reboot qualification are complete. The developer fee is fixed at 1% of
-  successful block coinbase value.
+  0.1.0-dev2 Dev Store package for Kraskus BTC BLAKE2b Solo, built from
+  Kraskus-Crypto-Apps coin/btc-blake2b @ 7c548438cab8611590c3297f85737104fe76c93c.
+  Runtime images are now pinned by immutable GHCR digest rather than the
+  mutable :dev tag used in 0.1.0-dev1:
+  adapter sha256:3872268e75de5581973ad222009fa0a711c1c2495fac38da116d968b75e4e0b8,
+  ui sha256:8e481ff4a7d6a94e5c6ded9c1b8aba59a6c8839e5d9720f2b99d2ed2bbcd44db,
+  knots sha256:0257fb30144bdd19bb1b9505456021ef01c645482df91430b630b069629a77ca,
+  datum sha256:d3d74040f892b8e0ae8a012caf41786913bbdced416b63059bccc813c887e2a0.
+  The adapter and UI images were rebuilt from the qualified source commit
+  above. Knots and DATUM were not rebuilt for this release — their images
+  are an exact republish of the previously-qualified, currently-running
+  build under an immutable tag, since no Knots/DATUM source changed.
+  Bitcoin Knots P2P TCP 8333 and DATUM Stratum V1 TCP 23334 are
+  intentionally published; Knots RPC, DATUM API, and the Kraskus adapter
+  remain on application-internal networks only. Persistent blockchain,
+  wallet, runtime, and secret state live below APP_DATA_DIR; first-run
+  secrets are generated locally and are never embedded in this Store
+  recipe. Wallet encryption and wallet send remain hard-disabled by
+  default (KRASKUS_B2B_ALLOW_WALLET_ENCRYPTION=0,
+  KRASKUS_B2B_ALLOW_WALLET_SEND=0) and both endpoints independently return
+  403 even with an operator override attempted. Node pruning defaults to
+  a 100 GB (102400 MiB) target. The developer fee remains fixed at 1%
+  (100 basis points) of successful-block coinbase value only, and is not
+  runtime-mutable.
+
+  Qualified in 0.1.0-dev2: Wallet V7 UI; Native/External payout switching
+  (frontend and backend); receive/new-address/QR; wallet balance and
+  activity history; UI theme inheritance across all 8 5tratumOS themes;
+  full encrypted-wallet unlock/sign/broadcast/relock flow qualified
+  end-to-end on an isolated regtest environment; mainnet wallet send and
+  encryption confirmed hard-disabled by default; 100 GB pruning; adapter
+  and UI qualified live on a running appliance.
+
+  Still pending before any Official Store promotion: full Knots sync to
+  chain tip; BLAKE2b activation/tip behavior at full sync; real BLAKE2b
+  ASIC accepted shares; a real successful-block developer-fee coinbase
+  proof; the found-block submission path; and final reboot/recovery
+  qualification. This package has not been install/start/update/uninstall
+  tested on a clean 5tratumOS install yet and remains status: proposed
+  pending that qualification pass and a named human reviewer. It is not
+  an Official Store release.
