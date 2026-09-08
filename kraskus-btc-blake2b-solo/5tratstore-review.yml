@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-btc-blake2b-solo
-appVersion: 0.1.0-dev3
+appVersion: 0.1.0-dev4
 reviewedAt: ""
 reviewedBy: ""
 
@@ -42,6 +42,40 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
+  0.1.0-dev4 Dev Store package for Kraskus BTC BLAKE2b Solo, built from
+  Kraskus-Crypto-Apps fix/btc-blake2b-wallet-v8 @ dbdc9cd2e906e7ebd212eaabd0459f65760ff708.
+  Adapter and UI are newly rebuilt and pinned by immutable GHCR digest:
+  adapter sha256:ffa8e5c97adb6eaa2e0ec2e6626dde83a420efa6403fc4f30618109b39fcf952,
+  ui sha256:e024c2f008c5ee871d27880cfe8a4d0cf28142b0c8a354b39d98886e8c11e1dd.
+  Knots remains pinned at
+  sha256:0257fb30144bdd19bb1b9505456021ef01c645482df91430b630b069629a77ca
+  and DATUM remains pinned at
+  sha256:d3d74040f892b8e0ae8a012caf41786913bbdced416b63059bccc813c887e2a0;
+  neither Knots nor DATUM was rebuilt for dev4.
+
+  0.1.0-dev4 fixes the Native/External mining payout workflow. The adapter
+  now restores a Knots-owned native payout address when switching back from
+  External mode instead of allowing the active external payout address to
+  fall through as the native address. Wallet payout state cache is invalidated
+  immediately after payout mutations. The Wallet UI now has one authoritative
+  Native/External switch driven by backend state, with an explicit External
+  setup state: selecting External reveals the address editor and leaves the
+  backend safely on Native until a valid external address is saved. The
+  completed Native -> External -> Native round trip was qualified live on the
+  test appliance. The source test suite passes 170 tests.
+
+  dev4 preserves the stock-install compatibility behavior introduced in dev3:
+  Knots, DATUM, adapter, and UI use pull_policy: missing; wallet-init uses
+  pull_policy: never; Knots TCP 8333 is not published on the host; DATUM
+  Stratum V1 TCP 23334 remains published. This allows coexistence with another
+  Bitcoin-family application already using host TCP 8333.
+
+  Wallet send and wallet encryption remain hard-disabled by default
+  (KRASKUS_B2B_ALLOW_WALLET_SEND=0 and
+  KRASKUS_B2B_ALLOW_WALLET_ENCRYPTION=0). The developer fee remains fixed at
+  1% / 100 basis points of successful-block coinbase value only, using
+  bc1qu8ya0usy3e3dft0gy7yzz2urx7pfkqeqxhugdt, and remains non-runtime-mutable.
+
   0.1.0-dev3 Dev Store package for Kraskus BTC BLAKE2b Solo, built from
   Kraskus-Crypto-Apps coin/btc-blake2b @ 7c548438cab8611590c3297f85737104fe76c93c.
   Runtime images are now pinned by immutable GHCR digest rather than the
