@@ -20,6 +20,11 @@ services:
         chown 0:2000 /runtime /secrets
         chmod 0770 /runtime
         chmod 0750 /secrets
+        if [ ! -s /runtime/prune_target_mib ]; then
+          printf '102400\n' > /runtime/prune_target_mib
+        fi
+        chown 0:2000 /runtime/prune_target_mib
+        chmod 0640 /runtime/prune_target_mib
         if [ ! -s /secrets/rpc-password ]; then
           umask 027
           tr -dc 'A-Za-z0-9' </dev/urandom | head -c 48 > /secrets/rpc-password

@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-btc-blake2b-solo
-appVersion: 0.1.0-dev5
+appVersion: 0.1.0-dev6
 reviewedAt: ""
 reviewedBy: ""
 
@@ -42,6 +42,28 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
+  0.1.0-dev6 Dev Store package for Kraskus BTC BLAKE2b Solo, built from
+  Kraskus-Crypto-Apps fix/btc-blake2b-wallet-v8 @ 5f798993ca753532f3e94738ba64d7fb5a557900.
+
+  dev6 is a recipe/source-only fresh-install correction. The Store
+  runtime-init now creates /runtime/prune_target_mib with the recommended
+  102400 MiB value only when that file is missing or empty, then preserves
+  any existing non-empty operator-selected value. This ensures a truly fresh
+  Store install starts Knots with prune=102400 instead of silently starting
+  unpruned. The corresponding source regression contract passes within the
+  170-test BTC BLAKE2b suite.
+
+  No application image was rebuilt for dev6. The immutable runtime images
+  remain exactly the dev5-qualified images: DATUM
+  sha256:d4c6e49bd962df5b610f335b063cdec144e0b61acb4e4fc719a1384afc522a2a,
+  adapter sha256:7b8c75a48a6ff5fda4f4d748d7202e4e1710146607e46c9b5a36c10ca478cde6,
+  UI sha256:46e706e72e76ee16efd547c86fe3d1f27d7c788460f420e230292dde56a1e878,
+  and Knots sha256:0257fb30144bdd19bb1b9505456021ef01c645482df91430b630b069629a77ca.
+  Wallet send and wallet encryption remain hard-disabled by default.
+
+  dev6 still requires a true clean-room Store install and reboot/recovery
+  qualification before installTested/startTested or promotion status changes.
+
   0.1.0-dev5 Dev Store package for Kraskus BTC BLAKE2b Solo, built from
   Kraskus-Crypto-Apps fix/btc-blake2b-wallet-v8 @ e36e4bc322fe2a5cbbf88691b7f56959b9617a55.
 
