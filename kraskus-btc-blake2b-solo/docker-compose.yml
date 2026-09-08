@@ -43,7 +43,7 @@ services:
 
   knots:
     image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-knots:0.1.0-dev2@sha256:0257fb30144bdd19bb1b9505456021ef01c645482df91430b630b069629a77ca
-    pull_policy: never
+    pull_policy: missing
     restart: unless-stopped
     stop_grace_period: 3m
     group_add:
@@ -62,8 +62,6 @@ services:
       - ${APP_DATA_DIR}/blockchain:/data
       - ${APP_DATA_DIR}/runtime:/runtime:ro
       - ${APP_DATA_DIR}/secrets:/secrets:ro
-    ports:
-      - "8333:8333/tcp"
     healthcheck:
       test: ["CMD-SHELL","bitcoin-cli -conf=/tmp/knots-config/bitcoin.conf -datadir=/data getblockchaininfo >/dev/null"]
       interval: 30s
@@ -105,7 +103,7 @@ services:
 
   datum:
     image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-datum:0.1.0-dev2@sha256:d3d74040f892b8e0ae8a012caf41786913bbdced416b63059bccc813c887e2a0
-    pull_policy: never
+    pull_policy: missing
     restart: unless-stopped
     group_add:
       - "2000"
@@ -144,7 +142,7 @@ services:
 
   adapter:
     image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-adapter:0.1.0-dev2@sha256:3872268e75de5581973ad222009fa0a711c1c2495fac38da116d968b75e4e0b8
-    pull_policy: never
+    pull_policy: missing
     restart: unless-stopped
     group_add:
       - "2000"
@@ -198,7 +196,7 @@ services:
 
   ui:
     image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-ui:0.1.0-dev2@sha256:8e481ff4a7d6a94e5c6ded9c1b8aba59a6c8839e5d9720f2b99d2ed2bbcd44db
-    pull_policy: never
+    pull_policy: missing
     restart: unless-stopped
     depends_on:
       adapter:

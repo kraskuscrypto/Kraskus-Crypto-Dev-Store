@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-btc-blake2b-solo
-appVersion: 0.1.0-dev2
+appVersion: 0.1.0-dev3
 reviewedAt: ""
 reviewedBy: ""
 
@@ -42,7 +42,7 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
-  0.1.0-dev2 Dev Store package for Kraskus BTC BLAKE2b Solo, built from
+  0.1.0-dev3 Dev Store package for Kraskus BTC BLAKE2b Solo, built from
   Kraskus-Crypto-Apps coin/btc-blake2b @ 7c548438cab8611590c3297f85737104fe76c93c.
   Runtime images are now pinned by immutable GHCR digest rather than the
   mutable :dev tag used in 0.1.0-dev1:
@@ -54,9 +54,11 @@ notes: >-
   above. Knots and DATUM were not rebuilt for this release — their images
   are an exact republish of the previously-qualified, currently-running
   build under an immutable tag, since no Knots/DATUM source changed.
-  Bitcoin Knots P2P TCP 8333 and DATUM Stratum V1 TCP 23334 are
-  intentionally published; Knots RPC, DATUM API, and the Kraskus adapter
-  remain on application-internal networks only. Persistent blockchain,
+  DATUM Stratum V1 TCP 23334 is intentionally published. Knots P2P
+  TCP 8333 is no longer published on the host to avoid collisions with
+  other Bitcoin-family applications; Knots retains outbound P2P access
+  and application-internal networking. Knots RPC, DATUM API, and the
+  Kraskus adapter remain on application-internal networks only. Persistent blockchain,
   wallet, runtime, and secret state live below APP_DATA_DIR; first-run
   secrets are generated locally and are never embedded in this Store
   recipe. Wallet encryption and wallet send remain hard-disabled by
@@ -66,6 +68,13 @@ notes: >-
   a 100 GB (102400 MiB) target. The developer fee remains fixed at 1%
   (100 basis points) of successful-block coinbase value only, and is not
   runtime-mutable.
+
+  0.1.0-dev3 adds stock-5tratumOS fresh-start compatibility without
+  rebuilding any application image. Knots, DATUM, adapter, and UI now use
+  pull_policy: missing so docker compose up can fetch immutable digest-pinned
+  images when they are not already present locally. The Knots host P2P bind
+  on TCP 8333 was removed to prevent collisions with other Bitcoin-family
+  Store applications.
 
   Qualified in 0.1.0-dev2: Wallet V7 UI; Native/External payout switching
   (frontend and backend); receive/new-address/QR; wallet balance and
