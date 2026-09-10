@@ -98,7 +98,7 @@ services:
         export KNOTS_RPC_PASSWORD="$$(cat /secrets/rpc-password)"
         exec /bin/sh /usr/local/bin/wallet-init
     volumes:
-      - ./data/wallet-init.sh:/usr/local/bin/wallet-init:ro
+      - ${APP_DATA_DIR}/data/wallet-init.sh:/usr/local/bin/wallet-init:ro
       - ${APP_DATA_DIR}/runtime:/runtime
       - ${APP_DATA_DIR}/secrets:/secrets:ro
     security_opt:

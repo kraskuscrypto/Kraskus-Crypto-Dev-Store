@@ -9,7 +9,7 @@ description: >-
   submissions, wallet receive workflows, node pruning, and appliance
   telemetry from one local interface. A fixed 1 percent developer fee is
   applied only to successfully mined blocks as a coinbase split.
-version: 0.1.0-dev7
+version: 0.1.0-dev8
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
