@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: mysterium-node
-appVersion: 2.6.5
+appVersion: 2.6.6
 reviewedAt: ''
 reviewedBy: ''
 upstream:
@@ -54,8 +54,11 @@ notes: Mysterium upstream requires NET_ADMIN and documents host networking for t
   status collector that writes atomic, read-only JSON snapshots into shared app storage.
   Nginx exposes those snapshot files to the portal with GET/HEAD-only access; it does not
   proxy the TequilAPI or expose its port to the LAN. Node-changing actions continue through
-  the official Mysterium Node UI. v2.6.5 uses the current MystNodes registration URL,
+  the official Mysterium Node UI. v2.6.6 uses the current MystNodes registration URL,
   opens the official Node UI directly on host port 4449, and cache-busts portal assets
   to prevent stale navigation handlers.
-  v2.6.5 mounts portal code and nginx configuration from the versioned package directory;
+  v2.6.6 mounts portal code and nginx configuration from the versioned package directory;
   persistent node identity, status, backups, and update state remain under APP_DATA_DIR.
+  v2.6.6 uses a one-shot Alpine migration service to update preserved portal navigation
+  before nginx starts. Persistent node identity, status, backups, and update state remain
+  under APP_DATA_DIR and are not mounted into the migration service.
