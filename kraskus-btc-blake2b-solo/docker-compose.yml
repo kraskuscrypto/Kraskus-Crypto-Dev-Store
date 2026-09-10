@@ -107,7 +107,7 @@ services:
       - b2b_private
 
   datum:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-datum:qual-05e1fd5@sha256:b9f3b4a6426952e4d7432259bca213f4fcac59b92d2fb3ea7b0e273f658b2dad
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-datum:0.1.0-beta1@sha256:a35f4a4092ca65234beb01985693af968c967b44fd11b92101262a116c23ac62
     pull_policy: missing
     restart: unless-stopped
     group_add:
