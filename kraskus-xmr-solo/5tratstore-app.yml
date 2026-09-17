@@ -1,8 +1,8 @@
 id: kraskus-xmr-solo
-name: Kraskus XMR Solo
+name: Monero by Kraskus
 tagline: Monero full node, wallet, and true solo mining appliance
 description: >-
-  Kraskus XMR Solo turns 5tratumOS into a self-contained Monero
+  Monero by Kraskus turns 5tratumOS into a self-contained Monero
   node, wallet, and true solo mining appliance. It provides chain
   synchronization, direct daemon mining, block submission tracking,
   operational events, wallet receive/send workflows, and appliance
@@ -11,7 +11,7 @@ description: >-
   state and blockchain data remain in persistent 5tratumOS app storage.
   An automatic 1% developer fee applies only to successfully mined block
   rewards after 60-block maturity; miner hashrate is never diverted.
-version: 0.1.10-beta
+version: 0.1.11-beta
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/

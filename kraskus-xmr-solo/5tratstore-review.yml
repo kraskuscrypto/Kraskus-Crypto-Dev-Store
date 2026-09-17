@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-xmr-solo
-appVersion: 0.1.10-beta
+appVersion: 0.1.11-beta
 reviewedAt: ""
 reviewedBy: ""
 
@@ -42,16 +42,17 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
-  Proposed 0.1.10-beta Dev Store package for VM120 qualification. This revision
-  updates only the XMR UI to Kraskus App Template V2 from source commit
-  535eff209526a1d2076157495900ebcc2992baee and pins the UI image to
-  sha256:d9d14da0ce025c2169a599cd5dcb8908f0aba1a6f6081639bab88954d38ceb54.
-  Monerod, adapter, miner gateway, wallet API, persistent storage, mining, wallet,
-  and automatic 1% developer-fee behavior remain unchanged from 0.1.9-beta.
-  The Template V2 UI passed clean TypeScript, lint, static export, Docker build,
-  isolated full-stack integration, backend regression, and desktop/tablet/mobile
-  visual checks. This Dev Store candidate is intentionally marked unqualified for
-  client-style install/start/update/uninstall until VM120 testing is complete.
+  Proposed 0.1.11-beta Dev Store package for VM120 qualification. This revision
+  finalizes the Template V2 XMR branding and page-parity pass from source commit
+  f8d11dcc1f6295d762285ec1bb81f65e316616e4 and pins the UI image to
+  sha256:10c132a36ba2cd0366e290ea4ccfebb95c2a5badbdd6af701edf60ad679eb4bf.
+  The visible product name is Monero by Kraskus and the hero uses the exact
+  supplied Monero emblem asset. Monerod, adapter, miner gateway, wallet API,
+  persistent storage, mining, wallet, and automatic 1% developer-fee behavior
+  remain unchanged from 0.1.9-beta. Template V2 page parity and responsive
+  qualification passed with zero remaining unintended discrepancies. This Dev
+  Store candidate remains intentionally unqualified for client-style
+  install/start/update/uninstall until VM120 testing is complete.
 
 # 0.1.6-beta release qualification
 #
@@ -125,3 +126,13 @@ notes: >-
 # UI digest: sha256:d9d14da0ce025c2169a599cd5dcb8908f0aba1a6f6081639bab88954d38ceb54
 # Backend/runtime images unchanged from 0.1.9-beta.
 # Pending client-style VM120 install/update/restart/persistence qualification.
+
+
+# 0.1.11-beta release qualification
+#
+# Final Template V2 fidelity/branding candidate for VM120.
+# Source commit: f8d11dcc1f6295d762285ec1bb81f65e316616e4
+# UI digest: sha256:10c132a36ba2cd0366e290ea4ccfebb95c2a5badbdd6af701edf60ad679eb4bf
+# Visible product name: Monero by Kraskus.
+# Exact supplied Monero emblem used on the hero coin.
+# Backend/runtime images unchanged from 0.1.9-beta.

@@ -1,4 +1,4 @@
-# Kraskus XMR Solo
+# Monero by Kraskus
 
 Native 5tratStore package for the Kraskus XMR true solo appliance.
 
@@ -115,3 +115,13 @@ Kraskus brand asset vault.
 - Preserves the existing monerod, adapter, miner gateway, wallet API, automatic 1% developer fee, storage, and mining behavior from 0.1.9-beta.
 - Pins only the new UI image to immutable digest `sha256:d9d14da0ce025c2169a599cd5dcb8908f0aba1a6f6081639bab88954d38ceb54`.
 - Published to the Dev Store specifically for VM120 client-style install, restart, persistence, and UI qualification before any Main Store promotion.
+
+
+## 0.1.11-beta
+
+- Finalizes the Template V2 fidelity pass against the canonical Kaspa app.
+- Changes the visible product name to **Monero by Kraskus**.
+- Uses the exact supplied Monero emblem on the Template V2 hero coin.
+- Preserves all XMR backend, wallet, mining, persistence, and automatic 1% developer-fee behavior.
+- Pins the qualified UI image to immutable digest `sha256:10c132a36ba2cd0366e290ea4ccfebb95c2a5badbdd6af701edf60ad679eb4bf`.
+- Published to the Dev Store for final VM120 client-style install/restart/persistence qualification.
