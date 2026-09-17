@@ -94,5 +94,5 @@ jobs:
         run: |
           test -s kraskus-xmr-solo/assets/icon.png
           file kraskus-xmr-solo/assets/icon.png
-          test "$(sha256sum kraskus-xmr-solo/assets/icon.png | awk '{print $1}')" = "ba9d0be31f3148dd5f103ff8fe70aeee20dbc5609b06d0cb3a59732864ccc06f"
-          echo "PASS: approved Divinity XMR icon checksum"
+          test "$(sha256sum kraskus-xmr-solo/assets/icon.png | awk '{print $1}')" = "dcc5f5c111a904aa01ea5c80b52548ab818f4461a4dd9192295d2c5387cf91db"
+          echo "PASS: approved official Monero icon checksum"
