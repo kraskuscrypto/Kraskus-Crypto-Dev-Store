@@ -1,5 +1,5 @@
 id: kraskus-zec-solo
-name: Kraskus ZEC Solo
+name: Zcash by Kraskus
 tagline: Zcash full node and solo mining pool
 description: Kraskus ZEC Solo turns 5tratumOS into an easy-to-use Zcash full node
   and local solo mining appliance. The app manages node synchronization, mining readiness,
@@ -11,7 +11,7 @@ developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
 repo: https://github.com/kraskuscrypto/Kraskus-CHTA-Solo
 support: https://kraskuscrypto.com/
-icon: assets/divinity-zec-logo.png
+icon: assets/zcash-emblem.png
 port: 33062
 path: /
 uiMode: proxy
