@@ -4,7 +4,7 @@ services:
       APP_HOST: ui
       APP_PORT: 8080
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-zec-v9-xmr-shell@sha256:139e7efec405010972519ee5dfa16047eb62b1704cb818081d2d1e1945a06ddd
+    image: ghcr.io/kraskuscrypto/kraskus-zec-template-v2-ui@sha256:a11a73d116326b34234a002a59976064ffe485894242dba67ce659921441b100
     restart: unless-stopped
     depends_on:
     - kraskus
@@ -17,7 +17,7 @@ services:
     - SETGID
     - SETUID
   kraskus:
-    image: ghcr.io/kraskuscrypto/kraskus-zec-solo-wallet-controller@sha256:a0046865242df47c41403f215be676bbd471b5ce1c253a00246bbcea220f09a4
+    image: ghcr.io/kraskuscrypto/kraskus-zec-solo-wallet-controller@sha256:08cf4e8a8c76aa71307d7576e1a9f3e0e254be744b2c774200b6cbf25e2feb07
     restart: unless-stopped
     depends_on:
     - zebra
@@ -48,7 +48,7 @@ services:
     cap_add:
     - DAC_OVERRIDE
   zallet-init:
-    image: ghcr.io/kraskuscrypto/kraskus-zec-solo-wallet-controller@sha256:a0046865242df47c41403f215be676bbd471b5ce1c253a00246bbcea220f09a4
+    image: ghcr.io/kraskuscrypto/kraskus-zec-solo-wallet-controller@sha256:08cf4e8a8c76aa71307d7576e1a9f3e0e254be744b2c774200b6cbf25e2feb07
     user: 0:0
     entrypoint:
     - /bin/sh
@@ -74,7 +74,7 @@ services:
     - DAC_OVERRIDE
     - FOWNER
   zallet:
-    image: ghcr.io/kraskuscrypto/kraskus-zec-zallet-supervisor@sha256:d19eb12c5f46ad50ee7c394e5fd12ba633f0a89bd7267412b068944178920e2c
+    image: ghcr.io/kraskuscrypto/kraskus-zec-zallet-supervisor@sha256:a308faa2838ba6ecc491d0ece38808aef66d88858bb30231e0ae2116ddf2003d
     restart: unless-stopped
     user: 10001:10001
     network_mode: service:kraskus

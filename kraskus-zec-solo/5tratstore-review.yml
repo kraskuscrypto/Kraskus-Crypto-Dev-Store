@@ -9,12 +9,10 @@ notes:
   - Payout configuration is applied through the Kraskus UI and shared safely with Zebra.
   - Testnet is the default network for beta qualification.
   - Mainnet activation remains subject to storage safety requirements.
-appVersion: 0.3.3-beta
+appVersion: 0.3.11-beta
 
 releaseNotes:
-  - Adds the ZEC v9 command-center interface while preserving the approved v8b multi-miner Mining layout.
-  - Routes Store traffic through the dedicated v9 UI service while keeping the 0.3.2-beta controller and Zebra runtime unchanged.
-  - Uses live controller status for node, RPC, Stratum, worker, block, and payout state.
-  - Shows unavailable sync, difficulty, hashrate, and share telemetry as unavailable instead of fabricating zero or completion values.
-  - Removes stale demo mining values and labels the Events timeline accurately as a browser-session journal.
-  - Keeps the streamlined Command, Mining, Blocks, Events, and Settings navigation.
+  - Migrates Zcash by Kraskus to the canonical Kraskus App Template V2 interface.
+  - Uses the official Zcash emblem and Kaspa-parity Home, Mining, Wallet, Blocks, and Settings navigation.
+  - Ships the live-qualified ZEC 0.3.10 controller with corrected Zebra tip difficulty during initial sync.
+  - Preserves Zebra, Zallet, Stratum 3335, wallet data, payout settings, and existing app data across update.
