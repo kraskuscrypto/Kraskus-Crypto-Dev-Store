@@ -106,3 +106,12 @@ Kraskus brand asset vault.
 - Removes mining and wallet-send lockouts while automatic fee settlement is pending or temporarily failing.
 - Preserves ledger integrity, orphan handling, retry, prepared-transaction recovery, fixed fee destination/rate/amount validation, and double-payment prevention.
 - Remains a Dev Store candidate pending client-style VM100 qualification before any Official Store promotion.
+
+
+## 0.1.10-beta
+
+- Migrates the XMR appliance UI to Kraskus App Template V2 with the canonical Home, Mining, Wallet, Blocks, and Settings shell.
+- Uses the new Next.js static-export UI and dynamic Docker-DNS nginx proxy configuration.
+- Preserves the existing monerod, adapter, miner gateway, wallet API, automatic 1% developer fee, storage, and mining behavior from 0.1.9-beta.
+- Pins only the new UI image to immutable digest `sha256:d9d14da0ce025c2169a599cd5dcb8908f0aba1a6f6081639bab88954d38ceb54`.
+- Published to the Dev Store specifically for VM120 client-style install, restart, persistence, and UI qualification before any Main Store promotion.

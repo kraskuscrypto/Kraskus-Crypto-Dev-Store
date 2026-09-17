@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-xmr-solo
-appVersion: 0.1.9-beta
+appVersion: 0.1.10-beta
 reviewedAt: ""
 reviewedBy: ""
 
@@ -28,10 +28,10 @@ compatibility:
     - Debian-13-5tratumOS-clean-room
   architectures:
     - amd64
-  installTested: true
-  startTested: true
-  updateTested: true
-  uninstallTested: true
+  installTested: false
+  startTested: false
+  updateTested: false
+  uninstallTested: false
 
 security:
   privileged: false
@@ -42,21 +42,16 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
-  Proposed 0.1.9-beta Dev Store package for the Kraskus XMR true-solo
-  appliance. Monero P2P TCP 18080 and the restricted miner endpoint TCP
-  1921 are intentionally published. monerod RPC, adapter, wallet RPC, and
-  wallet API remain on application networks. Blockchain, wallet, runtime,
-  and protected credential state remain below APP_DATA_DIR. Runtime images
-  were built from the canonical Kraskus-Crypto-Apps repository and are
-  pinned by immutable GHCR digests. The automatic developer fee remains
-  exactly 1% of successfully mined block rewards after 60-block maturity.
-  Pending or temporarily failed fee settlement does not lock mining or user
-  wallet sends. Ledger integrity, orphan resolution, retry, prepared-
-  transaction recovery, and double-payment prevention remain enforced.
-  GitHub Actions build run 33825587530 passed all source validation and five
-  linux/amd64 image jobs. This package remains proposed in the Dev Store
-  pending client-style VM100 qualification; it has not been promoted to the
-  Official Store.
+  Proposed 0.1.10-beta Dev Store package for VM120 qualification. This revision
+  updates only the XMR UI to Kraskus App Template V2 from source commit
+  535eff209526a1d2076157495900ebcc2992baee and pins the UI image to
+  sha256:d9d14da0ce025c2169a599cd5dcb8908f0aba1a6f6081639bab88954d38ceb54.
+  Monerod, adapter, miner gateway, wallet API, persistent storage, mining, wallet,
+  and automatic 1% developer-fee behavior remain unchanged from 0.1.9-beta.
+  The Template V2 UI passed clean TypeScript, lint, static export, Docker build,
+  isolated full-stack integration, backend regression, and desktop/tablet/mobile
+  visual checks. This Dev Store candidate is intentionally marked unqualified for
+  client-style install/start/update/uninstall until VM120 testing is complete.
 
 # 0.1.6-beta release qualification
 #
@@ -121,3 +116,12 @@ notes: >-
 # Automatic 1% developer-fee settlement remains maturity-gated,
 # retryable, orphan-aware, and double-payment-safe. Pending settlement does
 # not block mining or user wallet sends.
+
+
+# 0.1.10-beta release qualification
+#
+# Template V2 UI-only Dev Store candidate.
+# Source commit: 535eff209526a1d2076157495900ebcc2992baee
+# UI digest: sha256:d9d14da0ce025c2169a599cd5dcb8908f0aba1a6f6081639bab88954d38ceb54
+# Backend/runtime images unchanged from 0.1.9-beta.
+# Pending client-style VM120 install/update/restart/persistence qualification.

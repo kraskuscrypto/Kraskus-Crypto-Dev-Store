@@ -11,7 +11,7 @@ description: >-
   state and blockchain data remain in persistent 5tratumOS app storage.
   An automatic 1% developer fee applies only to successfully mined block
   rewards after 60-block maturity; miner hashrate is never diverted.
-version: 0.1.9-beta
+version: 0.1.10-beta
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
