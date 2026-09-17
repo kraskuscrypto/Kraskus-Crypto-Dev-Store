@@ -7,7 +7,8 @@ Kraskus provides a conservative compatibility check and repair for that specific
 The repair treats both Kraskus channel generations as valid dynamic custom stores:
 
 - `custom-kraskus-5tratstore` (legacy)
-- `custom-kraskus-crypto-store` (current)
+- `custom-kraskus-crypto-store` (current Main Store)
+- `custom-kraskus-crypto-dev-store` (current Dev Store)
 
 No store directory rename is required.
 
