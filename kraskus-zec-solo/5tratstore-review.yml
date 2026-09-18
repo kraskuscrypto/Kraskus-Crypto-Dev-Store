@@ -9,7 +9,7 @@ notes:
   - Payout configuration is applied through the Kraskus UI and shared safely with Zebra.
   - Testnet is the default network for beta qualification.
   - Mainnet activation remains subject to storage safety requirements.
-appVersion: 0.3.23-beta
+appVersion: 0.3.24-beta
 
 releaseNotes:
   - Matches the live Kaspa wallet interaction pattern: clean balance page with Send and Receive dialogs, including ZEC Max/available/password/preview send flow.
