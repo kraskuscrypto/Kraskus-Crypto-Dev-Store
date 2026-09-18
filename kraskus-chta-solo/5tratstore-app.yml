@@ -12,7 +12,7 @@ description: >-
   history, or send functionality that the appliance API does not expose.
   RPC credentials and mining settings remain in persistent local app
   storage, and CKPool stays gated until a valid payout address is set.
-version: 0.2.33-dev5
+version: 0.2.33-dev6
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
