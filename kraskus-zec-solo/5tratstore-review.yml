@@ -9,9 +9,10 @@ notes:
   - Payout configuration is applied through the Kraskus UI and shared safely with Zebra.
   - Testnet is the default network for beta qualification.
   - Mainnet activation remains subject to storage safety requirements.
-appVersion: 0.3.16-beta
+appVersion: 0.3.17-beta
 
 releaseNotes:
+  - Advances successful wallet creation directly into recovery confirmation and compacts ZEC-only mining diagnostics behind disclosures.
   - Restores Kaspa Template V2 information hierarchy across Mining and Settings while preserving Zcash-specific semantics.
   - Migrates Zcash by Kraskus to the canonical Kraskus App Template V2 interface.
   - Renders the Zcash center mark as native vector coin material with no image or CSS-mask dependency.
