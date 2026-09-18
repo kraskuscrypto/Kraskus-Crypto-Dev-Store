@@ -85,7 +85,7 @@ services:
       KRASKUS_API_HOST: 0.0.0.0
       KRASKUS_API_PORT: "18411"
       KRASKUS_APP_NAME: CheetahCoin by Kraskus
-      KRASKUS_APP_VERSION: 0.2.33-dev4
+      KRASKUS_APP_VERSION: 0.2.33-dev5
       KRASKUS_CHTA_RPC_URL: http://cheetahcoin:8536/
       KRASKUS_CHTA_RPC_USER_FILE: /run/secrets/rpc-user
       KRASKUS_CHTA_RPC_PASSWORD_FILE: /run/secrets/rpc-password
@@ -115,7 +115,7 @@ services:
 
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-chta-ui@sha256:e9d459991ac6ef1d00bfef2ba395381caa2743b28df059e8d6462d2c81f3e158
+    image: ghcr.io/kraskuscrypto/kraskus-chta-ui@sha256:863c75358394d4e2c5a18ceaebfab9a3546623a6545b04a9d249f8375b4d7bdf
     restart: unless-stopped
     depends_on:
       kraskus:
