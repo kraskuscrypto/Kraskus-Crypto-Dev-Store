@@ -4,7 +4,7 @@ services:
       APP_HOST: ui
       APP_PORT: 8080
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-zec-solo-wallet-controller@sha256:fcdec731e56421552f41fb7f573cb0435b80eca8b3b7aedac1411a8e5f97149b
+    image: ghcr.io/kraskuscrypto/kraskus-zec-solo-wallet-controller@sha256:c3b38c400fc0397bbe51436587d5340f1eb5c0310d2bc8243bc60bfc64a1cfa4
     restart: unless-stopped
     depends_on:
     - kraskus
