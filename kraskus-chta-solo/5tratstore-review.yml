@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-chta-solo
-appVersion: 0.2.33-dev8
+appVersion: 0.2.33-dev9
 reviewedAt: ""
 reviewedBy: ""
 
@@ -42,7 +42,7 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
-  Dev candidate 0.2.33-dev8 migrates CHTA Solo to Kraskus App Template V2.
+  Dev candidate 0.2.33-dev9 migrates CHTA Solo to Kraskus App Template V2.
   The CheetahCoin Core and qualified CKPool image digests remain unchanged.
   The backend is based on the prior Dev6 image with one qualified correction:
   fresh parseable CKPool pool.status telemetry is treated as authoritative
@@ -61,4 +61,7 @@ notes: >-
   mark integrated into a green/gold beveled coin face matching Kaspa/BTC styling.
   Dev8 collapses initial Home telemetry to one overview snapshot and defers
   page-specific pollers until their pages/dialogs are actually opened.
+  Dev9 reports hashrate and connected miners from online workers only and
+  persists a CKPool payout-era boundary so legacy pool blocks are excluded
+  from the CHTA Solo Blocks ledger.
   Main Store promotion remains intentionally separate.
