@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-chta-solo
-appVersion: 0.2.33-dev11
+appVersion: 0.2.33-dev12
 reviewedAt: ""
 reviewedBy: ""
 
@@ -42,7 +42,7 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
-  Dev candidate 0.2.33-dev11 migrates CHTA Solo to Kraskus App Template V2.
+  Dev candidate 0.2.33-dev12 migrates CHTA Solo to Kraskus App Template V2.
   The CheetahCoin Core and qualified CKPool image digests remain unchanged.
   The backend is based on the prior Dev6 image with one qualified correction:
   fresh parseable CKPool pool.status telemetry is treated as authoritative
@@ -68,4 +68,6 @@ notes: >-
   snapshot, then refreshes only the page-specific detail in the background.
   Dev11 moves the Store/OS emblem to a new cache-busting asset path so
   StratumOS cannot reuse the legacy CHTA icon cached under the old filename.
+  Dev12 aligns the fresh-install Wallet setup with the Kaspa Template V2
+  setup structure while keeping CHTA payout-only semantics truthful.
   Main Store promotion remains intentionally separate.
