@@ -9,9 +9,10 @@ notes:
   - Payout configuration is applied through the Kraskus UI and shared safely with Zebra.
   - Testnet is the default network for beta qualification.
   - Mainnet activation remains subject to storage safety requirements.
-appVersion: 0.3.19-beta
+appVersion: 0.3.20-beta
 
 releaseNotes:
+  - Implements the missing Zallet wallet password endpoint with salted PBKDF2-HMAC-SHA256 verifier storage and password-protected status reporting.
   - Fixes Zcash wallet backup confirmation challenge indexing and restores the pending recovery phrase after refresh.
   - Removes Solo round and Network difficulty from Mining, restores Kaspa-style Node/System settings structure, and fixes wallet post-confirmation state handling.
   - Advances successful wallet creation directly into recovery confirmation and compacts ZEC-only mining diagnostics behind disclosures.
