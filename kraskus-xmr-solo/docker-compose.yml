@@ -229,7 +229,7 @@ services:
       - xmr_api
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-ui@sha256:10c132a36ba2cd0366e290ea4ccfebb95c2a5badbdd6af701edf60ad679eb4bf
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-ui:hero-v1-d143c50@sha256:8215502fdf783c39fc71afd9b0bf382833f28781fa89ce1e705a8ed3d8204b6d
     restart: unless-stopped
     healthcheck:
       test:

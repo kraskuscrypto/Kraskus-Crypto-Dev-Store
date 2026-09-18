@@ -204,7 +204,7 @@ services:
       - b2b_api
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-ui:beta4-fcd1e5a@sha256:de33e38e90b0ac760d6ac39499253b5ccee5a4bb420de0489a596f791a37ac31
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-ui:hero-v1-3a9a858@sha256:494c680a44a5f43edfa5ca2f46b5ce01ecc30402f72e540fcad2a59dfaba7d0a
     pull_policy: missing
     restart: unless-stopped
     depends_on:
