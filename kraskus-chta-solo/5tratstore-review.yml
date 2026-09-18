@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-chta-solo
-appVersion: 0.2.33-dev7
+appVersion: 0.2.33-dev8
 reviewedAt: ""
 reviewedBy: ""
 
@@ -42,7 +42,7 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
-  Dev candidate 0.2.33-dev7 migrates CHTA Solo to Kraskus App Template V2.
+  Dev candidate 0.2.33-dev8 migrates CHTA Solo to Kraskus App Template V2.
   The CheetahCoin Core and qualified CKPool image digests remain unchanged.
   The backend is based on the prior Dev6 image with one qualified correction:
   fresh parseable CKPool pool.status telemetry is treated as authoritative
@@ -59,4 +59,6 @@ notes: >-
   reverse-proxy routing resolves the hero image correctly.
   Dev7 rebuilds the CHTA hero as a Template V2 medallion: official yellow CHTA
   mark integrated into a green/gold beveled coin face matching Kaspa/BTC styling.
+  Dev8 collapses initial Home telemetry to one overview snapshot and defers
+  page-specific pollers until their pages/dialogs are actually opened.
   Main Store promotion remains intentionally separate.
