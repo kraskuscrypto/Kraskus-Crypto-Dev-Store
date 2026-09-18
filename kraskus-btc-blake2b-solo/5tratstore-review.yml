@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-btc-blake2b-solo
-appVersion: 0.1.0-dev8
+appVersion: 0.1.0-beta2
 reviewedAt: ""
 reviewedBy: ""
 
@@ -42,6 +42,17 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
+  0.1.0-beta2 promotes the qualified Template V2 BTC2b adapter and UI used on
+  the production appliance to the Dev Store package. Adapter is pinned at
+  sha256:69702cf94127b84988a3f750cad6935f838fbf25402a4a8c558b6eba85d22553
+  and UI is pinned at
+  sha256:5f8b97f23e5f2d0bf412ced8fc896fc3bad8de237596cf5e38d656cb6fcbfa46.
+  Knots and DATUM remain unchanged at their already-qualified immutable
+  digests. The fixed 1 percent developer-fee address is unchanged, and wallet
+  send/encryption remain disabled by default. Clean-install qualification is
+  still in progress, so review status and compatibility test booleans remain
+  proposed/false.
+
   0.1.0-dev6 Dev Store package for Kraskus BTC BLAKE2b Solo, built from
   Kraskus-Crypto-Apps fix/btc-blake2b-wallet-v8 @ 5f798993ca753532f3e94738ba64d7fb5a557900.
 
