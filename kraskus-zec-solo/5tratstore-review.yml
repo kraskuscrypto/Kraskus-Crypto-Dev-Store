@@ -9,10 +9,11 @@ notes:
   - Payout configuration is applied through the Kraskus UI and shared safely with Zebra.
   - Testnet is the default network for beta qualification.
   - Mainnet activation remains subject to storage safety requirements.
-appVersion: 0.3.14-beta
+appVersion: 0.3.15-beta
 
 releaseNotes:
   - Migrates Zcash by Kraskus to the canonical Kraskus App Template V2 interface.
   - Renders the Zcash center mark as native vector coin material with no image or CSS-mask dependency.
   - Ships the live-qualified ZEC 0.3.10 controller with corrected Zebra tip difficulty during initial sync.
   - Preserves Zebra, Zallet, Stratum 3335, wallet data, payout settings, and existing app data across update.
+  - Updates the Store/OS app icon to match the native-vector hero coin mark, replacing the flat legacy emblem badge.
