@@ -150,7 +150,7 @@ services:
       - b2b_api
 
   adapter:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-adapter:beta3-9659b10@sha256:2e0bce506edadb4f5970df93dffef19b2c5b8205c90d003620c7a3b2e9968227
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-adapter:beta4-fcd1e5a@sha256:b6143c9dcaff4b19de3e6d08e159f407f750d695b935ab7a4dbcbdff3abbde78
     pull_policy: missing
     restart: unless-stopped
     group_add:
@@ -204,7 +204,7 @@ services:
       - b2b_api
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-ui:beta3-9659b10@sha256:6ce141fb0edee35406c679529cba81a4f42f4c5de40fc3f1fa93c25f99d77035
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-ui:beta4-fcd1e5a@sha256:de33e38e90b0ac760d6ac39499253b5ccee5a4bb420de0489a596f791a37ac31
     pull_policy: missing
     restart: unless-stopped
     depends_on:

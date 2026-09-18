@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-btc-blake2b-solo
-appVersion: 0.1.0-beta3
+appVersion: 0.1.0-beta4
 reviewedAt: ""
 reviewedBy: ""
 
@@ -42,6 +42,21 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
+  0.1.0-beta4 fixes resumable wallet setup after a partial create. Beta3 could
+  create the Knots wallet successfully and then fail while persisting payout
+  files because the adapter referenced a nonexistent _atomic_write helper.
+  Beta4 uses the adapter's real _write_text atomic helper, adds setup_complete
+  to wallet status, and makes Create wallet idempotent: if the Knots wallet
+  already exists but payout initialization is incomplete, setup resumes and
+  finishes instead of rejecting the existing wallet. Adapter is pinned at
+  sha256:b6143c9dcaff4b19de3e6d08e159f407f750d695b935ab7a4dbcbdff3abbde78
+  and UI at
+  sha256:de33e38e90b0ac760d6ac39499253b5ccee5a4bb420de0489a596f791a37ac31.
+  Fresh installs still do not auto-create a wallet. Existing wallets remain
+  preserved. Source validation: production image build PASS, 306 tests passed,
+  10 skipped, 1 pre-existing stale packaging assertion. Review remains
+  proposed pending fresh-install qualification.
+
   0.1.0-beta3 fixes clean-install wallet semantics. Fresh installs no longer
   auto-create the Knots wallet or payout address. Knots can sync without a
   wallet; the Wallet page now shows an explicit "Set up your wallet" state
