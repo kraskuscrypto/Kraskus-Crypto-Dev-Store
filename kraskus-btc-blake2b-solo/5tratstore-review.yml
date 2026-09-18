@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-btc-blake2b-solo
-appVersion: 0.1.0-beta2
+appVersion: 0.1.0-beta3
 reviewedAt: ""
 reviewedBy: ""
 
@@ -42,6 +42,21 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
+  0.1.0-beta3 fixes clean-install wallet semantics. Fresh installs no longer
+  auto-create the Knots wallet or payout address. Knots can sync without a
+  wallet; the Wallet page now shows an explicit "Set up your wallet" state
+  and the user must choose Create wallet before a native payout address is
+  generated. The adapter is pinned at
+  sha256:2e0bce506edadb4f5970df93dffef19b2c5b8205c90d003620c7a3b2e9968227
+  and the UI at
+  sha256:6ce141fb0edee35406c679529cba81a4f42f4c5de40fc3f1fa93c25f99d77035.
+  DATUM now waits safely for /runtime/payout_address instead of timing out
+  while wallet setup is pending. Existing wallets are preserved on upgrades;
+  beta3 never deletes or recreates an existing wallet. Source validation:
+  production image build PASS, isolated Knots createwallet smoke PASS,
+  305 tests passed / 10 skipped / 1 pre-existing stale packaging assertion.
+  Review status remains proposed pending a new clean-install qualification.
+
   0.1.0-beta2 promotes the qualified Template V2 BTC2b adapter and UI used on
   the production appliance to the Dev Store package. Adapter is pinned at
   sha256:69702cf94127b84988a3f750cad6935f838fbf25402a4a8c558b6eba85d22553

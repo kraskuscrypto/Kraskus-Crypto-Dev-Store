@@ -127,6 +127,10 @@ services:
         export KNOTS_RPC_PASSWORD="$$(cat /secrets/rpc-password)"
         export DATUM_ADMIN_PASSWORD="$$(cat /secrets/datum-admin-password)"
         export BLAKE2B_PAYOUT_FILE=/runtime/payout_address
+        while [ ! -s /runtime/payout_address ]; do
+          echo "Waiting for wallet/payout configuration..."
+          sleep 5
+        done
         exec /usr/local/bin/datum-entrypoint
     volumes:
       - ${APP_DATA_DIR}/runtime:/runtime:ro
@@ -134,7 +138,7 @@ services:
     ports:
       - "23334:23334/tcp"
     healthcheck:
-      test: ["CMD-SHELL","curl -fsS http://127.0.0.1:7152/ >/dev/null || test \"$$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:7152/)\" = 401"]
+      test: ["CMD-SHELL","test ! -s /runtime/payout_address || curl -fsS http://127.0.0.1:7152/ >/dev/null || test \"$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:7152/)\" = 401"]
       interval: 20s
       timeout: 10s
       retries: 6
@@ -146,7 +150,7 @@ services:
       - b2b_api
 
   adapter:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-adapter:template-v2-8507227@sha256:69702cf94127b84988a3f750cad6935f838fbf25402a4a8c558b6eba85d22553
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-adapter:beta3-9659b10@sha256:2e0bce506edadb4f5970df93dffef19b2c5b8205c90d003620c7a3b2e9968227
     pull_policy: missing
     restart: unless-stopped
     group_add:
@@ -200,7 +204,7 @@ services:
       - b2b_api
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-ui:template-v2-8507227@sha256:5f8b97f23e5f2d0bf412ced8fc896fc3bad8de237596cf5e38d656cb6fcbfa46
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-ui:beta3-9659b10@sha256:6ce141fb0edee35406c679529cba81a4f42f4c5de40fc3f1fa93c25f99d77035
     pull_policy: missing
     restart: unless-stopped
     depends_on:
