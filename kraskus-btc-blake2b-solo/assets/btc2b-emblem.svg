@@ -1,0 +1,46 @@
+<svg width="1254" height="1254" viewBox="0 0 1254 1254" xmlns="http://www.w3.org/2000/svg">
+  <!--
+    Canonical BTC2b by Kraskus emblem: the single source of truth for this
+    app's coin artwork. Reused verbatim (not re-approximated) as:
+      - the in-app hero/Block Hunt coin (components/block-hunt.tsx's
+        .coin-disc, which loads this file directly as an img)
+      - the Kraskus-Crypto-Dev-Store Workbench/Store card icon
+        (kraskus-btc-blake2b-solo/assets/icon.png, rasterized from this
+        exact file; see that repo's render script/commit for provenance)
+    Colors are pulled directly from this app's own established palette
+    (see app/globals.css's former .coin-disc / .coin-disc:before rules,
+    now superseded by this asset): ring gradient e69b38 to 815321, face
+    radial gradient f7d391 to b77a2c to 85501c, glyph fill 5e3c19 with
+    a fff0c2 highlight stroke (dark-on-light for legibility at small
+    sizes; the app's old CSS-only glyph used the pale eac28a fill,
+    which only worked at large hero size where the drop-shadow alone
+    carried contrast; this fill is used everywhere now for one visually
+    consistent emblem regardless of render size).
+    Editing this file is editing the canonical emblem everywhere it is
+    used; keep the Store icon PNG re-rendered from it in sync.
+  -->
+  <defs>
+    <radialGradient id="face" cx="34%" cy="23%" r="85%">
+      <stop offset="0%" stop-color="#f7d391"/>
+      <stop offset="68%" stop-color="#b77a2c"/>
+      <stop offset="100%" stop-color="#85501c"/>
+    </radialGradient>
+    <linearGradient id="ring" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e69b38"/>
+      <stop offset="50%" stop-color="#a76d29"/>
+      <stop offset="100%" stop-color="#815321"/>
+    </linearGradient>
+  </defs>
+
+  <!-- outer ring -->
+  <circle cx="600" cy="600" r="590" fill="url(#ring)" stroke="#d6a153" stroke-width="14"/>
+  <!-- inner face -->
+  <circle cx="600" cy="600" r="540" fill="url(#face)" stroke="#f8ce85" stroke-width="9"/>
+  <circle cx="600" cy="600" r="536" fill="none" stroke="#bc853b" stroke-width="16" opacity="0.55"/>
+
+  <!-- glyph stack: Bitcoin symbol plus small 2b, centered -->
+  <g font-family="Arial, Helvetica, sans-serif" text-anchor="middle">
+    <text x="600" y="705" font-size="560" font-weight="700" fill="#5e3c19" stroke="#fff0c2" stroke-width="3" paint-order="stroke">&#8383;</text>
+    <text x="600" y="862" font-size="128" font-weight="800" letter-spacing="4" fill="#5e3c19" stroke="#fff0c2" stroke-width="1.5" paint-order="stroke">2b</text>
+  </g>
+</svg>
