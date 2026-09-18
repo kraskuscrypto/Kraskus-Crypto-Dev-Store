@@ -12,13 +12,13 @@ description: >-
   history, or send functionality that the appliance API does not expose.
   RPC credentials and mining settings remain in persistent local app
   storage, and CKPool stays gated until a valid payout address is set.
-version: 0.2.33-dev10
+version: 0.2.33-dev11
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
 repo: https://github.com/kraskuscrypto/Kraskus-Crypto-Dev-Store
 support: https://kraskuscrypto.com/
-icon: assets/divinity-chta-logo.png
+icon: assets/chta-official-emblem-v2.png
 port: 33064
 path: /
 uiMode: proxy
