@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-chta-solo
-appVersion: 0.2.32-dev1
+appVersion: 0.2.33-dev1
 reviewedAt: ""
 reviewedBy: ""
 
@@ -28,9 +28,9 @@ compatibility:
     - Debian-13-5tratumOS-clean-room
   architectures:
     - amd64
-  installTested: false
-  startTested: false
-  updateTested: false
+  installTested: true
+  startTested: true
+  updateTested: true
   uninstallTested: false
 
 security:
@@ -42,11 +42,13 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
-  Dev candidate 0.2.32-dev1 wires the qualified Candidate12 CHTA backend
-  and the Formal V3 standalone Nginx UI by immutable GHCR digest. The
-  CheetahCoin Core and qualified CKPool images remain unchanged. Legacy
-  Python UI gateway, prepaint, compatibility, and hotfix mounts were
-  removed from the ui service. This candidate is intentionally unqualified
-  until a fresh VM120 installation verifies install, start, UI proxy,
-  node/RPC readiness, Stratum port 3336, settings persistence, confirmed
-  block telemetry, and reboot recovery.
+  Dev candidate 0.2.33-dev1 migrates CHTA Solo to Kraskus App Template V2.
+  The CheetahCoin Core and qualified CKPool image digests remain unchanged.
+  The backend is based on the prior Dev6 image with one qualified correction:
+  fresh parseable CKPool pool.status telemetry is treated as authoritative
+  Stratum-online evidence when CKPool omits explicit online/ready flags.
+  Qualification covered a fresh isolated install, live node synchronization,
+  real payout validation/apply, full teardown/restart persistence, legacy UI
+  to Template V2 upgrade state preservation, synced-node RPC, block-template
+  telemetry, real mining.subscribe/mining.authorize, and nginx proxy startup.
+  Main Store promotion remains intentionally separate.
