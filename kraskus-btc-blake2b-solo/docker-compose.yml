@@ -85,6 +85,8 @@ services:
     restart: "no"
     group_add:
       - "2000"
+    environment:
+      KNOTS_WALLET_NAME: "kraskus-mining"
     depends_on:
       runtime-init:
         condition: service_completed_successfully
@@ -119,6 +121,8 @@ services:
         condition: service_healthy
       wallet-init:
         condition: service_completed_successfully
+    environment:
+      BLAKE2B_VARDIFF_MIN_FILE: "/runtime/vardiff_min"
     entrypoint:
       - /bin/sh
       - -ec
@@ -126,11 +130,7 @@ services:
         export KNOTS_RPC_USER=kraskus
         export KNOTS_RPC_PASSWORD="$$(cat /secrets/rpc-password)"
         export DATUM_ADMIN_PASSWORD="$$(cat /secrets/datum-admin-password)"
-        export BLAKE2B_PAYOUT_FILE=/runtime/payout_address
-        while [ ! -s /runtime/payout_address ]; do
-          echo "Waiting for wallet/payout configuration..."
-          sleep 5
-        done
+        export BLAKE2B_PAYOUT_FILE=/runtime/settlement_address
         exec /usr/local/bin/datum-entrypoint
     volumes:
       - ${APP_DATA_DIR}/runtime:/runtime:ro
@@ -138,7 +138,7 @@ services:
     ports:
       - "23334:23334/tcp"
     healthcheck:
-      test: ["CMD-SHELL","test ! -s /runtime/payout_address || curl -fsS http://127.0.0.1:7152/ >/dev/null || test \"$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:7152/)\" = 401"]
+      test: ["CMD-SHELL","curl -fsS http://127.0.0.1:7152/ >/dev/null || test \"$$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:7152/)\" = 401"]
       interval: 20s
       timeout: 10s
       retries: 6
@@ -180,7 +180,12 @@ services:
       KRASKUS_B2B_NODE_PAYOUT_FILE: /runtime/node_payout_address
       KRASKUS_B2B_EXTERNAL_PAYOUT_FILE: /runtime/external_payout_address
       KRASKUS_B2B_NATIVE_MODE_FILE: /runtime/native_wallet_enabled
+      KRASKUS_B2B_SETTLEMENT_ADDRESS_FILE: /runtime/settlement_address
+      KRASKUS_B2B_SETTLEMENT_STATE_FILE: /runtime/settlement_state.json
+      KRASKUS_B2B_BLOCK_LEDGER_FILE: /runtime/blocks.json
+      KRASKUS_B2B_SETTLEMENT_WALLET_NAME: kraskus-settlement
       KRASKUS_B2B_PRUNE_FILE: /runtime/prune_target_mib
+      KRASKUS_B2B_VARDIFF_MIN_FILE: /runtime/vardiff_min
       KRASKUS_B2B_WALLET_NAME: kraskus-mining
       KRASKUS_B2B_DEV_FEE_ADDRESS: bc1q8vwplaf4df5u5d8zg8r6xrlh564s06l0kfjjtm
       # Both default to "0" (disabled) and must be explicitly overridden
