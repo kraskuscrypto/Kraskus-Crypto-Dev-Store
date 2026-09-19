@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: approved
 appId: kraskus-prl-solo
-appVersion: 0.1.0-dev1
+appVersion: 0.1.0-dev2
 reviewedAt: "2026-09-19"
 reviewedBy: "Kraskus Crypto"
 
@@ -28,7 +28,7 @@ compatibility:
     - Debian-13-5tratumOS-clean-room
   architectures:
     - amd64
-  installTested: false
+  installTested: true
   startTested: true
   updateTested: false
   uninstallTested: false

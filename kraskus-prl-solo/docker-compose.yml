@@ -81,6 +81,7 @@ services:
     environment:
       KRASKUS_API_HOST: "0.0.0.0"
       KRASKUS_API_PORT: "18441"
+      KRASKUS_PRL_APP_VERSION: "0.1.0-dev2"
       KRASKUS_PRL_RPC_URL: "http://pearld:44107/"
       KRASKUS_PRL_WALLET_RPC_URL: "http://oyster:44207/"
       KRASKUS_PRL_RPC_USER_FILE: "/run/secrets/prl_rpc_user"
@@ -112,7 +113,7 @@ services:
       - no-new-privileges:true
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-prl-solo-ui@sha256:63153a63352573c07ef3e016170bf3350e82ec78feed9fe1c4c7eddd9afbb71d
+    image: ghcr.io/kraskuscrypto/kraskus-prl-solo-ui@sha256:0b82d1549cbacb035556b6e5978642c1b0456d8e5ec1af1f6e4f204c0a1357f5
     restart: unless-stopped
     environment:
       ADAPTER_HOST: api
