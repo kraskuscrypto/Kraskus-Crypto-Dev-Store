@@ -1,0 +1,27 @@
+id: kraskus-prl-solo
+name: Pearl by Kraskus
+tagline: Pearl full node and native Oyster wallet preview
+description: >-
+  Development preview of Pearl by Kraskus for 5tratumOS. Runs a real Pearl
+  v1.4.8 mainnet node, the native Oyster wallet service, and the Kraskus
+  Template V2 interface. Node synchronization, peer state, chain progress,
+  wallet create/restore onboarding, receive, activity, and guarded send-preview
+  flows are under active qualification. Mining gateway and worker/share
+  telemetry are not yet enabled in this development build and are shown as
+  unavailable rather than simulated.
+version: 0.1.0-dev1
+category: Mining
+developer: Kraskus Crypto
+website: https://kraskuscrypto.com/
+repo: https://github.com/kraskuscrypto/Kraskus-Crypto-Apps
+support: https://kraskuscrypto.com/
+icon: assets/prl-emblem-std-v1.png
+port: 33068
+path: /
+uiMode: proxy
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: ui
+      APP_PORT: 80

@@ -1,0 +1,133 @@
+services:
+  app_proxy:
+    environment:
+      APP_HOST: ui
+      APP_PORT: 80
+    networks:
+      - public
+
+  init:
+    image: ghcr.io/kraskuscrypto/kraskus-prl-node@sha256:303d8ddc47e11a1eb4d635a234de3f6c300ebd9b86d65d141518e8dcf80758f5
+    restart: "no"
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        set -eu
+        mkdir -p /appdata/node /appdata/wallet /appdata/logs/node /appdata/logs/wallet /appdata/secrets
+        if [ ! -s /appdata/secrets/rpc-user ]; then
+          printf 'kraskus-prl-%s\n' "$(openssl rand -hex 8)" > /appdata/secrets/rpc-user
+        fi
+        if [ ! -s /appdata/secrets/rpc-password ]; then
+          openssl rand -hex 32 > /appdata/secrets/rpc-password
+        fi
+        chmod 700 /appdata/secrets
+        chmod 600 /appdata/secrets/rpc-user /appdata/secrets/rpc-password
+    volumes:
+      - ${APP_DATA_DIR}:/appdata
+    networks:
+      - internal
+    security_opt:
+      - no-new-privileges:true
+
+  pearld:
+    image: ghcr.io/kraskuscrypto/kraskus-prl-node@sha256:303d8ddc47e11a1eb4d635a234de3f6c300ebd9b86d65d141518e8dcf80758f5
+    restart: unless-stopped
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    volumes:
+      - ${APP_DATA_DIR}/node:/data
+      - ${APP_DATA_DIR}/logs/node:/logs
+      - ${APP_DATA_DIR}/secrets/rpc-user:/run/secrets/prl_rpc_user:ro
+      - ${APP_DATA_DIR}/secrets/rpc-password:/run/secrets/prl_rpc_password:ro
+    ports:
+      - "44108:44108/tcp"
+    networks:
+      - public
+      - internal
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - prlctl --notls --rpcserver=127.0.0.1:44107 --rpcuser=$$(cat /run/secrets/prl_rpc_user) --rpcpass=$$(cat /run/secrets/prl_rpc_password) getblockchaininfo >/dev/null 2>&1
+      interval: 15s
+      timeout: 8s
+      retries: 20
+      start_period: 20s
+    security_opt:
+      - no-new-privileges:true
+
+  oyster:
+    image: ghcr.io/kraskuscrypto/kraskus-prl-node@sha256:303d8ddc47e11a1eb4d635a234de3f6c300ebd9b86d65d141518e8dcf80758f5
+    restart: unless-stopped
+    entrypoint: ["/usr/local/bin/oyster-entrypoint.sh"]
+    depends_on:
+      init:
+        condition: service_completed_successfully
+      pearld:
+        condition: service_healthy
+    volumes:
+      - ${APP_DATA_DIR}/wallet:/wallet
+      - ${APP_DATA_DIR}/logs/wallet:/logs
+      - ${APP_DATA_DIR}/secrets/rpc-user:/run/secrets/prl_rpc_user:ro
+      - ${APP_DATA_DIR}/secrets/rpc-password:/run/secrets/prl_rpc_password:ro
+    networks:
+      - internal
+    security_opt:
+      - no-new-privileges:true
+
+  api:
+    image: ghcr.io/kraskuscrypto/kraskus-prl-solo-api@sha256:469044692241fbe3859d4f4b1e8fa0f3923d5b471fd89498a5ede331c125a862
+    restart: unless-stopped
+    environment:
+      KRASKUS_API_HOST: "0.0.0.0"
+      KRASKUS_API_PORT: "18441"
+      KRASKUS_PRL_RPC_URL: "http://pearld:44107/"
+      KRASKUS_PRL_WALLET_RPC_URL: "http://oyster:44207/"
+      KRASKUS_PRL_RPC_USER_FILE: "/run/secrets/prl_rpc_user"
+      KRASKUS_PRL_RPC_PASSWORD_FILE: "/run/secrets/prl_rpc_password"
+      KRASKUS_PRL_WALLET_USER_FILE: "/run/secrets/prl_rpc_user"
+      KRASKUS_PRL_WALLET_PASSWORD_FILE: "/run/secrets/prl_rpc_password"
+      KRASKUS_OYSTER_BIN: "/usr/local/bin/oyster"
+      KRASKUS_OYSTER_APPDATA: "/wallet"
+    volumes:
+      - ${APP_DATA_DIR}/wallet:/wallet
+      - ${APP_DATA_DIR}/secrets/rpc-user:/run/secrets/prl_rpc_user:ro
+      - ${APP_DATA_DIR}/secrets/rpc-password:/run/secrets/prl_rpc_password:ro
+    depends_on:
+      init:
+        condition: service_completed_successfully
+      pearld:
+        condition: service_healthy
+      oyster:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:18441/health', timeout=2).read()"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 2s
+    networks:
+      - internal
+    security_opt:
+      - no-new-privileges:true
+
+  ui:
+    image: ghcr.io/kraskuscrypto/kraskus-prl-solo-ui@sha256:63153a63352573c07ef3e016170bf3350e82ec78feed9fe1c4c7eddd9afbb71d
+    restart: unless-stopped
+    environment:
+      ADAPTER_HOST: api
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - public
+      - internal
+    security_opt:
+      - no-new-privileges:true
+
+networks:
+  public:
+    driver: bridge
+  internal:
+    driver: bridge
+    internal: true

@@ -1,0 +1,50 @@
+schemaVersion: 1
+status: approved
+appId: kraskus-prl-solo
+appVersion: 0.1.0-dev1
+reviewedAt: "2026-09-19"
+reviewedBy: "Kraskus Crypto"
+
+upstream:
+  sourceUrl: https://github.com/pearl-research-labs/pearl
+  license: mixed
+  licenseEvidence: LICENSES.md
+
+rights:
+  packageOriginal: true
+  softwareDistributionCleared: true
+  containerUseCleared: true
+  listingTextCleared: true
+  artworkCleared: true
+  noticesIncluded: true
+
+delivery:
+  mode: immutable-container-appliance
+  storePayload: recipe-only
+  mirrorsThirdPartyPayload: false
+
+compatibility:
+  osVersions:
+    - Debian-13-5tratumOS-clean-room
+  architectures:
+    - amd64
+  installTested: false
+  startTested: true
+  updateTested: false
+  uninstallTested: false
+
+security:
+  privileged: false
+  hostNetwork: false
+  dockerSocket: false
+  hostMountsReviewed: true
+  devicesReviewed: true
+  networkEndpointsReviewed: true
+
+notes: >-
+  Development-store-only PRL preview. Pearl node and Oyster wallet binaries are
+  pinned to the official Pearl v1.4.8 release and packaged in immutable GHCR
+  images. The node P2P port is public; node RPC, Oyster RPC, the Kraskus API,
+  and UI backend traffic remain app-internal. Wallet Send broadcast remains
+  locked pending qualification. Mining gateway, worker/share telemetry, block
+  attribution, and developer-fee handling are not enabled in this build.
