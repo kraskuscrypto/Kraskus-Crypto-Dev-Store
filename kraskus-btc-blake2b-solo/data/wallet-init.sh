@@ -67,12 +67,15 @@ _reown_if_present() {
   [ -e "$f" ] || return 0
   tmp="${f}.reown.$$"
   if cat "$f" > "$tmp" 2>/dev/null; then
+    # The temp file inherits this process's umask; the adapter and DATUM run
+    # as other UIDs and read these files via world-read, so pin 0644 here.
+    chmod 644 "$tmp"
     mv -f "$tmp" "$f"
   else
     rm -f "$tmp"
   fi
 }
-for _legacy in "$BENEFICIARY_OUT" "$NODE_OUT" "$EXTERNAL_OUT" "$MODE_FILE"; do
+for _legacy in "$BENEFICIARY_OUT" "$NODE_OUT" "$EXTERNAL_OUT" "$MODE_FILE" "$SETTLEMENT_OUT"; do
   _reown_if_present "$_legacy"
 done
 
