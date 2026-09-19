@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: approved
 appId: kraskus-prl-solo
-appVersion: 0.1.0-dev2
+appVersion: 0.1.0-dev3
 reviewedAt: "2026-09-19"
 reviewedBy: "Kraskus Crypto"
 
@@ -30,7 +30,7 @@ compatibility:
     - amd64
   installTested: true
   startTested: true
-  updateTested: false
+  updateTested: true
   uninstallTested: false
 
 security:
