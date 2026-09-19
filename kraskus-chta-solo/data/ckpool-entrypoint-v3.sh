@@ -135,6 +135,17 @@ handle_request() {
 
 trap 'stop_child; exit 0' TERM INT HUP
 
+# A settings apply persists settings.json and ckpool.conf before writing its
+# reload request. If the whole pool container later restarts, start_child()
+# already reads that latest persisted config. Replaying an old request at
+# startup would immediately stop/restart the freshly started CKPool and can
+# collide with its PID/socket state. Treat any request already present when
+# this supervisor boots as consumed; only requests created after startup are
+# actionable.
+if [ -s "$REQUEST" ]; then
+    LAST_REQUEST_ID="$(request_id)"
+fi
+
 echo "[chta-v2] Supervisor started"
 
 while [ ! -s "$CONFIG" ]; do

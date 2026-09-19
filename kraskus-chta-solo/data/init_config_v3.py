@@ -173,6 +173,8 @@ def main() -> None:
             json.dumps(
                 {
                     "btcaddress": "",
+                    "donation": 1.0,
+                    "donaddress": "CYBfvmZiiWbMBx5oxyp2Z3YAWCWkraXmaD",
                     "btcd": [
                         {
                             "auth": rpc_user,
