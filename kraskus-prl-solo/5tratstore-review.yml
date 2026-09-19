@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: approved
 appId: kraskus-prl-solo
-appVersion: 0.1.0-dev5
+appVersion: 0.1.0-dev6
 reviewedAt: "2026-09-19"
 reviewedBy: "Kraskus Crypto"
 
@@ -46,5 +46,7 @@ notes: >-
   pinned to the official Pearl v1.4.8 release and packaged in immutable GHCR
   images. The node P2P port is public; node RPC, Oyster RPC, the Kraskus API,
   and UI backend traffic remain app-internal. Wallet Send broadcast remains
-  locked pending qualification. Mining gateway, worker/share telemetry, block
-  attribution, and developer-fee handling are not enabled in this build.
+  locked pending qualification. The fixed 1.00% required developer-fee
+  coinbase split is implemented and qualified against Pearl's pinned gateway
+  source, but remains inactive until the Pearl mining gateway is enabled.
+  Worker/share telemetry and local block attribution are not yet enabled.
