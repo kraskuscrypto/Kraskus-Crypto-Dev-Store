@@ -2,45 +2,11 @@
 
 A custom 5tratStore repository maintained by Kraskus.
 
-## Quick compatibility setup
+## Compatibility setup
 
-Some current 5tratumOS installations expose dynamically named custom stores in the WebUI but still use an older CLI for app lifecycle commands. On affected hosts, native custom-store app updates can fail before Docker is touched.
-
-The easiest customer path is entirely inside 5tratumOS. The Compatibility app accepts both the legacy `custom-kraskus-5tratstore` channel and the current `custom-kraskus-crypto-store` channel, so existing installs and new installs use the same update path:
-
-1. Add the Kraskus Crypto Store.
-2. Install **Kraskus Compatibility**.
-3. Open it once and wait for the completion screen.
-4. When it says **Thank you for updating. You may now uninstall this app.**, remove the Compatibility app if desired.
-5. Install and update Kraskus apps normally.
-
-The Compatibility app only patches the known affected CLI layout. Newer compatible systems and systems already repaired are left untouched; unknown CLI layouts are refused safely. It does not use the Docker socket and is not privileged.
-
-### Terminal fallback
-
-If the Compatibility app cannot be installed, the qualified one-command repair remains available:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/kraskuscrypto/Kraskus-Crypto-Store/main/scripts/install-kraskus-compat.sh | sudo bash
-```
-
-See `COMPATIBILITY-SETUP.md` for details and recovery behavior.
-
-## Add to 5tratumOS
-
-Use **App Store → Add custom store** and enter:
-
-```text
-https://github.com/kraskuscrypto/Kraskus-Crypto-Store
-```
-
-Then install and update Kraskus apps normally from the native 5tratumOS App Store.
+For older 5tratumOS hosts that still need the custom-channel compatibility repair, use the qualified terminal fallback documented in COMPATIBILITY-SETUP.md. The one-time Compatibility app is no longer distributed in this store.
 
 ## Current apps
-
-### Kraskus Compatibility
-
-One-time compatibility utility for affected 5tratumOS hosts. It backs up the known older CLI, applies only the qualified custom-channel repair, validates the result, and displays a simple completion screen. After successful setup the app may be uninstalled.
 
 ### Kraskus ZEC Solo
 
@@ -67,7 +33,6 @@ Kraskus-Crypto-Store/
 ├── COMPATIBILITY-SETUP.md
 ├── umbrel-app-store.yml
 ├── README.md
-├── kraskus-compatibility/
 ├── kraskus-zec-solo/
 ├── kraskus-xmr-solo/
 ├── mysterium-node/
