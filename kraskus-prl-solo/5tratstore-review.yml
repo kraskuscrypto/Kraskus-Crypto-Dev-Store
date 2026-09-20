@@ -1,8 +1,8 @@
 schemaVersion: 1
 status: approved
 appId: kraskus-prl-solo
-appVersion: 0.1.0-dev6
-reviewedAt: "2026-09-19"
+appVersion: 0.1.7
+reviewedAt: "2026-09-20"
 reviewedBy: "Kraskus Crypto"
 
 upstream:
@@ -28,9 +28,9 @@ compatibility:
     - Debian-13-5tratumOS-clean-room
   architectures:
     - amd64
-  installTested: true
-  startTested: true
-  updateTested: true
+  installTested: false
+  startTested: false
+  updateTested: false
   uninstallTested: false
 
 security:
@@ -42,11 +42,11 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
-  Development-store-only PRL preview. Pearl node and Oyster wallet binaries are
-  pinned to the official Pearl v1.4.8 release and packaged in immutable GHCR
-  images. The node P2P port is public; node RPC, Oyster RPC, the Kraskus API,
-  and UI backend traffic remain app-internal. Wallet Send broadcast remains
-  locked pending qualification. The fixed 1.00% required developer-fee
-  coinbase split is implemented and qualified against Pearl's pinned gateway
-  source, but remains inactive until the Pearl mining gateway is enabled.
-  Worker/share telemetry and local block attribution are not yet enabled.
+  PRL 0.1.7 pins Pearl node/Oyster binaries and all Kraskus services to
+  immutable GHCR images. Stratum is exposed on TCP 1902; node RPC, Oyster RPC,
+  gateway telemetry, Kraskus API, and UI backend traffic remain app-internal.
+  The fixed required 1.00% developer-fee coinbase split has been validated
+  against live Pearl block templates. Worker/share telemetry, estimated work
+  rate, and Pearl-native Best Share scoring have been qualified on VM100 with
+  a real GPU miner. A fresh-install qualification of the exact 0.1.7 store
+  package is intentionally pending on a separate machine.

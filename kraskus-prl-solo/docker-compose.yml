@@ -75,15 +75,51 @@ services:
     security_opt:
       - no-new-privileges:true
 
+  gateway:
+    image: ghcr.io/kraskuscrypto/kraskus-prl-solo-gateway@sha256:97c808dadf76af57efc3aa6543ef14a29d8545ba255ca7ffc288bba4dc27f58b
+    restart: unless-stopped
+    environment:
+      PEARLD_RPC_URL: "http://pearld:44107/"
+      KRASKUS_PRL_RPC_USER_FILE: "/run/secrets/prl_rpc_user"
+      KRASKUS_PRL_RPC_PASSWORD_FILE: "/run/secrets/prl_rpc_password"
+      KRASKUS_PRL_MINING_ADDRESS_FILE: "/wallet/.kraskus/receive-address"
+      KRASKUS_PRL_STRATUM_HOST: "0.0.0.0"
+      KRASKUS_PRL_STRATUM_PORT: "1902"
+      KRASKUS_PRL_TELEMETRY_HOST: "0.0.0.0"
+      KRASKUS_PRL_TELEMETRY_PORT: "1903"
+    volumes:
+      - ${APP_DATA_DIR}/wallet:/wallet:ro
+      - ${APP_DATA_DIR}/secrets/rpc-user:/run/secrets/prl_rpc_user:ro
+      - ${APP_DATA_DIR}/secrets/rpc-password:/run/secrets/prl_rpc_password:ro
+    depends_on:
+      pearld:
+        condition: service_healthy
+      oyster:
+        condition: service_started
+    ports:
+      - "1902:1902/tcp"
+    networks:
+      - public
+      - internal
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:1903/health', timeout=2).read()"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+    security_opt:
+      - no-new-privileges:true
+
   api:
-    image: ghcr.io/kraskuscrypto/kraskus-prl-solo-api@sha256:1de60bdb11818c9dfbe9fab68130b32ac2bca8481f28996722759009cac65de1
+    image: ghcr.io/kraskuscrypto/kraskus-prl-solo-api@sha256:66084e7508d7e27b2653a84363d5959cb1156ec1df7f45e78b0a6c7ede1343e0
     restart: unless-stopped
     environment:
       KRASKUS_API_HOST: "0.0.0.0"
       KRASKUS_API_PORT: "18441"
-      KRASKUS_PRL_APP_VERSION: "0.1.0-dev6"
+      KRASKUS_PRL_APP_VERSION: "0.1.7"
       KRASKUS_PRL_RPC_URL: "http://pearld:44107/"
       KRASKUS_PRL_WALLET_RPC_URL: "http://oyster:44207/"
+      KRASKUS_PRL_GATEWAY_TELEMETRY_URL: "http://gateway:1903"
       KRASKUS_PRL_RPC_USER_FILE: "/run/secrets/prl_rpc_user"
       KRASKUS_PRL_RPC_PASSWORD_FILE: "/run/secrets/prl_rpc_password"
       KRASKUS_PRL_WALLET_USER_FILE: "/run/secrets/prl_rpc_user"
@@ -101,6 +137,8 @@ services:
         condition: service_healthy
       oyster:
         condition: service_started
+      gateway:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:18441/health', timeout=2).read()"]
       interval: 5s
@@ -113,7 +151,7 @@ services:
       - no-new-privileges:true
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-prl-solo-ui@sha256:a99ccd32c95c107a900027a22ba4506dbb423d12269eae665d2c8af273069703
+    image: ghcr.io/kraskuscrypto/kraskus-prl-solo-ui@sha256:0f5b5fa55887c0aa5f0e7601b156961fdbe1177ebe8ef5ba6aa3c420fda3015a
     restart: unless-stopped
     environment:
       ADAPTER_HOST: api
