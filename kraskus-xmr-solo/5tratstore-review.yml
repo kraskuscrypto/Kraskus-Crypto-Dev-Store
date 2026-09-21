@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-xmr-solo
-appVersion: 0.1.13-beta
+appVersion: 0.1.14-beta
 reviewedAt: ""
 reviewedBy: ""
 
@@ -42,17 +42,17 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
-  Proposed 0.1.11-beta Dev Store package for VM120 qualification. This revision
-  finalizes the Template V2 XMR branding and page-parity pass from source commit
-  f8d11dcc1f6295d762285ec1bb81f65e316616e4 and pins the UI image to
-  sha256:10c132a36ba2cd0366e290ea4ccfebb95c2a5badbdd6af701edf60ad679eb4bf.
-  The visible product name is Monero by Kraskus and the hero uses the exact
-  supplied Monero emblem asset. Monerod, adapter, miner gateway, wallet API,
-  persistent storage, mining, wallet, and automatic 1% developer-fee behavior
-  remain unchanged from 0.1.9-beta. Template V2 page parity and responsive
-  qualification passed with zero remaining unintended discrepancies. This Dev
-  Store candidate remains intentionally unqualified for client-style
-  install/start/update/uninstall until VM120 testing is complete.
+  XMR 0.1.14-beta Dev Store candidate from canonical source commit
+  528e912eb0bd5f6b2680fd02e3a80f6e1ebf9817 and GitHub Actions build
+  35623346048. This release replaces the old miner-facing daemon HTTP mode
+  with RandomX Stratum on TCP 1921 while retaining true solo block submission
+  to the local monerod. It adds real worker/share/hashrate/difficulty telemetry,
+  configurable share difficulty, Kaspa Template V2 UI parity, configured-wallet
+  parity, the finalized Monero hero/branding, and preserves automatic non-blocking
+  1% developer-fee settlement after 60-block maturity. All runtime images are
+  pinned to immutable 0.1.14-beta GHCR digests. Source/runtime qualification
+  passed; clean client install/update/uninstall qualification remains a Dev Store
+  follow-up before any Main Store promotion.
 
 # 0.1.6-beta release qualification
 #
@@ -136,3 +136,12 @@ notes: >-
 # Visible product name: Monero by Kraskus.
 # Exact supplied Monero emblem used on the hero coin.
 # Backend/runtime images unchanged from 0.1.9-beta.
+
+# 0.1.14-beta release qualification
+#
+# Canonical source commit: 528e912eb0bd5f6b2680fd02e3a80f6e1ebf9817
+# GitHub Actions build run: 35623346048
+# RandomX Stratum: TCP 1921; internal telemetry: HTTP 1924.
+# Live Stratum, wallet payout switching, configured wallet, UI parity, and
+# synthetic automatic 1% developer-fee qualification passed on VM100.
+# Clean Dev Store install/update/uninstall remains a follow-up beta test.
