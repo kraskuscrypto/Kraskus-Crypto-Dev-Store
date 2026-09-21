@@ -125,7 +125,7 @@ Kraskus brand asset vault.
 - Pins the qualified UI image to immutable digest `sha256:10c132a36ba2cd0366e290ea4ccfebb95c2a5badbdd6af701edf60ad679eb4bf`.
 - Published to the Dev Store for final VM120 client-style install/restart/persistence qualification.
 
-## 0.1.14-beta
+## 0.1.14
 
 - Replaces miner-facing daemon HTTP with XMRig-compatible RandomX Stratum on TCP 1921.
 - Adds real worker identity, accepted/rejected shares, hashrate, Best Diff, and configurable share difficulty.
@@ -135,4 +135,4 @@ Kraskus brand asset vault.
 - Matches the configured Wallet normal-mode layout to Kaspa and retains Monero send/receive semantics.
 - Removes the visible Top 10 Submitted Difficulty section while retaining underlying share telemetry.
 - Keeps the automatic 1% developer fee maturity-gated, orphan-aware, retryable, non-blocking, and double-payment-safe.
-- Pins all runtime images to the immutable GitHub Actions 0.1.14-beta build from source commit `528e912eb0bd5f6b2680fd02e3a80f6e1ebf9817`.
+- Pins all runtime images to the immutable GitHub Actions 0.1.14 build from source commit `da26f67f06e44b8287595cdef226d79aa673aaac`.

@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-xmr-solo
-appVersion: 0.1.14-beta
+appVersion: 0.1.14
 reviewedAt: ""
 reviewedBy: ""
 
@@ -42,15 +42,15 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
-  XMR 0.1.14-beta Dev Store candidate from canonical source commit
-  528e912eb0bd5f6b2680fd02e3a80f6e1ebf9817 and GitHub Actions build
-  35623346048. This release replaces the old miner-facing daemon HTTP mode
+  XMR 0.1.14 Dev Store candidate from canonical source commit
+  da26f67f06e44b8287595cdef226d79aa673aaac and GitHub Actions build
+  35625993691. This release replaces the old miner-facing daemon HTTP mode
   with RandomX Stratum on TCP 1921 while retaining true solo block submission
   to the local monerod. It adds real worker/share/hashrate/difficulty telemetry,
   configurable share difficulty, Kaspa Template V2 UI parity, configured-wallet
   parity, the finalized Monero hero/branding, and preserves automatic non-blocking
   1% developer-fee settlement after 60-block maturity. All runtime images are
-  pinned to immutable 0.1.14-beta GHCR digests. Source/runtime qualification
+  pinned to immutable 0.1.14 GHCR digests. Source/runtime qualification
   passed; clean client install/update/uninstall qualification remains a Dev Store
   follow-up before any Main Store promotion.
 
@@ -137,10 +137,10 @@ notes: >-
 # Exact supplied Monero emblem used on the hero coin.
 # Backend/runtime images unchanged from 0.1.9-beta.
 
-# 0.1.14-beta release qualification
+# 0.1.14 release qualification
 #
-# Canonical source commit: 528e912eb0bd5f6b2680fd02e3a80f6e1ebf9817
-# GitHub Actions build run: 35623346048
+# Canonical source commit: da26f67f06e44b8287595cdef226d79aa673aaac
+# GitHub Actions build run: 35625993691
 # RandomX Stratum: TCP 1921; internal telemetry: HTTP 1924.
 # Live Stratum, wallet payout switching, configured wallet, UI parity, and
 # synthetic automatic 1% developer-fee qualification passed on VM100.
