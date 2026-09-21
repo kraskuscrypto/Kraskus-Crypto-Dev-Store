@@ -1,5 +1,3 @@
-[Reading 171 lines from start (total: 171 lines, 0 remaining)]
-
 # 5StratumOS package for Kraskus Kaspa Solo — release package.
 #
 # Self-contained: bundles its own kaspad, exactly like every other first-party
@@ -171,5 +169,3 @@ networks:
   internal:
     driver: bridge
     internal: true
-
-[executed on device: 5tratumos (8e7e6cd6-9135-4d80-a505-c03634771276)]

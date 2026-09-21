@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: mysterium-node
-appVersion: 2.6.7
+appVersion: 2.6.11
 reviewedAt: ''
 reviewedBy: ''
 upstream:
@@ -24,9 +24,9 @@ compatibility:
   - 0.7.7-custom-store-test
   architectures:
   - amd64
-  installTested: false
-  startTested: false
-  updateTested: false
+  installTested: true
+  startTested: true
+  updateTested: true
   uninstallTested: false
 security:
   privileged: false
@@ -50,17 +50,25 @@ notes: Mysterium upstream requires NET_ADMIN and documents host networking for t
   and immutable sha256 digest before installation. Post-update health, version, persistent
   data, and available identity checks are performed. Failed validation triggers restoration
   of the prior image and backup. The portal itself never receives direct Docker socket
-  access. v2.6.0 keeps the upstream TequilAPI bound to localhost and adds a host-network
+  access. v2.6.0 keeps the upstream TequilAPI bound to IPv4 localhost and adds a host-network
   status collector that writes atomic, read-only JSON snapshots into shared app storage.
   Nginx exposes those snapshot files to the portal with GET/HEAD-only access; it does not
   proxy the TequilAPI or expose its port to the LAN. Node-changing actions continue through
-  the official Mysterium Node UI. v2.6.7 uses the current MystNodes registration URL,
-  opens the official Node UI directly on host port 4449, and cache-busts portal assets
-  to prevent stale navigation handlers.
-  v2.6.7 mounts portal code and nginx configuration from the versioned package directory;
-  persistent node identity, status, backups, and update state remain under APP_DATA_DIR.
-  v2.6.7 uses a one-shot Alpine migration service to update preserved portal navigation
-  before nginx starts. Persistent node identity, status, backups, and update state remain
-  under APP_DATA_DIR and are not mounted into the migration service.
-  v2.6.7 keeps the completed migration helper healthy and idle so StratumOS reports the
-  application as running instead of waiting on an intentionally exited one-shot service.
+  the official Mysterium Node UI. VM100 upgrade qualification preserved identity
+  0xd81d6fb238fa698fedcf0b9b2643ded8591f14eb and the pinned 1.39.5 runtime. A clean
+  dev-store installation on the 192.168.1.163 tester generated identity
+  0x7fcab4a87784762620198e10d0d589d828c3f036, started all five services, and produced
+  all 27 expected API snapshots. Reboot recovery and clean uninstall remain required
+  before this proposed package can be approved and merged into the client-facing store.
+  v2.6.9 uses the current MystNodes registration URL, opens the official Node UI directly
+  on host port 4449, and cache-busts portal assets to prevent stale navigation handlers.
+  v2.6.9 uses a health-checked Alpine migration service to refresh preserved portal assets
+  before nginx starts. The release clarifies metric reporting windows, renders only genuine
+  earnings samples, adds explicit sparse-chart states, makes the provider-quality ring match
+  the reported value, anchors its inner disc, repairs the sidebar runtime selector, and uses
+  a deterministic embedded-content scroll reset with a cache-busted stylesheet.
+  Persistent node identity, status, backups, and update state remain under APP_DATA_DIR and
+  are not mounted into the migration service. The completed helper stays healthy and idle so
+  StratumOS reports the application as running.
+
+# v2.6.11 corrects UI data-integrity mappings against live TequilAPI snapshots.

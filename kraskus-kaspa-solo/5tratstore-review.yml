@@ -1,5 +1,3 @@
-[Reading 57 lines from start (total: 57 lines, 0 remaining)]
-
 schemaVersion: 1
 status: approved
 appId: kraskus-kaspa-solo
@@ -57,5 +55,3 @@ notes: >-
   only and does not divert miner hashrate. Node, Stratum, worker telemetry,
   best-share/network-difficulty comparison, wallet receive/send, Blocks, UI,
   and immutable image pins were revalidated on the live 5tratumOS host.
-
-[executed on device: 5tratumos (8e7e6cd6-9135-4d80-a505-c03634771276)]
