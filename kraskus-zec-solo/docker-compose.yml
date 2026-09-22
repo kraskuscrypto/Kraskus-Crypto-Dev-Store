@@ -4,7 +4,7 @@ services:
       APP_HOST: ui
       APP_PORT: 8080
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-zec-solo-wallet-controller:ui-hero-v3-3dfb182@sha256:1cd056d65b502bf32baad32b020a70ac0d10560effb605e0baa7e5fb000132db
+    image: ghcr.io/kraskuscrypto/kraskus-zec-solo-wallet-controller:ui-0.3.25@sha256:3f9fa1de960870fcf05ad6d2a363459e512332178d3dd20f0f9389c1d642ee58
     restart: unless-stopped
     depends_on:
     - kraskus
@@ -74,7 +74,7 @@ services:
     - DAC_OVERRIDE
     - FOWNER
   zallet:
-    image: ghcr.io/kraskuscrypto/kraskus-zec-zallet-supervisor@sha256:e24a07658994b3555ff093dae8049704487ca29ce322be443ae0dadc0308e358
+    image: ghcr.io/kraskuscrypto/kraskus-zec-zallet-supervisor:0.3.25@sha256:8d829b46c8c10a06ea58ce8dcb5e6209c3f4f41a8ddb2b1bffd1b52df12eeca8
     restart: unless-stopped
     user: 10001:10001
     network_mode: service:kraskus

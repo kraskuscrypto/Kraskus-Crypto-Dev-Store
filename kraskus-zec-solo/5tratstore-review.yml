@@ -1,17 +1,20 @@
 appId: kraskus-zec-solo
-status: beta
+status: approved
 developer: Kraskus Crypto
 notes:
-  - Self-contained Kraskus ZEC Solo beta runtime.
+  - Self-contained Kraskus ZEC Solo runtime.
   - Includes the Kraskus UI, API/controller, Stratum server, and supervised Zebra service.
   - No pre-existing host development runtime is required.
   - No Docker socket access is required by the application runtime.
   - Payout configuration is applied through the Kraskus UI and shared safely with Zebra.
-  - Testnet is the default network for beta qualification.
+  - Testnet remains available for qualification and wallet-flow testing.
   - Mainnet activation remains subject to storage safety requirements.
-appVersion: 0.3.24-beta
+appVersion: 0.3.25
 
 releaseNotes:
+  - Adds native 24-word Zallet wallet recovery with persistent restored account metadata and password setup support.
+  - Finalizes Template V2 parity, ZEC Kraskus branding, native black Zcash hero mark, and zero-value balance presentation.
+  - Removes the temporary recovery sidecar architecture; recovery now runs inside the packaged Zallet supervisor with no Docker socket access.
   - Matches the live Kaspa wallet interaction pattern: clean balance page with Send and Receive dialogs, including ZEC Max/available/password/preview send flow.
   - Mirrors the ZEC Template V2 UI image through a public GHCR package path so clean 5tratumOS hosts can install without registry credentials.
   - Implements the missing Zallet wallet password endpoint with salted PBKDF2-HMAC-SHA256 verifier storage and password-protected status reporting.
