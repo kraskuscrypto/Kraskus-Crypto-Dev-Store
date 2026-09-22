@@ -6,10 +6,9 @@ Native 5tratStore package for the Kraskus XMR true solo appliance.
 
 - 33065 — 5tratumOS app proxy entry
 - 18080/tcp — Monero P2P
-- 1921/tcp — restricted direct-daemon solo miner endpoint
+- 1921/tcp — RandomX Stratum solo-mining endpoint
 
-monerod RPC, adapter RPC, wallet RPC, and wallet API are not published to
-the host.
+monerod RPC, adapter RPC, wallet RPC, wallet API, and Stratum telemetry HTTP are not published to the host.
 
 ## Persistent data
 
@@ -125,3 +124,15 @@ Kraskus brand asset vault.
 - Preserves all XMR backend, wallet, mining, persistence, and automatic 1% developer-fee behavior.
 - Pins the qualified UI image to immutable digest `sha256:10c132a36ba2cd0366e290ea4ccfebb95c2a5badbdd6af701edf60ad679eb4bf`.
 - Published to the Dev Store for final VM120 client-style install/restart/persistence qualification.
+
+## 0.1.14
+
+- Replaces miner-facing daemon HTTP with XMRig-compatible RandomX Stratum on TCP 1921.
+- Adds real worker identity, accepted/rejected shares, hashrate, Best Diff, and configurable share difficulty.
+- Keeps true solo behavior: only a network-valid block is submitted to the local monerod.
+- Switches block-template payout automatically to the configured local XMR wallet.
+- Aligns Home, Mining, Wallet, Blocks, and Settings with the Kaspa Template V2 blueprint while preserving Monero-specific wallet behavior.
+- Matches the configured Wallet normal-mode layout to Kaspa and retains Monero send/receive semantics.
+- Removes the visible Top 10 Submitted Difficulty section while retaining underlying share telemetry.
+- Keeps the automatic 1% developer fee maturity-gated, orphan-aware, retryable, non-blocking, and double-payment-safe.
+- Pins all runtime images to the immutable GitHub Actions 0.1.14 build from source commit `da26f67f06e44b8287595cdef226d79aa673aaac`.

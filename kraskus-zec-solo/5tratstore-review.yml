@@ -9,7 +9,7 @@ notes:
   - Payout configuration is applied through the Kraskus UI and shared safely with Zebra.
   - Testnet remains available for qualification and wallet-flow testing.
   - Mainnet activation remains subject to storage safety requirements.
-appVersion: 0.3.25
+appVersion: 0.3.26
 
 releaseNotes:
   - Adds native 24-word Zallet wallet recovery with persistent restored account metadata and password setup support.
