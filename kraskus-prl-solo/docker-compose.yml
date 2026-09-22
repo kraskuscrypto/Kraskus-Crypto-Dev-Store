@@ -82,9 +82,8 @@ services:
     command:
       - |
         set -eu
-        ADDR_FILE="${KRASKUS_PRL_MINING_ADDRESS_FILE:-/wallet/.kraskus/receive-address}"
-        while [ ! -s "$ADDR_FILE" ]; do
-          echo "KRASKUS_PRL_GATEWAY_WAITING_FOR_WALLET address_file=$ADDR_FILE"
+        while [ ! -s /wallet/.kraskus/receive-address ]; do
+          echo "KRASKUS_PRL_GATEWAY_WAITING_FOR_WALLET address_file=/wallet/.kraskus/receive-address"
           sleep 3
         done
         exec python /app/kraskus_gateway_service.py
@@ -115,8 +114,7 @@ services:
       test:
         - CMD-SHELL
         - >-
-          ADDR_FILE="${KRASKUS_PRL_MINING_ADDRESS_FILE:-/wallet/.kraskus/receive-address}";
-          if [ ! -s "$ADDR_FILE" ]; then exit 0; fi;
+          if [ ! -s /wallet/.kraskus/receive-address ]; then exit 0; fi;
           python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:1903/health', timeout=2).read()"
       interval: 10s
       timeout: 5s
