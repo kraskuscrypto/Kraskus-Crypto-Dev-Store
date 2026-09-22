@@ -78,6 +78,16 @@ services:
   gateway:
     image: ghcr.io/kraskuscrypto/kraskus-prl-solo-gateway@sha256:97c808dadf76af57efc3aa6543ef14a29d8545ba255ca7ffc288bba4dc27f58b
     restart: unless-stopped
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        set -eu
+        ADDR_FILE="${KRASKUS_PRL_MINING_ADDRESS_FILE:-/wallet/.kraskus/receive-address}"
+        while [ ! -s "$ADDR_FILE" ]; do
+          echo "KRASKUS_PRL_GATEWAY_WAITING_FOR_WALLET address_file=$ADDR_FILE"
+          sleep 3
+        done
+        exec python /app/kraskus_gateway_service.py
     environment:
       PEARLD_RPC_URL: "http://pearld:44107/"
       KRASKUS_PRL_RPC_USER_FILE: "/run/secrets/prl_rpc_user"
@@ -116,7 +126,7 @@ services:
     environment:
       KRASKUS_API_HOST: "0.0.0.0"
       KRASKUS_API_PORT: "18441"
-      KRASKUS_PRL_APP_VERSION: "0.1.8"
+      KRASKUS_PRL_APP_VERSION: "0.1.9"
       KRASKUS_PRL_RPC_URL: "http://pearld:44107/"
       KRASKUS_PRL_WALLET_RPC_URL: "http://oyster:44207/"
       KRASKUS_PRL_GATEWAY_TELEMETRY_URL: "http://gateway:1903"
