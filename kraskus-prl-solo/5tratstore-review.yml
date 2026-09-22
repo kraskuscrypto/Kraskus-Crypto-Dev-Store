@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: approved
 appId: kraskus-prl-solo
-appVersion: 0.1.8
+appVersion: 0.1.9
 reviewedAt: "2026-09-22"
 reviewedBy: "Kraskus Crypto"
 
@@ -42,11 +42,12 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
-  PRL 0.1.8 fixes fresh installation by allowing the Kraskus API and UI to
-  start before the mining gateway has a wallet receive address. The gateway
-  may restart while no wallet exists, then comes up automatically after wallet
-  creation writes /wallet/.kraskus/receive-address. Pearl node/Oyster binaries
-  and all Kraskus services remain pinned to immutable GHCR images. Stratum is
-  exposed on TCP 1902; node RPC, Oyster RPC, gateway telemetry, Kraskus API,
-  and UI backend traffic remain app-internal. The fixed required 1.00%
-  developer-fee coinbase split remains unchanged.
+  PRL 0.1.9 qualifies the clean-room fresh-install path. All four required
+  GHCR packages are public and anonymously pullable. Before a wallet exists,
+  the gateway now waits in a healthy no-wallet state instead of restart-looping;
+  it automatically starts Pearl Stratum after wallet creation writes
+  /wallet/.kraskus/receive-address. Pearl node/Oyster binaries and all Kraskus
+  services remain pinned to immutable GHCR images. Stratum is exposed on TCP
+  1902; node RPC, Oyster RPC, gateway telemetry, Kraskus API, and UI backend
+  traffic remain app-internal. The fixed required 1.00% developer-fee coinbase
+  split remains immutable and applies only to successfully mined blocks.
