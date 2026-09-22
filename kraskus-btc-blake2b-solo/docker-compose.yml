@@ -47,7 +47,7 @@ services:
       - no-new-privileges:true
 
   knots:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-knots:0.1.0-dev2@sha256:0257fb30144bdd19bb1b9505456021ef01c645482df91430b630b069629a77ca
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-knots:0.1.1@sha256:0257fb30144bdd19bb1b9505456021ef01c645482df91430b630b069629a77ca
     pull_policy: missing
     restart: unless-stopped
     stop_grace_period: 3m
@@ -80,7 +80,7 @@ services:
       - b2b_private
 
   wallet-init:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-knots:0.1.0-dev2@sha256:0257fb30144bdd19bb1b9505456021ef01c645482df91430b630b069629a77ca
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-knots:0.1.1@sha256:0257fb30144bdd19bb1b9505456021ef01c645482df91430b630b069629a77ca
     pull_policy: never
     restart: "no"
     group_add:
@@ -109,7 +109,7 @@ services:
       - b2b_private
 
   datum:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-datum:0.1.0-beta7-7700d43@sha256:63b11f8725d42810a376a24911f9e6a0a16ec7f4c0d5891ab3a696460a18c6c0
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-datum:0.1.1@sha256:3ffcc72a0863cdd20a64d77ab73ba8f85b832f8d03fe46f02d89655be6eb9bab
     pull_policy: missing
     restart: unless-stopped
     group_add:
@@ -150,7 +150,7 @@ services:
       - b2b_api
 
   adapter:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-adapter:0.1.0-beta7-7700d43@sha256:1372402102c9b5f94dc1e401a575d2d128ad28594dbd994db93c20ac675326ec
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-adapter:0.1.1@sha256:d1b1d02e15afd570e69fa94be99b94d63ad62e4d845f80d0c078dd2c9651bcac
     pull_policy: missing
     restart: unless-stopped
     group_add:
@@ -209,7 +209,7 @@ services:
       - b2b_api
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-ui:0.1.0-beta7-657b8e0@sha256:ac3023fbeb36755f713dc9f2fddc89b888b0a95cf57295b70a5b107ef4bfe9be
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-ui:0.1.1@sha256:4be63bb6de42da1db9fceb1c6856f37bc2c95f62d1acfec683e0382326453797
     pull_policy: missing
     restart: unless-stopped
     depends_on:

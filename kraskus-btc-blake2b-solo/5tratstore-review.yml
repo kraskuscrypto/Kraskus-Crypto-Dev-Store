@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-btc-blake2b-solo
-appVersion: 0.1.0-beta7
+appVersion: 0.1.1
 reviewedAt: ""
 reviewedBy: ""
 
@@ -42,6 +42,20 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
+  0.1.1 is the numerically-versioned Dev release qualified live on VM100.
+  It promotes the final CHTA-style HeroCoin/UI, settlement-first wallet
+  architecture, persistent block ledger, and reconciled packaging contracts.
+  Source qualification: 316 tests passed, 10 skipped. Live qualification: all
+  health/readiness/status/round/workers/blocks/wallet/payout/fee-policy/settings/
+  mining/history endpoints returned HTTP 200; the adapter reports application
+  version 0.1.1 from source commit b41e94f46d58a0ae5eaf16255155bb1c9ce7836d.
+  Developer fee remains fixed at 1 percent / 100 basis points, coinbase_split,
+  successful_blocks_only, required=true, runtime_mutable=false. Immutable
+  release digests: Knots sha256:0257fb30144bdd19bb1b9505456021ef01c645482df91430b630b069629a77ca;
+  DATUM sha256:3ffcc72a0863cdd20a64d77ab73ba8f85b832f8d03fe46f02d89655be6eb9bab;
+  adapter sha256:d1b1d02e15afd570e69fa94be99b94d63ad62e4d845f80d0c078dd2c9651bcac;
+  UI sha256:4be63bb6de42da1db9fceb1c6856f37bc2c95f62d1acfec683e0382326453797.
+
   0.1.0-beta7 adopts the settlement-first runtime contract: DATUM mines to
   /runtime/settlement_address (internal kraskus-settlement wallet) and no
   longer waits on /runtime/payout_address; wallet-init re-owns legacy runtime
