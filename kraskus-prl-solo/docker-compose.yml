@@ -116,7 +116,7 @@ services:
     environment:
       KRASKUS_API_HOST: "0.0.0.0"
       KRASKUS_API_PORT: "18441"
-      KRASKUS_PRL_APP_VERSION: "0.1.7"
+      KRASKUS_PRL_APP_VERSION: "0.1.8"
       KRASKUS_PRL_RPC_URL: "http://pearld:44107/"
       KRASKUS_PRL_WALLET_RPC_URL: "http://oyster:44207/"
       KRASKUS_PRL_GATEWAY_TELEMETRY_URL: "http://gateway:1903"
@@ -137,8 +137,6 @@ services:
         condition: service_healthy
       oyster:
         condition: service_started
-      gateway:
-        condition: service_healthy
     healthcheck:
       test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:18441/health', timeout=2).read()"]
       interval: 5s
