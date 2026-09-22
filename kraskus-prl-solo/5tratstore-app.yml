@@ -8,7 +8,7 @@ description: >-
   Pearl-scale Best Share tracking, wallet create/restore/send flows, and a
   fixed required 1.00% developer-fee coinbase split on successfully mined
   blocks.
-version: 0.1.7
+version: 0.1.8
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
