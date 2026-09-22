@@ -1,8 +1,8 @@
 schemaVersion: 1
 status: approved
 appId: kraskus-kaspa-solo
-appVersion: 0.2.4
-reviewedAt: "2026-09-20"
+appVersion: 0.2.5
+reviewedAt: "2026-09-22"
 reviewedBy: "Kraskus Crypto"
 
 upstream:
@@ -42,16 +42,9 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
-  0.2.4 production-qualified update for the Kraskus Kaspa Solo
-  true-solo appliance. Wallet Send is enabled through a two-step
-  preview/confirm flow with real fee estimation, single-use preview tokens,
-  password handling confined to memory, and fail-closed ambiguous-broadcast
-  handling. The existing-wallet backup-confirmation gate was corrected so a
-  configured wallet is never hidden merely because backup_confirmed is false.
-  Automatic 1% developer-fee payment is enabled after coinbase maturity through
-  the app-internal rolling-reserve settlement wallet. Its generated signing
-  secret and recovery phrase remain root-owned 0600 files in persistent app
-  storage and are never shipped in the Store package. The fee remains successful-block
-  only and does not divert miner hashrate. Node, Stratum, worker telemetry,
-  best-share/network-difficulty comparison, wallet receive/send, Blocks, UI,
-  and immutable image pins were revalidated on the live 5tratumOS host.
+  0.2.5 preserves the qualified 0.2.4 runtime and restores compatibility
+  icon aliases required by fresh 5tratumOS Store syncs. The approved Kaspa
+  emblem remains unchanged; assets/icon.png and kaspa-emblem-std-v1.png are
+  aliases of the same approved emblem blob used by kaspa-emblem-std-v2.png.
+  Runtime behavior, wallet flow, Stratum configuration, automatic 1% developer
+  fee settlement, and immutable container image pins are unchanged from 0.2.4.
