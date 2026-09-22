@@ -11,8 +11,11 @@ description: >-
   CKPool; this release does not claim native balance, transaction
   history, or send functionality that the appliance API does not expose.
   RPC credentials and mining settings remain in persistent local app
-  storage, and CKPool stays gated until a valid payout address is set. A required 1% developer fee is paid directly from successful block coinbases.
-version: 0.2.34-dev15
+  storage, and CKPool stays gated until a valid payout address is set. Normal
+  miners connect on port 1926; NMMiner and other very-low-hash devices use
+  port 1927 with a fixed 0.002 minimum difficulty. A required 1% developer
+  fee is paid directly from successful block coinbases.
+version: 0.2.35
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/

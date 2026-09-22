@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-chta-solo
-appVersion: 0.2.34-dev15
+appVersion: 0.2.35
 reviewedAt: ""
 reviewedBy: ""
 
@@ -42,6 +42,15 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
+  0.2.35 adds two dedicated CHTA Stratum endpoints: port 1926 for normal
+  SHA256 miners and port 1927 for NMMiner/very-low-hash devices. The low-hash
+  listener uses the pinned NMminer fractional-difficulty CKPool fork at a fixed
+  0.002 minimum/start difficulty while preserving the same payout configuration
+  and locked 1% successful-block coinbase developer-fee output. Live protocol
+  qualification confirmed mining.subscribe, mining.authorize and
+  mining.set_difficulty=0.002 against the current CHTA node. The Connect Miner
+  UI now identifies both endpoints and provides copy controls for each.
+
   Dev candidate 0.2.33-dev14 migrates CHTA Solo to Kraskus App Template V2.
   The CheetahCoin Core and qualified CKPool image digests remain unchanged.
   The backend is based on the prior Dev6 image with one qualified correction:

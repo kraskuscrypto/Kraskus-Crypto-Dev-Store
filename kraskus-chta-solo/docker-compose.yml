@@ -57,7 +57,7 @@ services:
       cheetahcoin:
         condition: service_healthy
     ports:
-      - "3336:3333"
+      - "1926:3333"
     volumes:
       - ${APP_DATA_DIR}/config:/kraskus-config:ro
       - ${APP_DATA_DIR}/pool:/www
@@ -70,8 +70,31 @@ services:
     security_opt:
       - no-new-privileges:true
 
+  pool_lowhash:
+    image: ghcr.io/kraskuscrypto/kraskus-chta-ckpool-nmminer:0.2.35@sha256:4cd8084d6af70402bbb4875a5fa945387bb329c2d080232e40489bdb4a68b7d2
+    pull_policy: missing
+    restart: unless-stopped
+    depends_on:
+      init:
+        condition: service_completed_successfully
+      cheetahcoin:
+        condition: service_healthy
+    ports:
+      - "1927:3333"
+    volumes:
+      - ${APP_DATA_DIR}/config:/kraskus-config:ro
+      - ${APP_DATA_DIR}/pool-lowhash:/www
+      - ${APP_DATA_DIR}/data/ckpool-lowhash-entrypoint-v1.sh:/kraskus-entrypoint.sh:ro
+    entrypoint:
+      - /bin/sh
+      - /kraskus-entrypoint.sh
+    networks:
+      - chta
+    security_opt:
+      - no-new-privileges:true
+
   kraskus:
-    image: ghcr.io/kraskuscrypto/kraskus-chta-solo@sha256:e71892f963977805a1371ccb8f7b33274c254ce9424e17b197e7065888a5635e
+    image: ghcr.io/kraskuscrypto/kraskus-chta-solo:0.2.35@sha256:6c27cb2dc2ad7661fbff1318e6f3d8704a80bbf855b939de68e2011746dfd756
     restart: unless-stopped
     depends_on:
       init:
@@ -80,12 +103,14 @@ services:
         condition: service_healthy
       pool:
         condition: service_started
+      pool_lowhash:
+        condition: service_started
 
     environment:
       KRASKUS_API_HOST: 0.0.0.0
       KRASKUS_API_PORT: "18411"
       KRASKUS_APP_NAME: CheetahCoin by Kraskus
-      KRASKUS_APP_VERSION: 0.2.34-dev15
+      KRASKUS_APP_VERSION: 0.2.35
       KRASKUS_CHTA_RPC_URL: http://cheetahcoin:8536/
       KRASKUS_CHTA_RPC_USER_FILE: /run/secrets/rpc-user
       KRASKUS_CHTA_RPC_PASSWORD_FILE: /run/secrets/rpc-password
@@ -97,12 +122,17 @@ services:
       KRASKUS_CHTA_RELOAD_REQUEST_FILE: /kraskus-config/reload-request.json
       KRASKUS_CHTA_RELOAD_ACK_FILE: /ckpool-data/reload-ack.json
       KRASKUS_CHTA_RELOAD_TIMEOUT: "20"
-      KRASKUS_CHTA_STRATUM_PORT: "3336"
+      KRASKUS_CHTA_STRATUM_PORT: "1926"
+      KRASKUS_CHTA_LOWHASH_SHARELOG_DIR: /ckpool-lowhash-data
+      KRASKUS_CHTA_LOWHASH_USERS_DIR: /ckpool-lowhash-data/users
+      KRASKUS_CHTA_LOWHASH_CKPOOL_STATUS_FILE: /ckpool-lowhash-data/pool/pool.status
+      KRASKUS_CHTA_LOWHASH_STRATUM_PORT: "1927"
 
     volumes:
       - ${APP_DATA_DIR}/config:/kraskus-config
       - ${APP_DATA_DIR}/secrets:/run/secrets:ro
       - ${APP_DATA_DIR}/pool:/ckpool-data:ro
+      - ${APP_DATA_DIR}/pool-lowhash:/ckpool-lowhash-data:ro
     networks:
       - chta
     read_only: true
@@ -115,7 +145,7 @@ services:
 
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-chta-ui@sha256:e91f6421e02cc08ea568ec7ece2a41702f9e69b15e19ea3e7d5c9f27785ffcde
+    image: ghcr.io/kraskuscrypto/kraskus-chta-ui:0.2.35@sha256:a5b156128ff4bab667e703371decb060ae59ea4081ae3a5069c76efd56d116db
     restart: unless-stopped
     depends_on:
       kraskus:
