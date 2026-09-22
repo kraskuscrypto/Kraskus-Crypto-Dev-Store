@@ -112,11 +112,16 @@ services:
       - public
       - internal
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:1903/health', timeout=2).read()"]
+      test:
+        - CMD-SHELL
+        - >-
+          ADDR_FILE="${KRASKUS_PRL_MINING_ADDRESS_FILE:-/wallet/.kraskus/receive-address}";
+          if [ ! -s "$ADDR_FILE" ]; then exit 0; fi;
+          python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:1903/health', timeout=2).read()"
       interval: 10s
       timeout: 5s
       retries: 30
-      start_period: 20s
+      start_period: 5s
     security_opt:
       - no-new-privileges:true
 
