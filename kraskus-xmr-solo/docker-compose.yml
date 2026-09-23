@@ -153,7 +153,7 @@ services:
       - xmr_api
 
   gateway:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-miner-gateway@sha256:b19e0f3d4c382eaf474bde9638345c46ded6830255496711aea53e20acde6d49
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-miner-gateway@sha256:196f161f47c8cfc649f160afd2eae340496a1e9000e9b871cb8e8391669ce5e6
     restart: unless-stopped
     user: "1000:1000"
     depends_on:
@@ -187,7 +187,7 @@ services:
       - xmr_api
 
   wallet-api:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-wallet-api@sha256:8f49260bc2a6069b581d0495ff6058dfa59c7114b0159a46e3209ced191e355f
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-wallet-api@sha256:41712374cff68342ddd3612b6113dda652dc1d6f3ebbad48f691e7f67d4dfd49
     restart: unless-stopped
     user: "1000:1000"
     environment:
@@ -232,7 +232,7 @@ services:
       - xmr_api
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-ui@sha256:bcb34020a55a6c617a32da1929223d07bd4f0d64774ef67e150355620b351653
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-ui@sha256:5fd7b8b2d96b6d9c5ec4aee01fd1c1a370a65bcd0b05de2c9767dd45e40ec453
     restart: unless-stopped
     healthcheck:
       test:
