@@ -31,7 +31,7 @@ services:
       - no-new-privileges:true
 
   monerod:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-monerod@sha256:b21c80653af3619b396852d5b0710face9ab29a32f1c99f23fe533c03158a3da
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-monerod@sha256:1d90d99963de534c6d566953985fc02dd527ef14c588ec2e7028e5ffcaf907da
     restart: unless-stopped
     stop_grace_period: 2m
     depends_on:
@@ -71,7 +71,7 @@ services:
       - xmr_wallet
 
   wallet-view-rpc:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-monerod@sha256:b21c80653af3619b396852d5b0710face9ab29a32f1c99f23fe533c03158a3da
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-monerod@sha256:1d90d99963de534c6d566953985fc02dd527ef14c588ec2e7028e5ffcaf907da
     restart: unless-stopped
     entrypoint: ["/usr/local/bin/monero-wallet-rpc"]
     command:
@@ -96,7 +96,7 @@ services:
       - xmr_wallet
 
   wallet-spend-rpc:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-monerod@sha256:b21c80653af3619b396852d5b0710face9ab29a32f1c99f23fe533c03158a3da
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-monerod@sha256:1d90d99963de534c6d566953985fc02dd527ef14c588ec2e7028e5ffcaf907da
     restart: unless-stopped
     entrypoint: ["/usr/local/bin/monero-wallet-rpc"]
     command:
@@ -121,7 +121,7 @@ services:
       - xmr_wallet
 
   adapter:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-adapter@sha256:6686aed813f2f3fa3f5c2ba3e5f0273e26187f6f23ab4dfb6335083a9e6209bb
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-adapter@sha256:b8b1ae475bc62f0a9f659d41529ddb339350cf21df6d7732867c330e92ec90bb
     restart: unless-stopped
     depends_on:
       monerod:
@@ -153,7 +153,7 @@ services:
       - xmr_api
 
   gateway:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-miner-gateway@sha256:5b599ac627d7896b784bf9ce8c631d4f4eb8b46d51429da9b1da6e030db6fb72
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-miner-gateway@sha256:b19e0f3d4c382eaf474bde9638345c46ded6830255496711aea53e20acde6d49
     restart: unless-stopped
     user: "1000:1000"
     depends_on:
@@ -187,7 +187,7 @@ services:
       - xmr_api
 
   wallet-api:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-wallet-api@sha256:dc1a8033efac16d056a432f727c46c68a4fdbe85c8022f2932cd50d000d0588c
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-wallet-api@sha256:8f49260bc2a6069b581d0495ff6058dfa59c7114b0159a46e3209ced191e355f
     restart: unless-stopped
     user: "1000:1000"
     environment:
@@ -232,7 +232,7 @@ services:
       - xmr_api
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-ui@sha256:7035d0560c003b28427fd307fd3e2abbb9f4e3254a041f94e60b027f6fc4a435
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-ui@sha256:bcb34020a55a6c617a32da1929223d07bd4f0d64774ef67e150355620b351653
     restart: unless-stopped
     healthcheck:
       test:
