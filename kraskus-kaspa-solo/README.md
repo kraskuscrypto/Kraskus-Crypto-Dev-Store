@@ -1,5 +1,3 @@
-[Reading 59 lines from start (total: 59 lines, 0 remaining)]
-
 # Kraskus Kaspa Solo
 
 Native 5tratStore package for the Kraskus Kaspa full node and true solo
@@ -19,11 +17,46 @@ published to the host.
 All persistent state lives below `${APP_DATA_DIR}`:
 
 - node/ — kaspad blockchain data (pruned, not archival)
-- wallet/ — native Kaspa wallet state
+- wallet/ — native Kaspa wallet state (customer wallet, the app-internal
+  settlement wallet, and the one-time recovery-backup artifact while a new
+  wallet's backup is pending)
 
 ## Artwork
 
 `assets/kaspa-emblem-std-v2.png` is the approved Kaspa application emblem used by the Store listing.
+
+## 0.3.0
+
+- Truthful readiness: one state (Starting / Syncing / Synced / Stratum starting /
+  Ready / Degraded / No peers / Node unavailable) derived from kaspad's own sync
+  status, block and header counts, peers, the Stratum bridge's reported phase
+  and a live stratum handshake. Home, Mining, the node header, Settings → System
+  and the API agree, and the app never reports synced or mining-ready while the
+  node is still at genesis.
+- Wallet backup safety: a newly created wallet's recovery phrase is stored in a
+  protected one-time artifact before the wallet becomes usable, shown through a
+  backup ceremony that survives a lost page or a slow request, and deleted once
+  the words are confirmed. Send stays disabled until then. Restored wallets are
+  not affected.
+- Forget wallet: Settings → Wallet → "Forget wallet" (typed confirmation) removes
+  the customer wallet so a new one can be created or restored from its phrase
+  with the same address. The internal settlement wallet, rewards not yet paid
+  out, developer-fee records and chain data are untouched.
+- Wallet service startup is retried with a bounded timeout and logs
+  diagnostics instead of failing silently after a stall.
+- Version 0.3.0 is shown in Settings → About and reported by every component;
+  all images are built from committed source and carry version/revision labels.
+- **Stratum port migration for Main Store customers:** the Main Store 0.2.0-beta
+  package published the miner endpoint on host port **5556**; 0.3.0 uses the
+  canonical Kraskus port **1900** (the bridge stays on 5556 internally), the
+  same as the Dev Store 0.2.4/0.2.5 packages. After updating, point miners at
+  `stratum+tcp://<appliance>:1900` (the Connect miner dialog shows the exact
+  address). Existing Dev Store installs are unaffected.
+- Browsers that used 0.2.0-beta may keep its cached page until one hard reload
+  (Ctrl+Shift+R); 0.3.0 sends no-cache headers so this does not recur.
+- Automatic 1% developer fee on successful blocks after coinbase maturity,
+  handled by the internal rolling-reserve settlement wallet, is unchanged;
+  miner hashrate is never diverted.
 
 ## 0.2.4
 
@@ -59,5 +92,3 @@ All persistent state lives below `${APP_DATA_DIR}`:
   authenticate, submit, accept, worker API visibility, Best Share update,
   and correct disconnect/idle/offline worker-lifecycle transitions — all
   passed with zero rejected/invalid shares and zero container restarts.
-
-[executed on device: 5tratumos (8e7e6cd6-9135-4d80-a505-c03634771276)]

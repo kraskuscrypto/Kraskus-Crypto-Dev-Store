@@ -48,6 +48,12 @@ services:
     volumes:
       - ${APP_DATA_DIR}/node:/app/data
 
+    # kaspad flushes its database on SIGTERM; compose's default 10 s grace
+    # period is far too short for that and lets `app down`/uninstall SIGKILL
+    # the node mid-flush (observed on VM120, 2026-09-23: "Error while
+    # Stopping ... forcing containers down"). Give it time to shut down cleanly.
+    stop_grace_period: 180s
+
     # P2P is published — a solo node needs normal network participation to
     # sync, same as the current working VM100 reference. RPC (16110/17110/18110)
     # is internal-only: nothing outside this package's own containers needs it,
@@ -60,7 +66,7 @@ services:
       - internal
 
   stratum:
-    image: ghcr.io/kraskuscrypto/kraskus-kaspa-solo-stratum@sha256:3abec9a6ea547fe477fceb1c11d950a0575d28830305d7646cd966d49d09759c
+    image: ghcr.io/kraskuscrypto/kraskus-kaspa-solo-stratum@sha256:63af5dfd6781a05d0348e52e32e8c7c4a14cd7982181842f3ae0d06a689e8ef2
     restart: unless-stopped
 
     command:
@@ -94,7 +100,7 @@ services:
       - kaspad
 
   adapter:
-    image: ghcr.io/kraskuscrypto/kraskus-kaspa-solo-adapter@sha256:f7e46b3246d5ec3a69939e7acc8fdb5330161f0ef93f6eb5780f317cef6114f7
+    image: ghcr.io/kraskuscrypto/kraskus-kaspa-solo-adapter@sha256:8f650dd93faafda7dc747b646f857b96d8f7a5d6ed0ee2ef213a60f58614ab8b
 
     restart: unless-stopped
 
@@ -117,7 +123,7 @@ services:
       - kaspad
 
   wallet-api:
-    image: ghcr.io/kraskuscrypto/kraskus-kaspa-solo-wallet-api@sha256:499f19e2ebaa74ed93dcc4abf01e14694caa8bcfcd8cfd5580b8e899d5949d39
+    image: ghcr.io/kraskuscrypto/kraskus-kaspa-solo-wallet-api@sha256:b6e5989ebc95a40981a1dde7a844be9e7970ca24ff8313095b7e35cac4042acc
 
     restart: unless-stopped
 
@@ -142,7 +148,7 @@ services:
       - kaspad
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-kaspa-solo-ui@sha256:7a96d44e4f188ac961d02840b993f18cf642469987b4e508f102c9efc4d908ef
+    image: ghcr.io/kraskuscrypto/kraskus-kaspa-solo-ui@sha256:7e96b18dd5e84eb91912213987864c5de8e5fd839782054772a3749a17dbf2b7
 
     restart: unless-stopped
 
