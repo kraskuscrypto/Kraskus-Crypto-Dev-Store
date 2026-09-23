@@ -1,10 +1,25 @@
+# Kraskus ZEC Solo 0.4.0.
+#
+# Every image below is pinned tag@sha256:digest, read back from GHCR after the
+# push. 0.4.0 rebuilds the controller, zallet-supervisor and UI images from
+# canonical source in Kraskus-Crypto-Apps at commit
+# d6444e29c3578382deaa48c5e9d95536c31291f7 (branch fix/zec-defect-resolution-v1),
+# and each carries org.opencontainers.image.version=0.4.0 and .revision set to
+# that commit.
+#
+# The 0.3.26 controller was `FROM` a published image of itself, so its
+# inherited metadata reported 0.3.2-beta and no image could be traced to a
+# commit. That is what the rebuild fixes; see docs/zec-image-provenance.md in
+# the apps repo.
+#
+# zebra is unchanged in this release and keeps its existing digest.
 services:
   app_proxy:
     environment:
       APP_HOST: ui
       APP_PORT: 8080
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-zec-solo-wallet-controller:ui-0.3.26@sha256:394cb0953cce010fa60983ac9d3789a25e2e17c57910e8ca2700177888ed4a68
+    image: ghcr.io/kraskuscrypto/kraskus-zec-solo-wallet-controller:ui-0.4.0@sha256:69d8887d906e8d820a30ebc87d9af8b505b99e765e50fde94ef3bda3d5857532
     restart: unless-stopped
     depends_on:
     - kraskus
@@ -17,7 +32,7 @@ services:
     - SETGID
     - SETUID
   kraskus:
-    image: ghcr.io/kraskuscrypto/kraskus-zec-solo-wallet-controller@sha256:08cf4e8a8c76aa71307d7576e1a9f3e0e254be744b2c774200b6cbf25e2feb07
+    image: ghcr.io/kraskuscrypto/kraskus-zec-solo-wallet-controller:0.4.0@sha256:b5045825e2a94bffc22a75e5f941423a6c848565fd0f6b2a64b328725dd9d2cb
     restart: unless-stopped
     depends_on:
     - zebra
@@ -48,7 +63,7 @@ services:
     cap_add:
     - DAC_OVERRIDE
   zallet-init:
-    image: ghcr.io/kraskuscrypto/kraskus-zec-solo-wallet-controller@sha256:08cf4e8a8c76aa71307d7576e1a9f3e0e254be744b2c774200b6cbf25e2feb07
+    image: ghcr.io/kraskuscrypto/kraskus-zec-solo-wallet-controller:0.4.0@sha256:b5045825e2a94bffc22a75e5f941423a6c848565fd0f6b2a64b328725dd9d2cb
     user: 0:0
     entrypoint:
     - /bin/sh
@@ -74,7 +89,7 @@ services:
     - DAC_OVERRIDE
     - FOWNER
   zallet:
-    image: ghcr.io/kraskuscrypto/kraskus-zec-zallet-supervisor:0.3.26@sha256:8d829b46c8c10a06ea58ce8dcb5e6209c3f4f41a8ddb2b1bffd1b52df12eeca8
+    image: ghcr.io/kraskuscrypto/kraskus-zec-zallet-supervisor:0.4.0@sha256:fae84858116f38e8ad6f9e84783a4e829d623c4f3c1bcacb3c3a3bab56c49391
     restart: unless-stopped
     user: 10001:10001
     network_mode: service:kraskus
