@@ -1,0 +1,28 @@
+# Bitcoin Satoshi Vision
+
+Bitcoin Satoshi Vision (SV Node 1.2.2, pruned) node and private solo-mining controller for
+5tratumOS. Miners connect to `stratum+tcp://<host>:1922` with any worker name;
+rewards pay the address configured in the app (external address or the
+built-in wallet). 1% of each block reward is a developer-fee coinbase output.
+
+## 0.3.0
+
+- Images rebuilt from committed source (`apps/bsv-solo/build.sh`), labelled
+  with version and source revision; hero artwork restored in source.
+- SV Node always runs with `-excessiveblocksize=10000000000` (10 GB),
+  appended last by the node supervisor and verified via `getsettings`.
+- One readiness model for Home, Mining, Stratum and the API; Stratum 1922
+  refuses miners with a reason until the node is synced, has peers, a payout
+  is configured and (for the built-in wallet) its backup is confirmed.
+- Built-in wallet: create, encrypted full `wallet.dat` backup, verify and
+  confirm, forget, restore (Kraskus backup or raw `wallet.dat`) to the same
+  address, pruned-history rebuild. Sending removed.
+- Blocks from a durable ledger with confirmed / maturing / orphaned /
+  rejected states; "no blocks found" is distinct from "block data
+  unavailable".
+- Upgrading from 0.2.2-beta keeps chain data, settings and the node wallet
+  (same address); the legacy UI and backup-export services are removed. If
+  the 0.2.x built-in wallet was the mining payout, mining to it pauses until
+  an encrypted backup is downloaded, verified and confirmed, then resumes.
+- The wallet password is an app password (backup download, restore/replace,
+  Forget), not a spending password.

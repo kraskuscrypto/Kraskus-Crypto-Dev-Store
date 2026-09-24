@@ -1,17 +1,23 @@
 id: kraskus-bsv-solo
-name: Kraskus BSV Solo
-tagline: Bitcoin SV node and private solo mining command center
+name: Bitcoin Satoshi Vision
+tagline: Bitcoin Satoshi Vision node and private solo mining command center
 description: >-
-  Runs a pruned Bitcoin SV mainnet node, a native GMC-to-Stratum V1 solo
-  mining controller, and the official Kraskus App Template. Mining remains
-  disabled until a valid external BSV payout address is configured. Each
-  accepted block coinbase assigns 99 percent to the configured miner address
-  and 1 percent to Kraskus development.
-version: 0.2.2-beta
+  Bitcoin Satoshi Vision turns 5tratumOS into a self-contained BSV
+  mainnet node (SV Node 1.2.2, pruned, 10 GB excessive block size) and a
+  native GMC-to-Stratum V1 solo-mining controller on port 1922. The Template
+  V2 interface shows node synchronization, one truthful mining-readiness
+  state, workers, shares and blocks confirmed by the node. Miners are refused
+  until the node is synchronized and a valid payout is configured. The
+  built-in wallet receives mining payouts once you have downloaded and
+  verified an encrypted backup of the complete wallet file; the same backup
+  restores the exact wallet on any install. Sending from the built-in wallet
+  is not available. A required 1% developer fee is paid directly from each
+  successful block coinbase.
+version: 0.3.0
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
-repo: https://github.com/kraskuscrypto/Kraskus-CHTA-Solo
+repo: https://github.com/kraskuscrypto/Kraskus-Crypto-Apps
 support: https://kraskuscrypto.com/
 icon: assets/bsv-emblem-std-v2.png
 port: 18422
@@ -22,4 +28,4 @@ services:
   app_proxy:
     environment:
       APP_HOST: ui
-      APP_PORT: 18422
+      APP_PORT: 8080
