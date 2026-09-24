@@ -2,24 +2,23 @@ id: kraskus-chta-solo
 name: CheetahCoin by Kraskus
 tagline: CheetahCoin full node and SHA256 solo mining
 description: >-
-  CheetahCoin by Kraskus turns 5tratumOS into a self-contained
-  CheetahCoin full node and local CKPool solo-mining appliance.
-  The Template V2 interface shows node synchronization, live mining
-  readiness, workers, accepted and rejected shares, best submitted
-  difficulty, round progress, and independently confirmed blocks.
-  The Wallet page configures the real CHTA payout address used by
-  CKPool; this release does not claim native balance, transaction
-  history, or send functionality that the appliance API does not expose.
-  RPC credentials and mining settings remain in persistent local app
-  storage, and CKPool stays gated until a valid payout address is set. Normal
-  miners connect on port 1926; NMMiner and other very-low-hash devices use
-  port 1927 with a fixed 0.002 minimum difficulty. A required 1% developer
-  fee is paid directly from successful block coinbases.
-version: 0.2.35
+  CHTA Kraskus turns 5tratumOS into a self-contained CheetahCoin full node and
+  solo-mining appliance. The Template V2 interface shows node synchronization,
+  one truthful mining-readiness state, each Stratum port's live status,
+  workers, accepted and rejected shares, round progress, and blocks
+  independently confirmed by the node. Normal miners connect on port 1926;
+  NMMiner and other very-low-hash devices use port 1927 with a fixed 0.002
+  difficulty. Both ports stay closed until the node is synchronized and a
+  valid payout is configured. The built-in CheetahCoin wallet can receive,
+  send and act as the mining payout once you have downloaded and verified an
+  encrypted backup of the complete wallet file; the same backup restores the
+  exact wallet on any CHTA Kraskus install. A required 1% developer fee is
+  paid directly from successful block coinbases.
+version: 0.3.0
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
-repo: https://github.com/kraskuscrypto/Kraskus-Crypto-Dev-Store
+repo: https://github.com/kraskuscrypto/Kraskus-Crypto-Apps
 support: https://kraskuscrypto.com/
 icon: assets/chta-official-emblem-v2.png
 port: 33064

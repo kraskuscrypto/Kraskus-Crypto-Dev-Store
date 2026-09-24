@@ -1,73 +1,53 @@
-# Kraskus CHTA Solo — Components and Distribution Notices
+# CHTA Kraskus (Kraskus CHTA Solo) — Components and Distribution Notices
 
-Kraskus CHTA Solo is a Kraskus Crypto application packaged for
-5tratumOS.
+CHTA Kraskus is a Kraskus Crypto application packaged for 5tratumOS. Every
+custom image in this package is built by `apps/chta-solo/build.sh` from a
+committed revision of
+https://github.com/kraskuscrypto/Kraskus-Crypto-Apps (`apps/chta-solo`) and
+carries `org.opencontainers.image.version` / `.revision` labels naming that
+release and commit. The exact published digests are recorded in
+`apps/chta-solo/release-manifest.json`.
 
 ## Kraskus CHTA application
 
-The initialization runtime, Backend V2 application, Store recipe,
-listing text, and Divinity CHTA artwork are maintained by
-Kraskus Crypto.
+The backend (API, readiness monitor, wallet service, first-run
+initialization), the web UI, the Stratum and node supervisors, the Store
+recipe, listing text and CHTA artwork are maintained by Kraskus Crypto.
 
-Qualified Store release images:
-
-- `ghcr.io/kraskuscrypto/kraskus-chta-solo@sha256:ecd132f97d5c7957dabc80e18eaa4517d87ee9f033d7b01b5d401e74dc515528`
-  — qualified first-run initialization image.
-
-- `ghcr.io/kraskuscrypto/kraskus-chta-solo@sha256:36affa9593c3fab2d6f29f255eaffc69233f96fcd50cbe21ace1900ed45eb24b`
-  — qualified Backend V2 application image.
+- `ghcr.io/kraskuscrypto/kraskus-chta-solo` — backend and `init`
+  (Python 3.13 on Alpine; bundles `qrcode` (BSD) and `cryptography`
+  (Apache-2.0 / BSD) from PyPI, hash-locked).
+- `ghcr.io/kraskuscrypto/kraskus-chta-ui` — web UI (Next.js static export
+  served by nginx).
 
 ## CheetahCoin Core
 
-CheetahCoin Core is upstream software distributed under the MIT
-license.
+CheetahCoin Core is upstream software distributed under the MIT license.
 
-Upstream project:
-
-- https://github.com/ShorelineCrypto/cheetahcoin
-
-The Store recipe uses the exact qualified Core image:
-
-- `ghcr.io/kraskuscrypto/kraskus-cheetahcoin-core@sha256:072f124dcbcff225733a0248f14689edafd1bedd402798f2d677dd4515fcd321`
-
-The qualified image has Docker image ID:
-
-- `sha256:183904066a2a9e45c44ffa07cc24f4b900fd4c70b150746d64c72bdcb562492b`
+- Upstream project: https://github.com/ShorelineCrypto/cheetahcoin
+- Release used: v2.4.0, `cheetahcoin_2.4.0_x86_64_linux-gnu.tgz`,
+  SHA-256 `05f8cdbb39367e68c3a71b446ec9b5d0f961c26b0a6e6a5c1a39b7024303c74d`
+  (verified at build time; only `cheetahcoind` and `cheetahcoin-cli` are
+  installed, unmodified).
+- Image: `ghcr.io/kraskuscrypto/kraskus-cheetahcoin-core`.
 
 The upstream copyright and MIT license terms remain applicable.
 
 ## CKPool
 
-CKPool is free software distributed under GNU GPL version 3.
+CKPool is free software distributed under the GNU General Public License,
+version 3. This package runs a build of the NMminer fractional-difficulty
+CKPool fork:
 
-The qualified appliance uses the existing WillItMod CKPool container
-directly by immutable registry digest:
-
-- `ghcr.io/willitmod/docker-ckpool-solo@sha256:8a9a7f10c8138d0f55533132ee7710a06715a42a49f75efb39be3350ada4fa6e`
-
-That registry artifact has Docker image ID:
-
-- `sha256:2d671d11bcb81e9f253d4ffb5fe95737939609cdd66771b7d12ef9fe4ba266f0`
-
-Qualification proved this is the exact CKPool image object and binary
-used during clean-room testing. The included `ckpool` binary reports
-version `ckpool/0.9.9`.
-
-The Store recipe does not mirror or republish the WillItMod CKPool
-artifact. It references the original immutable registry artifact.
+- Source: https://github.com/NMminer1024/btc-ckpool-solo at commit
+  `49b45c25940f2138955c4503e1da55f19cea8de9`
+- Kraskus modifications (configurable developer-fee address, fee-address
+  validation made fatal, fractional-difficulty accounting fixes, portable
+  SHA-256 build) are applied as scripted, verified edits in
+  `apps/chta-solo/packaging/ckpool/Dockerfile` in the repository above,
+  which together with the upstream commit is the complete corresponding
+  source.
+- Image: `ghcr.io/kraskuscrypto/kraskus-chta-ckpool` (the GPLv3 text is
+  shipped at `/usr/share/licenses/ckpool/COPYING`).
 
 CKPool's GPLv3 terms remain applicable.
-
-## User data
-
-This Store recipe contains no:
-
-- RPC usernames or passwords;
-- wallet data;
-- blockchain data;
-- configured payout address;
-- Docker socket access;
-- host credentials.
-
-RPC credentials are generated locally during first-run
-initialization and remain in persistent application storage.

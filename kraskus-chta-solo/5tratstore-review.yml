@@ -1,12 +1,12 @@
 schemaVersion: 1
-status: proposed
+status: approved
 appId: kraskus-chta-solo
-appVersion: 0.2.35
-reviewedAt: ""
-reviewedBy: ""
+appVersion: 0.3.0
+reviewedAt: "2026-09-24"
+reviewedBy: "Kraskus Crypto"
 
 upstream:
-  sourceUrl: https://github.com/kraskuscrypto/Kraskus-5tratStore
+  sourceUrl: https://github.com/kraskuscrypto/Kraskus-Crypto-Apps
   license: mixed
   licenseEvidence: LICENSES.md
 
@@ -28,10 +28,12 @@ compatibility:
     - Debian-13-5tratumOS-clean-room
   architectures:
     - amd64
+  # Qualified on VM120 through the 5tratumOS customer CLI: fresh install,
+  # start, 0.2.35 -> 0.3.0 update, uninstall, purge and reinstall.
   installTested: true
   startTested: true
   updateTested: true
-  uninstallTested: false
+  uninstallTested: true
 
 security:
   privileged: false
@@ -42,51 +44,26 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
-  0.2.35 adds two dedicated CHTA Stratum endpoints: port 1926 for normal
-  SHA256 miners and port 1927 for NMMiner/very-low-hash devices. The low-hash
-  listener uses the pinned NMminer fractional-difficulty CKPool fork at a fixed
-  0.002 minimum/start difficulty while preserving the same payout configuration
-  and locked 1% successful-block coinbase developer-fee output. Live protocol
-  qualification confirmed mining.subscribe, mining.authorize and
-  mining.set_difficulty=0.002 against the current CHTA node. The Connect Miner
-  UI now identifies both endpoints and provides copy controls for each.
-
-  Dev candidate 0.2.33-dev14 migrates CHTA Solo to Kraskus App Template V2.
-  The CheetahCoin Core and qualified CKPool image digests remain unchanged.
-  The backend is based on the prior Dev6 image with one qualified correction:
-  fresh parseable CKPool pool.status telemetry is treated as authoritative
-  Stratum-online evidence when CKPool omits explicit online/ready flags.
-  Qualification covered a fresh isolated install, live node synchronization,
-  real payout validation/apply, full teardown/restart persistence, legacy UI
-  to Template V2 upgrade state preservation, synced-node RPC, block-template
-  telemetry, real mining.subscribe/mining.authorize, and nginx proxy startup.
-  Dev2 corrects Template V2 sync-state mapping, centers the CHTA hero mark,
-  and fixes the node/peer/miner summary spacing seen in live review.
-  Dev5 uses a verified browser-decodable RGBA rendering of the canonical
-  official CHTA green/yellow emblem for both the UI mark and Store/OS emblem.
-  Dev6 switches in-app logo URLs to Workbench-safe relative paths so embedded
-  reverse-proxy routing resolves the hero image correctly.
-  Dev7 rebuilds the CHTA hero as a Template V2 medallion: official yellow CHTA
-  mark integrated into a green/gold beveled coin face matching Kaspa/BTC styling.
-  Dev8 collapses initial Home telemetry to one overview snapshot and defers
-  page-specific pollers until their pages/dialogs are actually opened.
-  Dev9 reports hashrate and connected miners from online workers only and
-  persists a CKPool payout-era boundary so legacy pool blocks are excluded
-  from the CHTA Solo Blocks ledger.
-  Dev10 makes Mining and Blocks render immediately from the existing Home
-  snapshot, then refreshes only the page-specific detail in the background.
-  Dev11 moves the Store/OS emblem to a new cache-busting asset path so
-  StratumOS cannot reuse the legacy CHTA icon cached under the old filename.
-  Dev12 aligns the fresh-install Wallet setup with the Kaspa Template V2
-  setup structure while keeping CHTA payout-only semantics truthful.
-  Dev13 treats /api/overview as an optimization instead of a readiness gate,
-  so fresh-sync installs render full Home/Mining/Blocks states from healthy
-  individual endpoints while Core is still syncing.
-  Dev14 adds the native CHTA wallet flow and its real node-backed wallet
-  operations while preserving truthful fallback behavior.
-  Dev15 adds a required 1% successful-block developer fee as a direct
-  two-output coinbase split to the locked Kraskus fee address. CKPool's build
-  is pinned to the portable C SHA256 path so GHCR artifacts do not inherit
-  builder-specific AVX instructions, and the CKPool supervisor no longer
-  replays stale reload requests after a full container restart.
-  Main Store promotion remains intentionally separate.
+  0.3.0 is a release-qualification rebuild. Every custom image (backend/init,
+  UI, CheetahCoin Core, CKPool) is built from committed source with
+  version/revision labels; the 0.2.x backend's chain of images built on top of
+  earlier images is gone, and the Core image now downloads the official
+  CheetahCoin 2.4.0 release and verifies its SHA-256. Wallet: the built-in
+  wallet stays in a backup-required state (no send, no native payout, receive
+  address withheld) until an encrypted backup of the complete wallet file has
+  been downloaded and verified; customers can reset the wallet and restore the
+  exact same wallet from that backup. The wallet password can no longer be
+  replaced by a second setup request. Readiness: one model reports Starting,
+  Syncing, Synced, Stratum not ready, Ready, Degraded, No peers or Error from
+  real node, payout, developer-fee and per-port Stratum observations; zero
+  peers or a stale chain tip is never reported as synced, and each Stratum
+  port's state is shown separately. Both Stratum ports now stay closed until
+  the node is synchronized and the payout is ready. Port 1927 is a fixed
+  0.002-difficulty low-diff entrance that no longer inherits normal-port
+  settings; port 1926 keeps min 1024 / start 4096 and its minimum can no
+  longer be set below 1. Upgrades now correctly restore the documented 1%
+  Kraskus developer-fee coinbase split when upgrading from configurations
+  that omitted it; an invalid developer-fee address now stops mining with a
+  visible error instead of silently mining at 0%. Blocks distinguish "no
+  blocks found" from "block data unavailable" and apply the solo-era filter
+  to both ports. The UI shows the release version in Settings > About.
