@@ -1,8 +1,8 @@
 schemaVersion: 1
 status: approved
 appId: kraskus-prl-solo
-appVersion: 0.2.0
-reviewedAt: "2026-09-23"
+appVersion: 0.2.1
+reviewedAt: "2026-09-24"
 reviewedBy: "Kraskus Crypto"
 
 upstream:
@@ -42,6 +42,11 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
+  PRL 0.2.1 hotfix: node readiness uses pearld's lock-free RPCs, so a healthy
+  node validating blocks no longer reads as "Node unavailable" and the stratum
+  sync gate no longer closes during those stalls; a wallet restore scans its
+  history from the wallet birthday (or from genesis when unknown) and stays in
+  RESTORING, with no balance or payout, until the scan finishes.
   PRL 0.2.0 (release qualification). One authoritative readiness model:
   height 0, no peers, a lagging or stale tip never reads as synced, and the
   gateway hands out work only while the node is synced. Wallet creation runs

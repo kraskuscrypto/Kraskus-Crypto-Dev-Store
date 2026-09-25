@@ -31,6 +31,24 @@ All persistent state lives below `${APP_DATA_DIR}`:
 
 `assets/prl-emblem-std-v1.png` is the approved PRL application emblem used by the Store listing.
 
+## 0.2.1
+
+- Node readiness no longer reports "Node unavailable" while pearld is busy
+  validating blocks. pearld's getblockchaininfo/getpeerinfo wait on the block
+  being connected (observed up to ~30 seconds during block validation);
+  liveness now uses its lock-free calls, the stall-prone ones only enrich the
+  status with their last known values, and the node is reported unavailable
+  only after real, sustained failure. The stratum gateway's sync gate uses the same probe, so it no longer
+  closes (and rejects shares) during those stalls, and pearld's container
+  healthcheck uses getblockcount.
+- Wallet restore recovers history. A created wallet records its birthday
+  (date and block height, shown with the recovery phrase); a restore takes that
+  birthday (optional) and scans from it, or from the start of the chain when
+  it is left blank. The wallet shows "Restoring wallet history" with scan
+  progress, no balance and no mining payout until the scan has finished.
+  Wallets restored with 0.2.0 are flagged: their older history may be missing
+  until they are forgotten and restored again.
+
 ## 0.2.0
 
 - Truthful readiness: one state (Starting / Syncing / Synced / Stratum not
