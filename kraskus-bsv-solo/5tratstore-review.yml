@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-bsv-solo
-appVersion: 0.3.0
+appVersion: 0.3.1
 reviewedAt: ""
 reviewedBy: ""
 
@@ -44,6 +44,17 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
+  0.3.1 is a Stratum job-lifecycle hotfix on top of 0.3.0; nothing else
+  changes. A same-tip template refresh no longer invalidates the work miners
+  hold: every job for the current block stays valid for 10 minutes (up to 64
+  jobs) and is sent with clean_jobs=false, refreshes are published at most
+  every 30 seconds, and only a new block (or a payout change) sends
+  clean_jobs=true and makes older jobs stale. A brief node RPC hiccup no
+  longer disconnects miners: the gate holds the issued jobs for up to 90
+  seconds before closing. Unknown jobs are reported as "Job not found"
+  instead of "stale job", and every Stratum disconnect is logged with its
+  reason. Wallet, backup/restore, the 1% developer fee, the 10 GB excessive
+  block size, port 1922 and the UI are unchanged from 0.3.0.
   0.3.0 is a release-qualification rebuild. Every custom image (backend, SV
   Node wrapper, UI) is built from committed source with version/revision
   labels; the UI and its approved silver hero are rebuilt from source instead

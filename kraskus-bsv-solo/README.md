@@ -5,6 +5,22 @@ Bitcoin Satoshi Vision (SV Node 1.2.2, pruned) node and private solo-mining cont
 rewards pay the address configured in the app (external address or the
 built-in wallet). 1% of each block reward is a developer-fee coinbase output.
 
+## 0.3.1
+
+Stratum job-lifecycle hotfix; everything else is unchanged from 0.3.0.
+
+- Same-tip template refreshes keep earlier jobs valid (`clean_jobs=false`);
+  each job for the current block is honoured for 10 minutes, up to 64 jobs.
+  Refreshes are published at most every 30 s; a new block is published at
+  once with `clean_jobs=true` and retires every older job.
+- Share replies distinguish `stale job` (old block), `Job not found
+  (expired)` and `Job not found` (never issued).
+- A transient node condition (an RPC call timing out while SV Node is busy)
+  holds the gate open with the issued jobs for up to 90 s instead of
+  disconnecting every miner; the cause is logged (`BSV_GATE_HOLD`).
+- Every Stratum disconnect is logged with its reason
+  (`BSV_STRATUM_DISCONNECT`) and counted in the controller status.
+
 ## 0.3.0
 
 - Images rebuilt from committed source (`apps/bsv-solo/build.sh`), labelled
