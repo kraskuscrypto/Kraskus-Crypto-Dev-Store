@@ -9,7 +9,7 @@ description: >-
   after the wallet backup is confirmed; rewards go straight to that wallet.
   A fixed 1 percent developer fee is applied only to successfully mined
   blocks as a coinbase split.
-version: 0.2.0
+version: 0.2.1
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/

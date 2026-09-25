@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-btc-blake2b-solo
-appVersion: 0.2.0
+appVersion: 0.2.1
 reviewedAt: ""
 reviewedBy: ""
 
@@ -42,6 +42,14 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
+  0.2.1 is a readiness hotfix. Node liveness now uses a lock-free Knots RPC
+  (getconnectioncount) and chain status is collected in the background with
+  a long timeout, so a node that is busy connecting blocks during initial
+  sync reads SYNCING instead of "Knots RPC unavailable"; a stopped node
+  still reads ERROR after 30 seconds without an answer. Wallet, backup
+  gate, Stratum 1923, Knots configuration and the 1% developer fee are
+  unchanged.
+
   0.2.0 is the remediation release of BTC2b by Kraskus (formerly shown as
   BTC BLAKE2b). One customer-owned Bitcoin Knots descriptor wallet receives
   mining rewards; mining starts only after its encrypted full-descriptor
