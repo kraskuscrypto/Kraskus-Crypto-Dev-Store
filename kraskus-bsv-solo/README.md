@@ -5,6 +5,22 @@ Bitcoin Satoshi Vision (SV Node 1.2.2, pruned) node and private solo-mining cont
 rewards pay the address configured in the app (external address or the
 built-in wallet). 1% of each block reward is a developer-fee coinbase output.
 
+## 0.3.2
+
+SV Node shutdown hardening; everything else is unchanged from 0.3.1.
+
+- Every SV Node stop is logged by the node supervisor:
+  `BSV_NODE_SHUTDOWN_BEGIN`, then `BSV_NODE_SHUTDOWN_CLEAN`,
+  `BSV_NODE_SHUTDOWN_UNCLEAN` or `BSV_NODE_SHUTDOWN_TIMEOUT`.
+- A clean exit leaves `.kraskus-node-clean-shutdown` in the node datadir; a
+  stop that runs out of time exits 137 instead of reporting success; a start
+  after an unconfirmed stop logs `BSV_NODE_PREVIOUS_SHUTDOWN_UNCONFIRMED`.
+- `bsv-safe-stop.sh` (in this package) stops SV Node with up to 900 s to
+  flush and refuses to continue an update or reinstall unless the clean exit
+  is confirmed. Run it before any update, `app down` or `app uninstall`:
+
+      sudo bash /opt/5tratumos/store/<channel>/kraskus-bsv-solo/bsv-safe-stop.sh --then update
+
 ## 0.3.1
 
 Stratum job-lifecycle hotfix; everything else is unchanged from 0.3.0.

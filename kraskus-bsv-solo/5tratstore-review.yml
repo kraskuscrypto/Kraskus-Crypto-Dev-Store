@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-bsv-solo
-appVersion: 0.3.1
+appVersion: 0.3.2
 reviewedAt: ""
 reviewedBy: ""
 
@@ -44,6 +44,15 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
+  0.3.2 hardens SV Node shutdown; nothing else changes. The node supervisor
+  logs every stop (BSV_NODE_SHUTDOWN_BEGIN / CLEAN / UNCLEAN / TIMEOUT),
+  leaves a clean-shutdown marker only after bitcoind exits cleanly, reports
+  a stop that timed out as a failure instead of success, and warns at start
+  when the previous stop was not confirmed. The package ships
+  bsv-safe-stop.sh, which stops SV Node with up to 15 minutes to flush and
+  refuses to let an update or reinstall continue unless the clean exit is
+  confirmed. Wallet, readiness, Stratum, the 1% developer fee, port 1922,
+  the UI, prune target, dbcache and sync tuning are unchanged from 0.3.1.
   0.3.1 is a Stratum job-lifecycle hotfix on top of 0.3.0; nothing else
   changes. A same-tip template refresh no longer invalidates the work miners
   hold: every job for the current block stays valid for 10 minutes (up to 64
