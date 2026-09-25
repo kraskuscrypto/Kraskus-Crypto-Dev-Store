@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-btc-blake2b-solo
-appVersion: 0.2.1
+appVersion: 0.2.2
 reviewedAt: ""
 reviewedBy: ""
 
@@ -42,6 +42,16 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
+  0.2.2 simplifies the Wallet page to the Kraskus Kaspa/CHTA/XMR pattern:
+  status, balance, address and backup status with Back up / Receive
+  buttons. Backing up is one dialog (wallet password, backup passphrase,
+  download the encrypted file, then confirm it is stored safely); mining
+  stays off until a backup of this exact wallet was downloaded and
+  confirmed. Uploading the file again is optional (Settings > Wallet >
+  Verify backup). Restore is a separate dialog. Backup format, restore,
+  migration, payout, readiness, Knots, DATUM, Stratum 1923 and the 1%
+  developer fee are unchanged.
+
   0.2.1 is a readiness hotfix. Node liveness now uses a lock-free Knots RPC
   (getconnectioncount) and chain status is collected in the background with
   a long timeout, so a node that is busy connecting blocks during initial
