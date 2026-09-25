@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-btc-blake2b-solo
-appVersion: 0.1.1
+appVersion: 0.2.0
 reviewedAt: ""
 reviewedBy: ""
 
@@ -42,200 +42,27 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
-  0.1.1 is the numerically-versioned Dev release qualified live on VM100.
-  It promotes the final CHTA-style HeroCoin/UI, settlement-first wallet
-  architecture, persistent block ledger, and reconciled packaging contracts.
-  Source qualification: 316 tests passed, 10 skipped. Live qualification: all
-  health/readiness/status/round/workers/blocks/wallet/payout/fee-policy/settings/
-  mining/history endpoints returned HTTP 200; the adapter reports application
-  version 0.1.1 from source commit b41e94f46d58a0ae5eaf16255155bb1c9ce7836d.
-  Developer fee remains fixed at 1 percent / 100 basis points, coinbase_split,
-  successful_blocks_only, required=true, runtime_mutable=false. Immutable
-  release digests: Knots sha256:0257fb30144bdd19bb1b9505456021ef01c645482df91430b630b069629a77ca;
-  DATUM sha256:3ffcc72a0863cdd20a64d77ab73ba8f85b832f8d03fe46f02d89655be6eb9bab;
-  adapter sha256:d1b1d02e15afd570e69fa94be99b94d63ad62e4d845f80d0c078dd2c9651bcac;
-  UI sha256:4be63bb6de42da1db9fceb1c6856f37bc2c95f62d1acfec683e0382326453797.
+  0.2.0 is the remediation release of BTC2b by Kraskus (formerly shown as
+  BTC BLAKE2b). One customer-owned Bitcoin Knots descriptor wallet receives
+  mining rewards; mining starts only after its encrypted full-descriptor
+  backup has been downloaded, verified and confirmed. The 0.1.x settlement
+  wallet is preserved and migrated explicitly. Sensitive wallet and node
+  operations require the wallet password. Stratum moves to 1923. The 1%
+  developer fee is a DATUM build invariant verified at runtime. Found
+  blocks are recorded durably by DATUM. Qualification evidence and the
+  immutable image digests are recorded in release-manifest.json and the
+  QA report; compatibility flags are set only after the 5tratumOS
+  install/update/uninstall qualification.
 
-  0.1.0-beta7 adopts the settlement-first runtime contract: DATUM mines to
-  /runtime/settlement_address (internal kraskus-settlement wallet) and no
-  longer waits on /runtime/payout_address; wallet-init re-owns legacy runtime
-  files on upgrade and reports SETTLEMENT_ONLY when no user wallet exists.
-  Compose gains the settlement/ledger/vardiff adapter env. Review remains
-  proposed pending fresh-install qualification on a clean 5tratumOS install.
+  IMPORTANT for 0.1.x installs: the 0.1.x Knots node can need 2 to 6.5
+  minutes to shut down (Tor-control hang), and an update that kills it
+  during that window can corrupt its chain database. Before updating, stop
+  only the BTC2b Knots container with a long grace (docker stop -t 600),
+  confirm it exited with code 0, then run the normal update. Never use
+  docker kill, docker rm -f, --purge, or delete chain or wallet data. The
+  exact commands are in README.md. 0.2.0 itself stops in seconds (Tor
+  control disabled) and carries a 10 minute stop grace.
 
-  0.1.0-beta4 fixes resumable wallet setup after a partial create. Beta3 could
-  create the Knots wallet successfully and then fail while persisting payout
-  files because the adapter referenced a nonexistent _atomic_write helper.
-  Beta4 uses the adapter's real _write_text atomic helper, adds setup_complete
-  to wallet status, and makes Create wallet idempotent: if the Knots wallet
-  already exists but payout initialization is incomplete, setup resumes and
-  finishes instead of rejecting the existing wallet. Adapter is pinned at
-  sha256:b6143c9dcaff4b19de3e6d08e159f407f750d695b935ab7a4dbcbdff3abbde78
-  and UI at
-  sha256:de33e38e90b0ac760d6ac39499253b5ccee5a4bb420de0489a596f791a37ac31.
-  Fresh installs still do not auto-create a wallet. Existing wallets remain
-  preserved. Source validation: production image build PASS, 306 tests passed,
-  10 skipped, 1 pre-existing stale packaging assertion. Review remains
-  proposed pending fresh-install qualification.
-
-  0.1.0-beta3 fixes clean-install wallet semantics. Fresh installs no longer
-  auto-create the Knots wallet or payout address. Knots can sync without a
-  wallet; the Wallet page now shows an explicit "Set up your wallet" state
-  and the user must choose Create wallet before a native payout address is
-  generated. The adapter is pinned at
-  sha256:2e0bce506edadb4f5970df93dffef19b2c5b8205c90d003620c7a3b2e9968227
-  and the UI at
-  sha256:6ce141fb0edee35406c679529cba81a4f42f4c5de40fc3f1fa93c25f99d77035.
-  DATUM now waits safely for /runtime/payout_address instead of timing out
-  while wallet setup is pending. Existing wallets are preserved on upgrades;
-  beta3 never deletes or recreates an existing wallet. Source validation:
-  production image build PASS, isolated Knots createwallet smoke PASS,
-  305 tests passed / 10 skipped / 1 pre-existing stale packaging assertion.
-  Review status remains proposed pending a new clean-install qualification.
-
-  0.1.0-beta2 promotes the qualified Template V2 BTC2b adapter and UI used on
-  the production appliance to the Dev Store package. Adapter is pinned at
-  sha256:69702cf94127b84988a3f750cad6935f838fbf25402a4a8c558b6eba85d22553
-  and UI is pinned at
-  sha256:5f8b97f23e5f2d0bf412ced8fc896fc3bad8de237596cf5e38d656cb6fcbfa46.
-  Knots and DATUM remain unchanged at their already-qualified immutable
-  digests. The fixed 1 percent developer-fee address is unchanged, and wallet
-  send/encryption remain disabled by default. Clean-install qualification is
-  still in progress, so review status and compatibility test booleans remain
-  proposed/false.
-
-  0.1.0-dev6 Dev Store package for Kraskus BTC BLAKE2b Solo, built from
-  Kraskus-Crypto-Apps fix/btc-blake2b-wallet-v8 @ 5f798993ca753532f3e94738ba64d7fb5a557900.
-
-  dev6 is a recipe/source-only fresh-install correction. The Store
-  runtime-init now creates /runtime/prune_target_mib with the recommended
-  102400 MiB value only when that file is missing or empty, then preserves
-  any existing non-empty operator-selected value. This ensures a truly fresh
-  Store install starts Knots with prune=102400 instead of silently starting
-  unpruned. The corresponding source regression contract passes within the
-  170-test BTC BLAKE2b suite.
-
-  No application image was rebuilt for dev6. The immutable runtime images
-  remain exactly the dev5-qualified images: DATUM
-  sha256:d4c6e49bd962df5b610f335b063cdec144e0b61acb4e4fc719a1384afc522a2a,
-  adapter sha256:7b8c75a48a6ff5fda4f4d748d7202e4e1710146607e46c9b5a36c10ca478cde6,
-  UI sha256:46e706e72e76ee16efd547c86fe3d1f27d7c788460f420e230292dde56a1e878,
-  and Knots sha256:0257fb30144bdd19bb1b9505456021ef01c645482df91430b630b069629a77ca.
-  Wallet send and wallet encryption remain hard-disabled by default.
-
-  dev6 still requires a true clean-room Store install and reboot/recovery
-  qualification before installTested/startTested or promotion status changes.
-
-  0.1.0-dev5 Dev Store package for Kraskus BTC BLAKE2b Solo, built from
-  Kraskus-Crypto-Apps fix/btc-blake2b-wallet-v8 @ e36e4bc322fe2a5cbbf88691b7f56959b9617a55.
-
-  dev5 replaces the developer-fee payout destination with the dedicated
-  Knots-owned Kraskus developer wallet address bc1q8vwplaf4df5u5d8zg8r6xrlh564s06l0kfjjtm. The address was
-  generated by wallet kraskus-devfee. Knots getaddressinfo independently
-  confirmed ismine=true and iswatchonly=false. The private wallet backup is
-  retained separately by the developer and is not included in source,
-  container images, or Store payloads.
-
-  Developer-fee policy remains unchanged: 1 percent / 100 basis points,
-  coinbase_split, successful_blocks_only, runtime_mutable=false. The active
-  miner receives the remaining 99 percent at either the Knots-owned Native
-  payout address or the configured External payout address.
-
-  DATUM was rebuilt because the developer-fee payout script is compiled into
-  the DATUM runtime. Adapter and UI were also rebuilt from the same qualified
-  source. Immutable dev5 digests are:
-  datum sha256:d4c6e49bd962df5b610f335b063cdec144e0b61acb4e4fc719a1384afc522a2a,
-  adapter sha256:7b8c75a48a6ff5fda4f4d748d7202e4e1710146607e46c9b5a36c10ca478cde6,
-  ui sha256:46e706e72e76ee16efd547c86fe3d1f27d7c788460f420e230292dde56a1e878.
-  Knots remains unchanged at
-  sha256:0257fb30144bdd19bb1b9505456021ef01c645482df91430b630b069629a77ca.
-
-  Source qualification passes 170 tests. Wallet send and wallet encryption
-  remain hard-disabled by default. dev5 still requires Store-installed runtime
-  qualification before promotion beyond the Dev Store.
-
-  0.1.0-dev4 Dev Store package for Kraskus BTC BLAKE2b Solo, built from
-  Kraskus-Crypto-Apps fix/btc-blake2b-wallet-v8 @ dbdc9cd2e906e7ebd212eaabd0459f65760ff708.
-  Adapter and UI are newly rebuilt and pinned by immutable GHCR digest:
-  adapter sha256:ffa8e5c97adb6eaa2e0ec2e6626dde83a420efa6403fc4f30618109b39fcf952,
-  ui sha256:e024c2f008c5ee871d27880cfe8a4d0cf28142b0c8a354b39d98886e8c11e1dd.
-  Knots remains pinned at
-  sha256:0257fb30144bdd19bb1b9505456021ef01c645482df91430b630b069629a77ca
-  and DATUM remains pinned at
-  sha256:d3d74040f892b8e0ae8a012caf41786913bbdced416b63059bccc813c887e2a0;
-  neither Knots nor DATUM was rebuilt for dev4.
-
-  0.1.0-dev4 fixes the Native/External mining payout workflow. The adapter
-  now restores a Knots-owned native payout address when switching back from
-  External mode instead of allowing the active external payout address to
-  fall through as the native address. Wallet payout state cache is invalidated
-  immediately after payout mutations. The Wallet UI now has one authoritative
-  Native/External switch driven by backend state, with an explicit External
-  setup state: selecting External reveals the address editor and leaves the
-  backend safely on Native until a valid external address is saved. The
-  completed Native -> External -> Native round trip was qualified live on the
-  test appliance. The source test suite passes 170 tests.
-
-  dev4 preserves the stock-install compatibility behavior introduced in dev3:
-  Knots, DATUM, adapter, and UI use pull_policy: missing; wallet-init uses
-  pull_policy: never; Knots TCP 8333 is not published on the host; DATUM
-  Stratum V1 TCP 23334 remains published. This allows coexistence with another
-  Bitcoin-family application already using host TCP 8333.
-
-  Wallet send and wallet encryption remain hard-disabled by default
-  (KRASKUS_B2B_ALLOW_WALLET_SEND=0 and
-  KRASKUS_B2B_ALLOW_WALLET_ENCRYPTION=0). In dev4 the developer fee remained
-  fixed at 1% / 100 basis points of successful-block coinbase value only and
-  used the now-retired Ledger-derived developer payout address. It remained
-  non-runtime-mutable.
-
-  0.1.0-dev3 Dev Store package for Kraskus BTC BLAKE2b Solo, built from
-  Kraskus-Crypto-Apps coin/btc-blake2b @ 7c548438cab8611590c3297f85737104fe76c93c.
-  Runtime images are now pinned by immutable GHCR digest rather than the
-  mutable :dev tag used in 0.1.0-dev1:
-  adapter sha256:3872268e75de5581973ad222009fa0a711c1c2495fac38da116d968b75e4e0b8,
-  ui sha256:8e481ff4a7d6a94e5c6ded9c1b8aba59a6c8839e5d9720f2b99d2ed2bbcd44db,
-  knots sha256:0257fb30144bdd19bb1b9505456021ef01c645482df91430b630b069629a77ca,
-  datum sha256:d3d74040f892b8e0ae8a012caf41786913bbdced416b63059bccc813c887e2a0.
-  The adapter and UI images were rebuilt from the qualified source commit
-  above. Knots and DATUM were not rebuilt for this release — their images
-  are an exact republish of the previously-qualified, currently-running
-  build under an immutable tag, since no Knots/DATUM source changed.
-  DATUM Stratum V1 TCP 23334 is intentionally published. Knots P2P
-  TCP 8333 is no longer published on the host to avoid collisions with
-  other Bitcoin-family applications; Knots retains outbound P2P access
-  and application-internal networking. Knots RPC, DATUM API, and the
-  Kraskus adapter remain on application-internal networks only. Persistent blockchain,
-  wallet, runtime, and secret state live below APP_DATA_DIR; first-run
-  secrets are generated locally and are never embedded in this Store
-  recipe. Wallet encryption and wallet send remain hard-disabled by
-  default (KRASKUS_B2B_ALLOW_WALLET_ENCRYPTION=0,
-  KRASKUS_B2B_ALLOW_WALLET_SEND=0) and both endpoints independently return
-  403 even with an operator override attempted. Node pruning defaults to
-  a 100 GB (102400 MiB) target. The developer fee remains fixed at 1%
-  (100 basis points) of successful-block coinbase value only, and is not
-  runtime-mutable.
-
-  0.1.0-dev3 adds stock-5tratumOS fresh-start compatibility without
-  rebuilding any application image. Knots, DATUM, adapter, and UI now use
-  pull_policy: missing so docker compose up can fetch immutable digest-pinned
-  images when they are not already present locally. The Knots host P2P bind
-  on TCP 8333 was removed to prevent collisions with other Bitcoin-family
-  Store applications.
-
-  Qualified in 0.1.0-dev2: Wallet V7 UI; Native/External payout switching
-  (frontend and backend); receive/new-address/QR; wallet balance and
-  activity history; UI theme inheritance across all 8 5tratumOS themes;
-  full encrypted-wallet unlock/sign/broadcast/relock flow qualified
-  end-to-end on an isolated regtest environment; mainnet wallet send and
-  encryption confirmed hard-disabled by default; 100 GB pruning; adapter
-  and UI qualified live on a running appliance.
-
-  Still pending before any Official Store promotion: full Knots sync to
-  chain tip; BLAKE2b activation/tip behavior at full sync; real BLAKE2b
-  ASIC accepted shares; a real successful-block developer-fee coinbase
-  proof; the found-block submission path; and final reboot/recovery
-  qualification. This package has not been install/start/update/uninstall
-  tested on a clean 5tratumOS install yet and remains status: proposed
-  pending that qualification pass and a named human reviewer. It is not
-  an Official Store release.
+  Real BLAKE2b ASIC shares on BTC2b Mainnet are not yet verified (no
+  compatible hardware available). The proof of work is cross-checked
+  against Knots and verified end to end on regtest.
