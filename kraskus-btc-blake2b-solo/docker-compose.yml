@@ -1,6 +1,6 @@
-# BTC2b by Kraskus 0.2.1 -- 5tratumOS Store recipe.
+# BTC2b by Kraskus 0.2.2 -- 5tratumOS Store recipe.
 # Images are pinned to immutable digests built by build.sh from runtime
-# source 303e197 (release-manifest.json records the same digests).
+# source 492151a (release-manifest.json records the same digests).
 services:
   app_proxy:
     environment:
@@ -53,7 +53,7 @@ services:
       - no-new-privileges:true
 
   knots:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-knots:0.2.1@sha256:bc87ee2ebf1053293274f541c08104ae6eb01596dc3019946320ac1864deb092
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-knots:0.2.2@sha256:b9ca88ce2cbb005e84f61532fb7f3e90134c9cf87967dd6278d04565d2694b43
     pull_policy: missing
     restart: unless-stopped
     # Never SIGKILL Knots before it has flushed its UTXO cache (a kill during
@@ -91,7 +91,7 @@ services:
       - b2b_private
 
   datum:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-datum:0.2.1@sha256:b87f7acdaae982aa4d69712fe8093a0987348797c07f6467ecd93cf202977c7e
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-datum:0.2.2@sha256:1035f0e5c4375078cdafc50d6ee3c8fd2e242b7cb95b95999e82db29f8795f2d
     pull_policy: missing
     restart: unless-stopped
     group_add:
@@ -136,7 +136,7 @@ services:
       - b2b_api
 
   adapter:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-adapter:0.2.1@sha256:d3da025e3400adc9041e7535def234bc638c581c3f8230701e9b67a2ecbcc72b
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-adapter:0.2.2@sha256:414e3472483e1018ff0e09523a13cc2e5a0c0f56a6d25795e8947dccbd8229f4
     pull_policy: missing
     restart: unless-stopped
     group_add:
@@ -177,7 +177,7 @@ services:
       - b2b_api
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-ui:0.2.1@sha256:9784071de60e513fa3ddad44241febdfe24259322320d0a9011aec261dbaa0d7
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-ui:0.2.2@sha256:772d43da4a86528eaf14a1fc06b876845773f0b0e3825b4e2fbe1d04b9ff8f8e
     pull_policy: missing
     restart: unless-stopped
     depends_on:
