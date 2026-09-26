@@ -5,6 +5,15 @@ Bitcoin Satoshi Vision (SV Node 1.2.2, pruned) node and private solo-mining cont
 rewards pay the address configured in the app (external address or the
 built-in wallet). 1% of each block reward is a developer-fee coinbase output.
 
+## 0.3.3
+
+Home hero coin face only; everything else is unchanged from 0.3.2.
+
+- The hero coin is gold: engraved legend band from the Satoshi Vision
+  reference coin, BSV side marks, circuit traces and a dragon coiled behind the struck B, drawn
+  in code (`ui-v2/components/bsv-coin-face.tsx`, no image asset). The coin's
+  size, float and tilt, orbits and glow are unchanged.
+
 ## 0.3.2
 
 SV Node shutdown hardening; everything else is unchanged from 0.3.1.

@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-bsv-solo
-appVersion: 0.3.2
+appVersion: 0.3.3
 reviewedAt: ""
 reviewedBy: ""
 
@@ -44,6 +44,13 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
+  0.3.3 changes only the Home hero coin face: the coin is now gold, with an
+  engraved legend band (the Satoshi Vision reference coin), BSV side marks, circuit
+  traces and a dragon coiled behind the struck B, drawn in code (no image
+  asset). The coin's size, float and tilt, orbits and glow are unchanged.
+  Everything else -- node, wallet, readiness, Stratum, the 1% developer fee,
+  port 1922, shutdown handling and the rest of the UI -- is unchanged from
+  0.3.2.
   0.3.2 hardens SV Node shutdown; nothing else changes. The node supervisor
   logs every stop (BSV_NODE_SHUTDOWN_BEGIN / CLEAN / UNCLEAN / TIMEOUT),
   leaves a clean-shutdown marker only after bitcoind exits cleanly, reports
