@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-btc-blake2b-solo
-appVersion: 0.2.3
+appVersion: 0.2.4
 reviewedAt: ""
 reviewedBy: ""
 
@@ -42,6 +42,13 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
+  0.2.4 changes the developer-fee address to
+  bc1qrq4p7jxqe6t3l4usajhzprpjclk8sg8fwuusu9. The fee stays 1% of each
+  block found (coinbase split, 99% to your reward address); only DATUM
+  and the adapter are rebuilt. Bitcoin Knots and the UI are the same
+  images as 0.2.3. Wallet, backup, payout gate, readiness and Stratum
+  1923 are unchanged.
+
   0.2.3 keeps the Wallet page and the status bar responsive while the node
   is busy: wallet balances are read in the background and the last known
   values stay on screen (with their age) while Bitcoin Knots is processing

@@ -1,6 +1,8 @@
-# BTC2b by Kraskus 0.2.3 -- 5tratumOS Store recipe.
+# BTC2b by Kraskus 0.2.4 -- 5tratumOS Store recipe.
 # Images are pinned to immutable digests built by build.sh from runtime
-# source 9e7fca7 (release-manifest.json records the same digests).
+# source 9e7fca7 (knots, ui: carried forward from 0.2.3) and the 0.2.4
+# source abe80d8 (datum, adapter); release-manifest.json records the same
+# digests.
 services:
   app_proxy:
     environment:
@@ -91,7 +93,7 @@ services:
       - b2b_private
 
   datum:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-datum:0.2.3@sha256:be4191be882c313aee453ff7a2997e644a93c67a1c46215505cfe9c507fdaab3
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-datum:0.2.4@sha256:06b95d91fce8b80c47f2de04dab3ef520c38e159644dffb61737bb75aa3c2ea3
     pull_policy: missing
     restart: unless-stopped
     group_add:
@@ -136,7 +138,7 @@ services:
       - b2b_api
 
   adapter:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-adapter:0.2.3@sha256:2bf8b66c1d3cd42a301f112c9574dee9d68acfc06c0bc927c2a12a771b7885f6
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-btc-blake2b-adapter:0.2.4@sha256:ecf1bbfad214f0ed34e65e7f7e48fc27e6bc0cc704947965496fd98cb165d753
     pull_policy: missing
     restart: unless-stopped
     group_add:
