@@ -136,3 +136,14 @@ Kraskus brand asset vault.
 - Removes the visible Top 10 Submitted Difficulty section while retaining underlying share telemetry.
 - Keeps the automatic 1% developer fee maturity-gated, orphan-aware, retryable, non-blocking, and double-payment-safe.
 - Pins all runtime images to the immutable GitHub Actions 0.1.14 build from source commit `da26f67f06e44b8287595cdef226d79aa673aaac`.
+
+## 0.1.18
+
+- Workers are listed in natural name order (`miner2` before `miner10`).
+- Each worker shows its own assigned share difficulty, kept separate from best submitted share difficulty and Monero network difficulty.
+- Several rigs behind one IP address are now distinct; opening a worker shows that worker.
+- A rig can request its own fixed share difficulty by adding `+difficulty` to its username, for example `rig-01+50000`; the suffix is not shown in the worker name. There is no automatic difficulty adjustment (VarDiff); the default share difficulty stays 1,000.
+- Saving a new default share difficulty asks for confirmation when miners are connected; every miner now reconnects within seconds instead of staying on a stale job.
+- Share and event history files are size-bounded; lifetime accepted/rejected totals and best shares are kept across restarts and upgrades.
+- Far fewer routine events and container log lines (no event per share or per block-template poll).
+- Pins the rebuilt miner-gateway and UI images from GitHub Actions run 36323863586, source commit `2d3a9c1475e050576048e87b66d62e1ae8a9ca46`; monerod, adapter, and wallet-api digests are unchanged.
