@@ -53,10 +53,16 @@ class UpdateSafe(unittest.TestCase):
         review = yaml.safe_load((APP / "5tratstore-review.yml").read_text())
         self.assertRegex(str(app["version"]), r"^\d+\.\d+\.\d+$")
         self.assertEqual(str(app["version"]), str(review["appVersion"]))
-        for svc in compose()["services"].values():
+        ver = tuple(map(int, str(app["version"]).split(".")))
+        for name, svc in compose()["services"].items():
             image = svc.get("image", "")
-            if "btc-blake2b" in image:
-                self.assertIn(f":{app['version']}@", image)
+            if "btc-blake2b" not in image:
+                continue
+            tag = re.search(r":(\d+\.\d+\.\d+)@", image).group(1)
+            if name in ("datum", "adapter"):  # carry the fee: always rebuilt per release
+                self.assertEqual(tag, str(app["version"]), name)
+            else:  # knots/ui may be carried forward unchanged from an earlier release (still digest-pinned)
+                self.assertLessEqual(tuple(map(int, tag.split("."))), ver, name)
 
 
 if __name__ == "__main__":
