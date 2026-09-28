@@ -147,3 +147,11 @@ Kraskus brand asset vault.
 - Share and event history files are size-bounded; lifetime accepted/rejected totals and best shares are kept across restarts and upgrades.
 - Far fewer routine events and container log lines (no event per share or per block-template poll).
 - Pins the rebuilt miner-gateway and UI images from GitHub Actions run 36323863586, source commit `2d3a9c1475e050576048e87b66d62e1ae8a9ca46`; monerod, adapter, and wallet-api digests are unchanged.
+
+## 0.1.19
+
+- Fixes wallet Reset followed by Restore failing with "Wallet already exists" and leaving the wallet half set up when the wallet was busy synchronizing.
+- Reset now reports success only after both wallet services have really closed the wallet and its files are gone; if the wallet cannot be closed safely in time, Reset says so and removes nothing.
+- A Restore that fails part-way no longer leaves a half-configured wallet; it can simply be retried.
+- Includes the 0.1.18 worker, share-difficulty, reconnect and log changes unchanged.
+- Pins the rebuilt wallet-api image from GitHub Actions run 36360430025, source commit `9de56ed592ff03bc5c407384ee3ec84e5daa286f`; miner-gateway and UI keep their 0.1.18 digests, monerod and adapter are unchanged.
