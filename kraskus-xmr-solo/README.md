@@ -152,6 +152,6 @@ Kraskus brand asset vault.
 
 - Fixes wallet Reset followed by Restore failing with "Wallet already exists" and leaving the wallet half set up when the wallet was busy synchronizing.
 - Reset now reports success only after both wallet services have really closed the wallet and its files are gone; if the wallet cannot be closed safely in time, Reset says so and removes nothing.
-- A Restore that fails part-way no longer leaves a half-configured wallet; it can simply be retried.
+- A Restore that fails part-way no longer leaves a half-configured wallet; it can simply be retried. A slow Restore that times out in the browser still completes in the background.
 - Includes the 0.1.18 worker, share-difficulty, reconnect and log changes unchanged.
-- Pins the rebuilt wallet-api image from GitHub Actions run 36360430025, source commit `9de56ed592ff03bc5c407384ee3ec84e5daa286f`; miner-gateway and UI keep their 0.1.18 digests, monerod and adapter are unchanged.
+- Pins the rebuilt wallet-api image from GitHub Actions run 36362496508, source commit `0f9a8cbf77015ae98ef7c8060987319a95cf838c`; miner-gateway and UI keep their 0.1.18 digests, monerod and adapter are unchanged.
