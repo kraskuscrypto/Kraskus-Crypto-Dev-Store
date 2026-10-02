@@ -1,0 +1,26 @@
+id: kraskus-quantus-solo
+name: Quantus Solo
+tagline: Quantus (QTC) full node and solo mining node
+description: >-
+  Quantus Solo runs a Quantus mainnet full node on 5tratumOS and lets your
+  Quantus miners on the local network mine to your own wormhole reward
+  address. You import the reward address and its inner hash; the app checks
+  that they belong together and never asks for your 24 words. An optional
+  local CPU miner is included for testing only; it is not profitable on
+  mainnet. No developer fee. Upstream telemetry is turned off.
+version: 0.1.0
+category: Mining
+developer: Kraskus Crypto
+website: https://kraskuscrypto.com/
+repo: https://github.com/kraskuscrypto/Kraskus-Crypto-Apps
+support: https://kraskuscrypto.com/
+icon: assets/quantus-solo-emblem.png
+port: 33076
+path: /
+uiMode: proxy
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: ui
+      APP_PORT: 80
