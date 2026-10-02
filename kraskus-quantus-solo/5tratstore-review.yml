@@ -1,0 +1,57 @@
+schemaVersion: 1
+status: proposed
+appId: kraskus-quantus-solo
+appVersion: 0.1.0
+reviewedAt: ""
+reviewedBy: ""
+
+upstream:
+  sourceUrl: https://github.com/kraskuscrypto/Kraskus-Crypto-Apps
+  license: mixed
+  licenseEvidence: LICENSES.md
+
+# DEV STORE ONLY. These stay false until the Main gates close: G5a (source
+# mirror + legal review of the GPL-3.0 node binary obligations) and F6 (use
+# of the Quantus Q mark). Owner decision 2026-10-02: Dev testing may proceed
+# before them; Main may not.
+rights:
+  packageOriginal: true
+  softwareDistributionCleared: false
+  containerUseCleared: true
+  listingTextCleared: true
+  artworkCleared: false
+  noticesIncluded: true
+
+delivery:
+  mode: immutable-container-appliance
+  storePayload: recipe-only
+  mirrorsThirdPartyPayload: false
+
+compatibility:
+  osVersions:
+    - Debian-13-5tratumOS-clean-room
+  architectures:
+    - amd64
+  installTested: false
+  startTested: false
+  updateTested: false
+  uninstallTested: false
+
+security:
+  privileged: false
+  hostNetwork: false
+  dockerSocket: false
+  hostMountsReviewed: true
+  devicesReviewed: true
+  networkEndpointsReviewed: true
+
+notes: >-
+  Quantus Solo 0.1.0, Dev Store only, for real LAN mining tests. Quantus
+  mainnet node (quantus-node built by Kraskus from Quantus-Network/chain
+  482c5b9e, v1.0.2-Qm; binary sha256 e40fdcf0613afa5b712c2a6f2a3d329be1ca15fbfc446f3f4080b5c9ca99fefd),
+  remote LAN miners over QUIC on 1935/udp (token + TLS pin), optional local
+  CPU miner off by default, no GPU miner, no developer fee. Reward address
+  and inner hash are imported; seed words are never accepted. Upstream
+  telemetry and mDNS off; RPC and metrics internal only. Ports: UI 33076,
+  HTTPS/operator 33078, miner 1935/udp, P2P 30333. Storage guidance is
+  provisional. Not a Main release.
