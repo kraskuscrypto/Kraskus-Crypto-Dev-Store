@@ -1,0 +1,56 @@
+schemaVersion: 1
+status: proposed
+appId: kraskus-common-foundry
+appVersion: 0.1.0
+reviewedAt: ""
+reviewedBy: ""
+
+upstream:
+  sourceUrl: https://github.com/kraskuscrypto/Kraskus-Crypto-Apps
+  license: mixed
+  licenseEvidence: LICENSES.md
+
+rights:
+  packageOriginal: true
+  softwareDistributionCleared: false
+  containerUseCleared: false
+  listingTextCleared: false
+  artworkCleared: false
+  noticesIncluded: true
+
+delivery:
+  mode: immutable-container-appliance
+  storePayload: recipe-only
+  mirrorsThirdPartyPayload: false
+
+compatibility:
+  osVersions:
+    - Debian-13-5tratumOS-clean-room
+  architectures:
+    - amd64
+  installTested: false
+  startTested: false
+  updateTested: false
+  uninstallTested: false
+
+security:
+  privileged: false
+  hostNetwork: false
+  dockerSocket: false
+  hostMountsReviewed: true
+  devicesReviewed: true
+  networkEndpointsReviewed: true
+
+notes: >-
+  Common Foundry 0.1.0, Dev Store only. Base node app: official Common
+  Foundry v1.0.0 cmfd-node (033d41e, unmodified; sha256
+  d062859df619f6accdf9f21f8806d6b4ef422f6259ba2cc6e3aea2fdbb0be9f1) with the
+  Kraskus supervisor, adapter and UI. Images pinned by GHCR digest from
+  Kraskus-Crypto-Apps 01474e9. No GPU miner in this package (owner decision
+  2026-10-02; GPU companion is WS-2), so no devices are requested. Only
+  P2P 29444/tcp is published; RPC, metrics, adapter and UI stay internal (UI
+  via app_proxy on 33072). No telemetry, no mDNS, no developer fee. The model
+  bank is downloaded at runtime from the official sources and SHA-256
+  authenticated, never mirrored. Rights fields stay false until the Common
+  Foundry naming/trademark terms (re-audit C2) are published; the icon is
+  original Kraskus artwork, not the Common Foundry mark. Not a Main release.
