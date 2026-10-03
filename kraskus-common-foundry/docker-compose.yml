@@ -1,9 +1,9 @@
 # 5StratumOS package for Common Foundry (CMFD Kraskus) 0.1.0 -- DEV STORE ONLY
 # (not a Main release). Common Foundry mainnet v1.0.0 (033d41e).
 #
-# Package from Kraskus-Crypto-Apps feature/common-foundry-v1 @ 01474e9
-# (apps/common-foundry/package/kraskus-common-foundry), unchanged except that
-# the images are pinned to their GHCR digests (pushed 2026-10-02; each digest
+# Package from Kraskus-Crypto-Apps feature/common-foundry-v1 @ 89c73d5
+# (apps/common-foundry/package/kraskus-common-foundry; images built at
+# 01474e9, unchanged), unchanged except that the images are pinned to their GHCR digests (pushed 2026-10-02; each digest
 # equals the qualified local image ID).
 #
 # Base node app only: the NVIDIA miner is NOT part of 0.1.0 (owner decision
@@ -139,8 +139,15 @@ services:
       start_period: 10s
     security_opt:
       - no-new-privileges:true
+    # 5tratumOS publishes the manifest UI port (33072) on the APP_HOST
+    # service at install (it drops app_proxy and adds "33072:8080" to ui).
+    # Docker publishes nothing for a container whose only network is
+    # internal, so ui must also join the non-internal cmfd_public network or
+    # the portal is refused (Dev 0.1.0 on VM100). The UI still reaches the
+    # adapter over cmfd_private; it publishes no port itself.
     networks:
       - cmfd_private
+      - cmfd_public
 
 networks:
   cmfd_public:
