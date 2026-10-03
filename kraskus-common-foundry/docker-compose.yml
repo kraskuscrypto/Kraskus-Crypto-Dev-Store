@@ -1,0 +1,150 @@
+# 5StratumOS package for Common Foundry (CMFD Kraskus) 0.1.0 -- DEV STORE ONLY
+# (not a Main release). Common Foundry mainnet v1.0.0 (033d41e).
+#
+# Package from Kraskus-Crypto-Apps feature/common-foundry-v1 @ 01474e9
+# (apps/common-foundry/package/kraskus-common-foundry), unchanged except that
+# the images are pinned to their GHCR digests (pushed 2026-10-02; each digest
+# equals the qualified local image ID).
+#
+# Base node app only: the NVIDIA miner is NOT part of 0.1.0 (owner decision
+# 2026-10-02). It arrives with the GPU companion package (WS-2) after
+# 5tratumOS GPU qualification.
+#
+#   init    one-shot as root: data layout and ownership (uid 1000)
+#   node     official cmfd-node (unmodified) + Kraskus supervisor:
+#            model-bank preparation, node process, wallet control socket,
+#            allowlisted token-protected RPC proxy on 18481 (private only).
+#            P2P 29444 published (the only published port; no RPC, no metrics,
+#            no mDNS, no telemetry); official RPC 127.0.0.1:29443 loopback only.
+#   adapter  readiness, wallet UX, mining gate, UI API (18480), optional
+#            pool statistics fetch (https egress). A normal service: sharing
+#            the node's network namespace left the adapter stranded after
+#            node restarts (RCNet QA).
+#   ui       Template V2 web UI (nginx) behind app_proxy
+#
+# There is no GPU miner in this package (see above): a compose GPU
+# reservation would make installation fail on hosts without the NVIDIA
+# runtime.
+#
+# Persistent data: node/ (chain, wallet.key, wallet-archive/), inputs/ (the
+# authenticated 6.4 GB model bank; re-downloadable), runtime/ (supervisor
+# state, control socket, adapter state), secrets/ (node container only).
+# Networks: cmfd_public, cmfd_private (internal). Names are permanent.
+services:
+  app_proxy:
+    environment:
+      APP_HOST: ui
+      APP_PORT: 8080
+    networks:
+      - cmfd_private
+
+  init:
+    image: ghcr.io/kraskuscrypto/kraskus-common-foundry-node@sha256:eef674dca0be3c9975f5abdefd7eefda2a0bbe261b14cd56e5d16760e392c83c
+    pull_policy: missing
+    restart: "no"
+    user: "0:0"
+    entrypoint: ["sh", "-c"]
+    command:
+      - "mkdir -p /d/node /d/inputs /d/runtime /d/secrets /d/miner-scratch && chown 1000:1000 /d/node /d/inputs /d/runtime /d/miner-scratch && chown 0:0 /d/secrets && chmod 700 /d/secrets /d/node && chmod 750 /d/runtime"
+    volumes:
+      - ${APP_DATA_DIR}:/d
+    network_mode: "none"
+    security_opt:
+      - no-new-privileges:true
+
+  node:
+    image: ghcr.io/kraskuscrypto/kraskus-common-foundry-node@sha256:eef674dca0be3c9975f5abdefd7eefda2a0bbe261b14cd56e5d16760e392c83c
+    pull_policy: missing
+    restart: unless-stopped
+    # Supervisor as root with a minimal capability set so the stored wallet
+    # passphrase is root:root 0600; cmfd-node itself runs as uid 1000.
+    user: "0:0"
+    # The supervisor stops cmfd-node with SIGTERM and waits up to 300 s.
+    stop_grace_period: 6m
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    volumes:
+      - ${APP_DATA_DIR}/node:/data
+      - ${APP_DATA_DIR}/inputs:/inputs
+      - ${APP_DATA_DIR}/runtime:/runtime
+      - ${APP_DATA_DIR}/secrets:/secrets
+    ports:
+      - "29444:29444/tcp"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import os,socket,sys; s=socket.socket(socket.AF_UNIX); s.settimeout(5); s.connect('/runtime/control.sock'); s.sendall(b'{\"op\":\"state\"}'); s.shutdown(socket.SHUT_WR); sys.exit(0 if b'\"ok\": true' in s.recv(4096) else 1)"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    tmpfs:
+      - /tmp
+      - /run/cmfd:mode=0700
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID
+      - DAC_OVERRIDE
+      - FOWNER
+      - KILL
+    networks:
+      - cmfd_public
+      - cmfd_private
+
+  adapter:
+    image: ghcr.io/kraskuscrypto/kraskus-common-foundry-adapter@sha256:17bb733631e07cab95d410919e6388643e3c0645e95874d8b3f94275096b099d
+    pull_policy: missing
+    restart: unless-stopped
+    stop_grace_period: 20s
+    depends_on:
+      node:
+        condition: service_started
+    volumes:
+      - ${APP_DATA_DIR}/runtime:/runtime
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:18480/health', timeout=5).read()"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    # cmfd_public only for outbound HTTPS to the pool statistics page the
+    # customer configures (no published ports); everything else is private.
+    networks:
+      - cmfd_private
+      - cmfd_public
+
+  ui:
+    image: ghcr.io/kraskuscrypto/kraskus-common-foundry-ui@sha256:2844695777f9b4ce741c9f8158b969c5117b0054e76d986a8ea912f7e17a997f
+    pull_policy: missing
+    restart: unless-stopped
+    depends_on:
+      adapter:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/health >/dev/null"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - cmfd_private
+
+networks:
+  cmfd_public:
+    driver: bridge
+  cmfd_private:
+    driver: bridge
+    internal: true
