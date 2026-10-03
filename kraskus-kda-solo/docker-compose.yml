@@ -1,0 +1,211 @@
+# KDA Solo by Kraskus 0.1.0 -- 5tratumOS Store recipe.
+#
+#   init       adapter image, one-shot as root: data layout and ownership
+#   bootstrap  adapter image, one-shot as root: community snapshot download +
+#              BLAKE2 verification into chainweb/ (skipped once a DB exists)
+#   node       community chainweb-node 3.2.1 (pinned upstream binary image +
+#              Kraskus supervisor). P2P 1789 published; service API 1848 internal
+#   stratum    Kraskus Kadena Stratum gateway                        host 1917
+#   adapter    readiness, wallet, mining gate, ledger, dev fee, API (internal)
+#   ui         Template V2 web UI (nginx) behind app_proxy
+#
+# Persistent data:
+#   chainweb/  chainweb-node databases (RocksDB + Pact SQLite; ~59 GB compacted)
+#   data/      wallet/ (state), secrets/ (sealed key; adapter only), ledger/
+#   runtime/   gate, telemetry, block events, node key hand-off
+#
+# Networks: kda_public (internet egress: node P2P, snapshot download,
+# reference heights; published Stratum) and kda_private (internal only).
+# These names are permanent (the 5tratumOS CLI never removes a dropped network).
+#
+# Image references are pinned to immutable digests at publication
+# (release-manifest.json records the same digests).
+services:
+  app_proxy:
+    environment:
+      APP_HOST: ui
+      APP_PORT: 80
+    networks:
+      - kda_private
+
+  init:
+    image: ghcr.io/kraskuscrypto/kraskus-kda-solo-adapter@sha256:7ef6bb0f31be9e991cb7df8c14974ee415dbc43027e0fcdda1432ba327cc7625
+    pull_policy: missing
+    restart: "no"
+    user: "0:0"
+    command: ["python", "/app/kda_init.py"]
+    healthcheck:
+      disable: true
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+      - ${APP_DATA_DIR}/runtime:/runtime
+    network_mode: "none"
+    security_opt:
+      - no-new-privileges:true
+
+  bootstrap:
+    image: ghcr.io/kraskuscrypto/kraskus-kda-solo-adapter@sha256:7ef6bb0f31be9e991cb7df8c14974ee415dbc43027e0fcdda1432ba327cc7625
+    pull_policy: missing
+    restart: "no"
+    user: "0:0"
+    command: ["python", "/app/kda_bootstrap.py"]
+    healthcheck:
+      disable: true
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    environment:
+      KDA_BOOTSTRAP_MODE: compacted
+      KDA_DB_DIR: /chainweb/db
+      KDA_RUNTIME_DIR: /runtime
+      # Limit snapshot download speed (KB/s, 0 = unlimited) on shared disks/links.
+      KDA_BOOTSTRAP_BWLIMIT_KBPS: "0"
+      # Storage policy: keep in step with the node's values below. The download
+      # needs (remaining snapshot size + floor + margin) free before it starts
+      # and stops, keeping the partial, if free space falls to the floor.
+      KDA_NODE_MIN_FREE_GB: "15"
+      KDA_BOOTSTRAP_MARGIN_GB: "5"
+    volumes:
+      - ${APP_DATA_DIR}/chainweb:/chainweb/db
+      - ${APP_DATA_DIR}/runtime:/runtime
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - kda_public
+
+  node:
+    image: ghcr.io/kraskuscrypto/kraskus-kda-solo-node@sha256:4d2e3415a6f88f100e7cb859dce12b42d997a770284508a2389da56f0081926d
+    pull_policy: missing
+    restart: unless-stopped
+    # chainweb-node flushes RocksDB on SIGINT; the supervisor forwards the stop
+    # signal and waits up to 300 s. See README "Stopping safely".
+    stop_grace_period: 6m
+    depends_on:
+      bootstrap:
+        condition: service_completed_successfully
+    environment:
+      KDA_CHAINWEB_VERSION: mainnet01
+      KDA_NODE_RTS: "-T -H1G -A64M"
+      KDA_NODE_LOG_LEVEL: warn
+      # Storage policy: stop chainweb-node gracefully below MIN, restart at RESUME
+      # (GB free on the database filesystem). Raise both on shared hosts.
+      KDA_NODE_MIN_FREE_GB: "15"
+      KDA_NODE_RESUME_FREE_GB: "20"
+      # Private P2P mode: behind NAT (no inbound 1789) the bootstrap nodes cannot
+      # reach us back and every peer handshake times out (VM120, 2026-09-30:
+      # 0 blocks in 7 h). Private mode only pulls from the known bootstrap peers
+      # and syncs normally. Owner decision D7; public mode needs 1789 forwarded.
+      # --p2p-hostname=localhost: without it chainweb-node asks the bootstrap hosts
+      # for its external IP at start and aborts if none answers ("withHost failed");
+      # a private node never advertises itself, so the lookup is not needed.
+      KDA_NODE_EXTRA_ARGS: "--bootstrap-reachability=0 --enable-private --p2p-hostname=localhost"
+    volumes:
+      - ${APP_DATA_DIR}/chainweb:/chainweb/db
+      - ${APP_DATA_DIR}/runtime:/runtime
+    ports:
+      - "1789:1789/tcp"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/kda-node-healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 30m
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    networks:
+      - kda_public
+      - kda_private
+
+  stratum:
+    image: ghcr.io/kraskuscrypto/kraskus-kda-solo-stratum@sha256:473c03f9ba2a9100080661acb3bf839b186887c9030a4357881faa0463ecf8a2
+    pull_policy: missing
+    restart: unless-stopped
+    stop_grace_period: 20s
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    environment:
+      KDA_CHAINWEB_VERSION: mainnet01
+      KDA_NODE_URL: http://node:1848
+      KDA_STRATUM_PORT: "1917"
+      KDA_RUNTIME_DIR: /runtime
+    volumes:
+      - ${APP_DATA_DIR}/runtime:/runtime
+    ports:
+      - "1917:1917/tcp"
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    networks:
+      - kda_public
+      - kda_private
+
+  adapter:
+    image: ghcr.io/kraskuscrypto/kraskus-kda-solo-adapter@sha256:7ef6bb0f31be9e991cb7df8c14974ee415dbc43027e0fcdda1432ba327cc7625
+    pull_policy: missing
+    restart: unless-stopped
+    stop_grace_period: 20s
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    environment:
+      KDA_CHAINWEB_VERSION: mainnet01
+      KDA_NODE_URL: http://node:1848
+      KDA_DATA_DIR: /data
+      KDA_RUNTIME_DIR: /runtime
+      KDA_DB_DIR: /chainweb-db
+      KDA_STRATUM_PUBLIC_PORT: "1917"
+      KDA_BOOTSTRAP_MODE: compacted
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+      - ${APP_DATA_DIR}/runtime:/runtime
+      - ${APP_DATA_DIR}/chainweb:/chainweb-db:ro
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    networks:
+      - kda_public
+      - kda_private
+
+  ui:
+    image: ghcr.io/kraskuscrypto/kraskus-kda-solo-ui@sha256:793b073996f0db7df7a56f024bb0c28d8e27bec3d9b5c3a36260e988958238a8
+    pull_policy: missing
+    restart: unless-stopped
+    depends_on:
+      adapter:
+        condition: service_healthy
+    environment:
+      ADAPTER_HOST: adapter
+      ADAPTER_PORT: "18480"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1/health >/dev/null"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    security_opt:
+      - no-new-privileges:true
+    # kda_public is required: Docker cannot publish the platform's UI port
+    # (${port}:80, added by the 5tratumOS renderer) from an internal-only network.
+    networks:
+      - kda_public
+      - kda_private
+
+networks:
+  kda_public:
+    driver: bridge
+  kda_private:
+    driver: bridge
+    internal: true
