@@ -1,4 +1,4 @@
-# KDA Solo by Kraskus 0.1.0 -- 5tratumOS Store recipe.
+# KDA Solo by Kraskus 0.1.1 -- 5tratumOS Store recipe (UI 0.1.1; node/stratum/adapter 0.1.0).
 #
 #   init       adapter image, one-shot as root: data layout and ownership
 #   bootstrap  adapter image, one-shot as root: community snapshot download +
@@ -199,7 +199,7 @@ services:
       - kda_private
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-kda-solo-ui@sha256:793b073996f0db7df7a56f024bb0c28d8e27bec3d9b5c3a36260e988958238a8
+    image: ghcr.io/kraskuscrypto/kraskus-kda-solo-ui@sha256:286b2639048cf79cd4bb793740bac805d7646d84f737e960c0c29673fa6d0405
     pull_policy: missing
     restart: unless-stopped
     depends_on:
