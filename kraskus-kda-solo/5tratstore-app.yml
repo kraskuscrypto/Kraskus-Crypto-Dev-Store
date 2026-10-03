@@ -1,0 +1,29 @@
+id: kraskus-kda-solo
+name: KDA Solo by Kraskus
+tagline: Kadena Chainweb node, backed-up wallet, and true solo mining for Kadena ASICs
+description: >-
+  KDA Solo by Kraskus runs the community-maintained Kadena chainweb-node
+  (kda-community, the maintainers of the Kadena network since Kadena LLC
+  ceased operations in 2025) with per-chain sync status for all 20 chains,
+  a Kadena k: account wallet with a confirmed recovery-phrase backup,
+  same-chain sends, and a true-solo Stratum endpoint for Blake2s Kadena
+  ASICs on port 1917. Blocks pay your wallet directly; a block is only
+  counted when the network has accepted it. First start downloads a
+  verified ~59 GB community database snapshot. A fixed 1 percent developer
+  fee is settled only from confirmed block rewards, on the same chain.
+version: 0.1.0
+category: Mining
+developer: Kraskus Crypto
+website: https://kraskuscrypto.com/
+repo: https://github.com/kraskuscrypto/Kraskus-Crypto-Apps
+support: https://kraskuscrypto.com/
+icon: assets/kda-emblem.png
+port: 33075
+path: /
+uiMode: proxy
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: ui
+      APP_PORT: 80
