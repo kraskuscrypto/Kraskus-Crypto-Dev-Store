@@ -11,7 +11,7 @@ description: >-
   counted when the network has accepted it. First start downloads a
   verified ~59 GB community database snapshot. A fixed 1 percent developer
   fee is settled only from confirmed block rewards, on the same chain.
-version: 0.1.0
+version: 0.1.1
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/

@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-kda-solo
-appVersion: 0.1.0
+appVersion: 0.1.1
 reviewedAt: ""
 reviewedBy: ""
 
@@ -42,7 +42,10 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
-  0.1.0 is published to the Kraskus Dev Store only (not Main). D1 (developer-fee design, option B) and D2 (the
+  0.1.1 changes only the UI image (KDA branding: hero face derived from the approved Store emblem, header
+  emblem, single-line "KDA Kraskus"); node, stratum and adapter stay on the qualified 0.1.0 digests, so the
+  adapter still reports 0.1.0 in Settings. Includes the 0.1.0 clean-install fix (node waits for bootstrap).
+  Published to the Kraskus Dev Store only (not Main). D1 (developer-fee design, option B) and D2 (the
   dedicated Kraskus developer-fee account k:2866aeb222d7a6f722dc35633d803b02a5e1a2cffe409aafb3a68fa1a8611225) are
   approved; VM120 mainnet qualification passed. Kadena ASIC hardware support is
   unverified until a real unit is tested. amd64 only: chainweb-node refuses mining coordination on

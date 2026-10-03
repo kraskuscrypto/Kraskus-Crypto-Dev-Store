@@ -1,4 +1,4 @@
-# KDA Solo by Kraskus 0.1.0
+# KDA Solo by Kraskus 0.1.1
 
 A Kadena (KDA) Chainweb node, a Kadena wallet, and a true-solo Stratum endpoint for Kadena
 (Blake2s) ASICs, packaged for 5tratumOS.
@@ -102,7 +102,7 @@ TCP 1789; public mode is not offered in the UI yet.
 chainweb-node needs time to close its databases. The app gives it up to 6 minutes. Prefer
 stopping the app from the 5tratumOS UI rather than force-removing its containers.
 
-## Limitations (0.1.0)
+## Limitations (0.1.1)
 
 - Same-chain sends only. Cross-chain transfers are planned; the compacted database may not
   serve the SPV proofs they need.
