@@ -80,9 +80,28 @@ services:
     # chainweb-node flushes RocksDB on SIGINT; the supervisor forwards the stop
     # signal and waits up to 300 s. See README "Stopping safely".
     stop_grace_period: 6m
+    # The snapshot download (bootstrap) takes about an hour on a clean host. Waiting for it with
+    # service_completed_successfully blocked `docker compose up -d` (and the platform's install/up,
+    # 600 s timeout) for the whole download. Compose now only orders the start; the node itself waits
+    # until THIS bootstrap has finished (state DONE or SKIPPED and no partial download present) before
+    # starting chainweb-node, so it never opens a database that is still being written.
     depends_on:
       bootstrap:
-        condition: service_completed_successfully
+        condition: service_started
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        trap 'exit 0' TERM INT
+        echo "kda-node: waiting for the chain database bootstrap to finish"
+        sleep 15 & wait $$!
+        while :; do
+          st=$$(sed -n 's/.*"state": "\([A-Z_]*\)".*/\1/p' /runtime/bootstrap-status.json 2>/dev/null)
+          if [ ! -e /chainweb/db/.bootstrap-incoming ]; then
+            case "$$st" in DONE|SKIPPED) echo "kda-node: bootstrap $$st"; exec /usr/local/bin/kda-node-entrypoint.sh ;; esac
+          fi
+          sleep 10 & wait $$!
+        done
     environment:
       KDA_CHAINWEB_VERSION: mainnet01
       KDA_NODE_RTS: "-T -H1G -A64M"
