@@ -1,69 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   Common Foundry (CMFD Kraskus) store icon, 512x512.
-  Original Kraskus artwork: the in-app CMFD emblem
+  The official Common Foundry "CF" emblem (provided by Kris, 2026-10-05) set
+  in the Kraskus hero-coin format, as in the 0.1.2 app
   (Kraskus-Crypto-Apps apps/common-foundry/ui/components/cmfd-emblem.tsx,
-  geometry and gradients unchanged): a geared ring around a 3x3 "forge
-  matrix" set as a diamond, on a graphite coin face with a bronze rim.
-  It is not derived from Common Foundry's own mark.
+  outline and copper gradient unchanged): polished copper CF with an engraved
+  edge on a deep bronze coin face with a bronze rim.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
   <defs>
-    <radialGradient id="hot" cx="50%" cy="45%" r="60%">
-      <stop offset="0%" stop-color="#fff2c8"/>
-      <stop offset="45%" stop-color="#ffb25a"/>
-      <stop offset="100%" stop-color="#dd5c1c"/>
-    </radialGradient>
-    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#ffd9b8"/>
-      <stop offset="100%" stop-color="#b8561f"/>
-    </linearGradient>
     <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#f0b083"/>
       <stop offset="45%" stop-color="#a8501c"/>
       <stop offset="70%" stop-color="#5e2a0e"/>
       <stop offset="100%" stop-color="#c46a32"/>
     </linearGradient>
-    <radialGradient id="face" cx="45%" cy="40%" r="70%">
-      <stop offset="0%" stop-color="#2b2e30"/>
-      <stop offset="100%" stop-color="#0f1112"/>
+    <radialGradient id="face" cx="34%" cy="23%" r="85%">
+      <stop offset="0%" stop-color="#b0602c"/>
+      <stop offset="58%" stop-color="#6e2c0c"/>
+      <stop offset="100%" stop-color="#2e1003"/>
     </radialGradient>
-    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#dd5c1c" stop-opacity="0.28"/>
-      <stop offset="100%" stop-color="#dd5c1c" stop-opacity="0"/>
+    <radialGradient id="inner" cx="50%" cy="50%" r="50%">
+      <stop offset="80%" stop-color="#3d1504" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#3d1504" stop-opacity="0.55"/>
     </radialGradient>
+    <linearGradient id="copper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffe2c6"/>
+      <stop offset="38%" stop-color="#f2a56e"/>
+      <stop offset="72%" stop-color="#d27a43"/>
+      <stop offset="100%" stop-color="#a8532a"/>
+    </linearGradient>
+    <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.32"/>
+      <stop offset="45%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="28"/>
+    </filter>
+    <path id="cf" d="M397 106 L680 106 L571 233 L373 233 L373 688 L585 688 L585 433 L708 308 L1075 308 L968 431 L710 431 L710 572 L970 572 L872 687 L710 687 L710 945 L587 1075 L587 812 L383 812 L245 662 L245 258 Z"/>
   </defs>
-  <circle cx="256" cy="256" r="248" fill="url(#rim)"/>
-  <circle cx="256" cy="256" r="226" fill="url(#face)"/>
-  <circle cx="256" cy="256" r="226" fill="none" stroke="#dd5c1c" stroke-opacity="0.55" stroke-width="2"/>
-  <circle cx="256" cy="256" r="190" fill="url(#glow)"/>
-  <!-- the in-app emblem (viewBox 0 0 100 100), scaled 3.3x and centred -->
-  <g transform="translate(91 91) scale(3.3)">
-    <g fill="url(#metal)">
-      <rect x="46.5" y="3" width="7" height="9" rx="1.6" transform="rotate(0 50 50)"/>
-      <rect x="46.5" y="3" width="7" height="9" rx="1.6" transform="rotate(30 50 50)"/>
-      <rect x="46.5" y="3" width="7" height="9" rx="1.6" transform="rotate(60 50 50)"/>
-      <rect x="46.5" y="3" width="7" height="9" rx="1.6" transform="rotate(90 50 50)"/>
-      <rect x="46.5" y="3" width="7" height="9" rx="1.6" transform="rotate(120 50 50)"/>
-      <rect x="46.5" y="3" width="7" height="9" rx="1.6" transform="rotate(150 50 50)"/>
-      <rect x="46.5" y="3" width="7" height="9" rx="1.6" transform="rotate(180 50 50)"/>
-      <rect x="46.5" y="3" width="7" height="9" rx="1.6" transform="rotate(210 50 50)"/>
-      <rect x="46.5" y="3" width="7" height="9" rx="1.6" transform="rotate(240 50 50)"/>
-      <rect x="46.5" y="3" width="7" height="9" rx="1.6" transform="rotate(270 50 50)"/>
-      <rect x="46.5" y="3" width="7" height="9" rx="1.6" transform="rotate(300 50 50)"/>
-      <rect x="46.5" y="3" width="7" height="9" rx="1.6" transform="rotate(330 50 50)"/>
-    </g>
-    <circle cx="50" cy="50" r="38" fill="none" stroke="url(#metal)" stroke-width="5"/>
-    <g transform="rotate(45 50 50)">
-      <rect x="31.5" y="31.5" width="11" height="11" rx="2.4" fill="url(#metal)" opacity="0.92"/>
-      <rect x="44.5" y="31.5" width="11" height="11" rx="2.4" fill="url(#metal)" opacity="0.92"/>
-      <rect x="57.5" y="31.5" width="11" height="11" rx="2.4" fill="url(#metal)" opacity="0.92"/>
-      <rect x="31.5" y="44.5" width="11" height="11" rx="2.4" fill="url(#metal)" opacity="0.92"/>
-      <rect x="44.5" y="44.5" width="11" height="11" rx="2.4" fill="url(#hot)"/>
-      <rect x="57.5" y="44.5" width="11" height="11" rx="2.4" fill="url(#metal)" opacity="0.92"/>
-      <rect x="31.5" y="57.5" width="11" height="11" rx="2.4" fill="url(#metal)" opacity="0.92"/>
-      <rect x="44.5" y="57.5" width="11" height="11" rx="2.4" fill="url(#metal)" opacity="0.92"/>
-      <rect x="57.5" y="57.5" width="11" height="11" rx="2.4" fill="url(#metal)" opacity="0.92"/>
-    </g>
-  </g>
+  <!-- rim -->
+  <circle cx="256" cy="256" r="246" fill="url(#rim)"/>
+  <!-- face -->
+  <circle cx="256" cy="256" r="226" fill="url(#face)" stroke="#ffc49a" stroke-width="3"/>
+  <circle cx="256" cy="256" r="219" fill="none" stroke="#b8561f" stroke-width="8"/>
+  <circle cx="256" cy="256" r="215" fill="url(#inner)"/>
+  <!-- official CF emblem, 62% of the face -->
+  <svg x="116" y="116" width="280" height="280" viewBox="150 81 1020 1020" overflow="visible">
+    <use href="#cf" fill="#ffb070" opacity="0.33" filter="url(#glow)"/>
+    <use href="#cf" fill="#3d1504" transform="translate(11 15)"/>
+    <use href="#cf" fill="url(#copper)" stroke="#4a1e08" stroke-width="14" stroke-linejoin="miter"/>
+    <use href="#cf" fill="url(#sheen)"/>
+  </svg>
 </svg>

@@ -1,16 +1,16 @@
 id: kraskus-common-foundry
 name: Common Foundry
-tagline: Common Foundry mainnet node with wallet and Kraskus monitoring
+tagline: Common Foundry mainnet node with encrypted wallet and Kraskus monitoring
 description: >-
-  Run and monitor a Common Foundry mainnet node from 5tratumOS with wallet
-  integration, model-bank verification, node status, block monitoring and
-  Kraskus controls. Uses the official Common Foundry v1.0.0 node, unmodified,
-  behind the Kraskus interface (CMFD Kraskus). The node starts after the
-  authenticated mainnet launch (3 October 2026, 17:00 UTC). NVIDIA mining is
-  not included in the base 0.1.0 package; official NVIDIA miner support will
-  be added through the GPU companion package after 5tratumOS GPU
-  qualification. AMD mining is not available in 0.1.0. No developer fee.
-version: 0.1.0
+  Runs the official Common Foundry v1.0.8 node, unmodified, with its encrypted
+  wallet behind the Kraskus interface (CMFD Kraskus). The app downloads and
+  authenticates the ForgeMatrix model bank, syncs the mainnet chain, and walks
+  you through creating, backing up and restoring your wallet. Your wallet
+  passphrase is needed only to send, back up, restore or forget the wallet.
+  NVIDIA mining is not included in the base package; official NVIDIA miner
+  support will be added through the GPU companion package after 5tratumOS GPU
+  qualification. AMD mining is not available. No developer fee.
+version: 0.1.2
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
