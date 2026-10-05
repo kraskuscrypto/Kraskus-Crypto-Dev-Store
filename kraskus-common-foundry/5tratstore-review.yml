@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-common-foundry
-appVersion: 0.1.0
+appVersion: 0.1.2
 reviewedAt: ""
 reviewedBy: ""
 
@@ -42,15 +42,21 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
-  Common Foundry 0.1.0, Dev Store only. Base node app: official Common
-  Foundry v1.0.0 cmfd-node (033d41e, unmodified; sha256
-  d062859df619f6accdf9f21f8806d6b4ef422f6259ba2cc6e3aea2fdbb0be9f1) with the
+  Common Foundry 0.1.2, Dev Store only. Base node app: official Common
+  Foundry mainnet v1.0.8 (3aa5369; SHA256SUMS signed by the
+  commonfoundry-mainnet-owner key; cmfd-node sha256 652f8e03...) with the
   Kraskus supervisor, adapter and UI. Images pinned by GHCR digest from
-  Kraskus-Crypto-Apps 01474e9. No GPU miner in this package (owner decision
-  2026-10-02; GPU companion is WS-2), so no devices are requested. Only
-  P2P 29444/tcp is published; RPC, metrics, adapter and UI stay internal (UI
-  via app_proxy on 33072). No telemetry, no mDNS, no developer fee. The model
-  bank is downloaded at runtime from the official sources and SHA-256
-  authenticated, never mirrored. Rights fields stay false until the Common
-  Foundry naming/trademark terms (re-audit C2) are published; the icon is
-  original Kraskus artwork, not the Common Foundry mark. Not a Main release.
+  Kraskus-Crypto-Apps c18ef50. Changes from 0.1.0: v1.0.8 node (16-block
+  sync batches; 0.1.0's v1.0.0 node could not sync past height 0), beacon
+  fetched by the official launcher (no Kraskus shim), wallet passphrase only
+  for send/backup/restore/forget, stable backup wizard, storage floors
+  (stop 28 GiB, start 52 GiB) and 80% disk warning, simplified owner UI with
+  Diagnostics, official CF emblem. Package structure, ports, volumes and
+  capabilities are unchanged from 0.1.0. No GPU miner in this package (owner
+  decision D3 / WS-2), so no devices are requested. Only P2P 29444/tcp is
+  published; RPC, metrics, adapter and UI stay internal (UI via app_proxy on
+  33072). No telemetry, no mDNS, no developer fee. The model bank is
+  downloaded at runtime from the official sources and SHA-256 authenticated,
+  never mirrored. Rights fields stay false until the Common Foundry
+  naming/trademark terms (re-audit C2) are published; the icon is the
+  official CF emblem provided by the owner. Not a Main release.

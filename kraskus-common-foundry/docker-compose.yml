@@ -1,16 +1,16 @@
-# 5StratumOS package for Common Foundry (CMFD Kraskus) 0.1.0 -- DEV STORE ONLY
-# (not a Main release). Common Foundry mainnet v1.0.0 (033d41e).
+# 5StratumOS package for Common Foundry (CMFD Kraskus) 0.1.2 -- DEV STORE ONLY
+# (not a Main release). Common Foundry mainnet v1.0.8 (3aa5369).
 #
-# Package from Kraskus-Crypto-Apps feature/common-foundry-v1 @ 89c73d5
+# Package from Kraskus-Crypto-Apps feature/common-foundry-v1 @ c18ef50
 # (apps/common-foundry/package/kraskus-common-foundry; images built at
-# 01474e9, unchanged), unchanged except that the images are pinned to their GHCR digests (pushed 2026-10-02; each digest
-# equals the qualified local image ID).
+# c18ef50), unchanged except that the images are pinned to their GHCR digests
+# (pushed 2026-10-05; each digest equals the qualified local image ID).
 #
-# Base node app only: the NVIDIA miner is NOT part of 0.1.0 (owner decision
-# 2026-10-02). It arrives with the GPU companion package (WS-2) after
-# 5tratumOS GPU qualification.
+# Base node app only, as in 0.1.0: the NVIDIA miner overlay
+# (docker-compose.gpu.yml in the Apps repo) is not part of the store package
+# until 5tratumOS GPU delivery is decided (owner decision D3 / WS-2).
 #
-#   init    one-shot as root: data layout and ownership (uid 1000)
+#   init     one-shot as root: data layout and ownership (uid 1000)
 #   node     official cmfd-node (unmodified) + Kraskus supervisor:
 #            model-bank preparation, node process, wallet control socket,
 #            allowlisted token-protected RPC proxy on 18481 (private only).
@@ -39,7 +39,7 @@ services:
       - cmfd_private
 
   init:
-    image: ghcr.io/kraskuscrypto/kraskus-common-foundry-node@sha256:eef674dca0be3c9975f5abdefd7eefda2a0bbe261b14cd56e5d16760e392c83c
+    image: ghcr.io/kraskuscrypto/kraskus-common-foundry-node@sha256:8f816fefba9d67f5c17d6a9b81d24bf92a4579743196fefcb8fe5a6ae8b8848d
     pull_policy: missing
     restart: "no"
     user: "0:0"
@@ -53,7 +53,7 @@ services:
       - no-new-privileges:true
 
   node:
-    image: ghcr.io/kraskuscrypto/kraskus-common-foundry-node@sha256:eef674dca0be3c9975f5abdefd7eefda2a0bbe261b14cd56e5d16760e392c83c
+    image: ghcr.io/kraskuscrypto/kraskus-common-foundry-node@sha256:8f816fefba9d67f5c17d6a9b81d24bf92a4579743196fefcb8fe5a6ae8b8848d
     pull_policy: missing
     restart: unless-stopped
     # Supervisor as root with a minimal capability set so the stored wallet
@@ -96,7 +96,7 @@ services:
       - cmfd_private
 
   adapter:
-    image: ghcr.io/kraskuscrypto/kraskus-common-foundry-adapter@sha256:17bb733631e07cab95d410919e6388643e3c0645e95874d8b3f94275096b099d
+    image: ghcr.io/kraskuscrypto/kraskus-common-foundry-adapter@sha256:1b7fdddfdc06824fba1e4b60604f379ecf3267c23f74a4e2b96d80fc67534f20
     pull_policy: missing
     restart: unless-stopped
     stop_grace_period: 20s
@@ -125,7 +125,7 @@ services:
       - cmfd_public
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-common-foundry-ui@sha256:2844695777f9b4ce741c9f8158b969c5117b0054e76d986a8ea912f7e17a997f
+    image: ghcr.io/kraskuscrypto/kraskus-common-foundry-ui@sha256:0ea0a40164e1b13e3110f9f3d2baf289933632022939a47d047c60c59fa5210e
     pull_policy: missing
     restart: unless-stopped
     depends_on:
