@@ -1,0 +1,60 @@
+schemaVersion: 1
+status: proposed
+appId: kraskus-common-foundry-gpu-miner
+appVersion: 0.1.3
+reviewedAt: ""
+reviewedBy: ""
+
+upstream:
+  sourceUrl: https://github.com/kraskuscrypto/Kraskus-Crypto-Apps
+  license: mixed
+  licenseEvidence: LICENSES.md
+
+rights:
+  packageOriginal: true
+  softwareDistributionCleared: false
+  containerUseCleared: false
+  listingTextCleared: false
+  artworkCleared: false
+  noticesIncluded: true
+
+delivery:
+  mode: immutable-container-appliance
+  storePayload: recipe-only
+  mirrorsThirdPartyPayload: false
+
+compatibility:
+  osVersions:
+    - Debian-13-5tratumOS-clean-room
+  architectures:
+    - amd64
+  installTested: true
+  startTested: true
+  updateTested: true
+  uninstallTested: true
+
+security:
+  privileged: false
+  hostNetwork: false
+  dockerSocket: false
+  hostMountsReviewed: true
+  devicesReviewed: false
+  networkEndpointsReviewed: true
+
+notes: >-
+  Common Foundry GPU Miner 0.1.3, Dev Store only (companion to
+  kraskus-common-foundry, D7/WS-2). Official Common Foundry v1.0.8 cmfd-miner
+  and replay worker, unmodified, under the Kraskus supervisor; images built at
+  Kraskus-Crypto-Apps dc767a4 and pinned by GHCR digest. Requests all NVIDIA
+  GPUs through a Compose device reservation: the host needs the NVIDIA driver
+  and the NVIDIA Container Toolkit (documented operator prerequisite; the app
+  never installs or modifies host components; a GPU power cap needs a
+  persistent host service). No wallet, keys, backups or passphrases; payout is
+  public configuration with read-back. D-6: private tmpfs home
+  /run/cmfd-miner (uid 1000, 0700). 5tratumOS v0.8.28 + RTX 5070 qualification
+  (VM151, 2026-10-06): install/start/stop/restart/reboot/update/keep- and
+  purge-reinstall, own bank download, secret scan, isolation and host
+  no-change PASS; pool connection, shares and FW/s deferred (official pool
+  outage); the standalone miner was certified on the same GPU against the live
+  pool. devicesReviewed stays false until the deferred checks pass. Not a Main
+  release.
