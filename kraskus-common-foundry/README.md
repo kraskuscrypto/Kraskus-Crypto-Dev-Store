@@ -1,4 +1,4 @@
-# Common Foundry (kraskus-common-foundry) 0.1.2 — Dev Store
+# Common Foundry (kraskus-common-foundry) 0.1.3 — Dev Store
 
 A Common Foundry mainnet node on 5tratumOS, with an encrypted wallet, model-bank verification, node status, block monitoring and Kraskus controls (top-left label **CMFD Kraskus**).
 
@@ -38,9 +38,14 @@ The 6.4 GB ForgeMatrix model bank is downloaded at runtime from the official Com
 
 Update and keep your data. The wallet, chain and model bank are kept; 0.1.0's node could not sync past height 0, and 0.1.2 syncs from the network.
 
-## Not in 0.1.2
+## New in 0.1.3
 
-- **NVIDIA mining** is not included in the base package. Official NVIDIA miner support will be added through the GPU companion package after 5tratumOS GPU qualification.
+- The Overview page no longer shows a full-width Mainnet banner. The network is named in the header and in the Network card.
+- GPU mining is available through the separate **Common Foundry GPU Miner** app (NVIDIA hosts only). This node and wallet app stays GPU-independent.
+
+## Not in this app
+
+- **NVIDIA mining** is in the separate Common Foundry GPU Miner app, not in this package.
 - **AMD mining** is not available.
 
 The icon is the official Common Foundry CF emblem.
