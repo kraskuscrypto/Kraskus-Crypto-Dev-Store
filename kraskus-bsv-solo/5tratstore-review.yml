@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-bsv-solo
-appVersion: 0.3.3
+appVersion: 0.5.0
 reviewedAt: ""
 reviewedBy: ""
 
@@ -44,6 +44,30 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
+  0.4.0 is the hardened release on the Kraskus foundation 1.1.1 (the Kaspa
+  Solo 0.3.3 security model). The product is now named Bitcoin SV (label
+  BSV Kraskus) and the Home hero is the silver B/SV coin drawn in code (no
+  image asset), replacing the 0.3.3 gold dragon coin. The 5tratumOS login and the P2 per-app proxy
+  token now gate every state change and every wallet-data read (0.3.3
+  accepted settings and wallet changes from anyone who could reach the UI
+  port); the UI port is published on 127.0.0.1 only. The wallet password is
+  the only app credential: it is set as the last wallet set-up step and is
+  required, over the platform's HTTPS and behind a persisted lock-out, for
+  the encrypted backup export, Forget, payout destination changes and the
+  wallet history rescan (which also needs the typed phrase RESCAN WALLET).
+  The app never rebuilds or reindexes the blockchain: the 0.3.x history
+  rebuild (-reindex) is removed, and the wallet history rescan only rescans
+  the wallet over the blocks the pruned node still has. The
+  API and controller run as uid 10001; SV Node keeps uid 999 and its data,
+  bind mount, command and 660 s shutdown grace are unchanged; the one-shot
+  init service no longer mounts the chain. SV Node refuses to start when a
+  chain is expected but its chainstate is missing (no genesis resync onto an
+  empty mount point). Secret and wallet files are written 0600 atomically.
+  Workers/Miners shows real live miner state (online/idle/offline, estimated
+  hashrate, accepted/stale/invalid, difficulty, session uptime, best share,
+  blocks) and /api/overview no longer fails during initial sync. Wallet
+  backup verify/restore use chunked uploads that pass the dashboard proxy.
+  Wallet, payout and settings files are kept as they are.
   0.3.3 changes only the Home hero coin face: the coin is now gold, with an
   engraved legend band (the Satoshi Vision reference coin), BSV side marks, circuit
   traces and a dragon coiled behind the struck B, drawn in code (no image
