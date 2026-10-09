@@ -5,12 +5,15 @@ mining appliance.
 
 ## Ports
 
-- 33067 — 5tratumOS app proxy entry
+- 33067 — the app's only web listener (plain HTTP inside the box). On
+  5tratumOS with the secure proxy (P2) it is published on 127.0.0.1 only and
+  opened through the 5tratumOS dashboard (HTTPS, behind the 5tratumOS login).
 - 16111/tcp — Kaspa P2P
 - 1900/tcp — Stratum solo-mining endpoint
 
 kaspad RPC (gRPC/borsh/JSON), the adapter, and the wallet API are not
-published to the host.
+published to the host. There is no separate HTTPS port, certificate or
+sign-in page for this app.
 
 ## Persistent data
 
@@ -24,6 +27,93 @@ All persistent state lives below `${APP_DATA_DIR}`:
 ## Artwork
 
 `assets/kaspa-emblem-std-v2.png` is the approved Kaspa application emblem used by the Store listing.
+
+## 0.4.0
+
+DRAFT — not released. Kraskus Apps V3 for Kaspa. No consensus, Stratum,
+mining, fee or node-data change; updating keeps the wallet, payout settings and
+node database (the 0.3.1 -> 0.4.0 update is qualified before release).
+
+**Runs on stock 5tratumOS v0.8.31 or newer and on Umbrel.** Apps installed from
+the named Kraskus store update with the normal Update button.
+
+- **New on the screens:** an overall system health summary on Home; a hashrate
+  trend for the last 24 hours on Mining (kept in memory, starts again after a
+  restart); share efficiency %; a Stratum health line; how fresh the shown data
+  is (header); how long ago each miner sent its last share; and "Copy all" for
+  the miner connection settings.
+- **Works without the 5tratumOS secure app proxy (P2).** When the platform
+  provides no proxy token, the app creates its own once at first start and its
+  own web server uses it; when the platform does provide one (P2), only the
+  platform token is used. The wallet password still protects sending,
+  forgetting the wallet and payout changes, exactly as before. There is still
+  no other sign-in, passphrase, setup code or certificate step.
+- **Shutdown:** the node gets up to 300 seconds and the wallet service up to
+  60 seconds to stop cleanly (standard Compose settings).
+- Same wallet experience: create or restore → save the recovery phrase →
+  choose the wallet password → mine. The recovery phrase is shown only during
+  setup.
+- **Wallet balance shows the whole wallet.** After a send, the change goes to
+  one of the wallet's own change addresses; earlier versions showed only the
+  receive address, so the balance looked too low. The balance now includes the
+  wallet's change addresses, recorded when you use your wallet password (Send
+  or a payout change). After updating, change from earlier sends appears after
+  your next wallet-password action.
+- **Payout destination:** a Native Wallet ON/OFF switch. OFF shows a field for
+  an external wallet address and a Save button; the address is checked before
+  it is saved. The active destination is always shown. Changes still need the
+  wallet password.
+- **Transactions:** the Wallet page lists recent receives and sends with date,
+  amount, status and a copyable transaction ID. New receives appear on their
+  own; sends and earlier activity are added when you use your wallet password.
+  Times marked ≈ are estimated.
+
+## 0.3.3
+
+DRAFT — not released. Foundation hardening on top of 0.3.1 (Kraskus foundation
+1.1.1). No consensus, wallet, Stratum, mining, fee or node-data change;
+updating keeps the wallet, payout settings and node database. (0.3.2 was an
+unpublished pilot number and is retired.)
+
+**Requires 5tratumOS with the HTTPS front door and the secure app proxy
+(P1 + P2).** The release is held until that 5tratumOS version ships. Complete
+the 5tratumOS first-time setup (create the 5tratumOS admin) right after
+installing the platform: the 5tratumOS login is what protects this app.
+
+- **Same wallet experience.** Open the app from the 5tratumOS dashboard →
+  create the wallet and save its recovery phrase, or restore it from the
+  phrase → choose the wallet password (the last step of both) → mine. Sending
+  asks for the wallet password. The wallet password
+  is the only password this app asks for: there is no extra sign-in,
+  passphrase, setup code or certificate step.
+- **Wallet password protects the wallet.** Sending, forgetting the wallet, and
+  changing the payout destination once a wallet exists and the first payout
+  choice was made all ask for it. Too many wrong passwords pause further
+  tries (5 free, then 1 minute doubling to 1 hour; kept across restarts).
+  Create/restore never replace an existing wallet: forget it first.
+- **Only the 5tratumOS dashboard can change anything.** The platform adds a
+  per-app secret to every request it forwards after the 5tratumOS login; the
+  app refuses every change, and every wallet-data view (address, balance,
+  payout, recovery phrase), without it. Direct LAN requests to the app port
+  are refused.
+- **Request protection.** No wildcard CORS; Host, Origin and Fetch-Metadata checks;
+  JSON-only state changes; 64 KiB bodies, timeouts and bounded concurrency;
+  request headers are never logged.
+- **State safety.** Crash-safe, locked state writes; corrupt or newer-version
+  files are reported, preserved and never overwritten or answered with Forget
+  wallet; the settlement wallet is never re-created over existing secrets.
+- **Runtime.** The adapter and wallet-api run as uid 10001, never as root;
+  a one-shot `init` service (no platform secret, no network) hands data written
+  by 0.3.0/0.3.1 to that user, keeping file modes; the encrypted wallet files
+  (0644 until now) become readable by that user only (0600); liveness-only
+  health checks; kaspad gets a 300 s stop grace on 5tratumOS v0.8.23+ (100 s on
+  older platforms, which kill `compose down` at 120 s).
+- **Stopping during the start-up rebuild.** kaspad runs under Docker's init. A
+  stop while it rebuilds its UTXO index at start-up now ends in seconds; before,
+  kaspad ignored the stop signal in that phase and was force-killed after 300 s.
+- **Finish wallet setup before rolling back.** A wallet whose set-up is not
+  finished (password not set yet) cannot be used by an older version; finish
+  it, then roll back.
 
 ## 0.3.1
 

@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: approved
 appId: kraskus-kaspa-solo
-appVersion: 0.3.1
+appVersion: 0.4.0
 reviewedAt: "2026-09-23"
 reviewedBy: "Kraskus Crypto"
 
@@ -42,6 +42,31 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
+  0.3.3 (DRAFT, not released) hardens the app foundation (Kraskus
+  foundation 1.1.1) without changing consensus, wallet, Stratum, mining or
+  fee behaviour, and keeps the original wallet flow: open the app, create
+  the wallet and save its recovery phrase (or restore it from the phrase),
+  then set the wallet password as the last step, mine. Create and restore
+  share the same final password step. The wallet password is the only
+  user-facing credential (send,
+  forget wallet, payout-destination changes after the first-run choice;
+  persisted lock-out). Requires 5tratumOS with the P1 HTTPS front door and
+  the P2 secure proxy: the recipe declares x-5tratumos-secure-proxy (UI port
+  80 on 127.0.0.1, platform token mounted into the adapter and wallet-api
+  only) and the app refuses every state change and wallet-data read without
+  the token.
+  No app TLS port, certificate, operator passphrase or setup code. No
+  wildcard CORS, Host/Origin checks, JSON-only state changes, bounded
+  requests, header-free logs; crash-safe state with corrupt/newer-schema
+  detection and quarantine; adapter and wallet-api run as uid 10001, never
+  as root (the only root step is a one-shot init service without the token
+  that hands data written by 0.3.0/0.3.1 to that user, file modes kept;
+  the encrypted wallet files, 0644 until now, become 0600);
+  pinned build inputs and a verified release manifest. kaspad runs under
+  Docker's init, so a stop during its start-up UTXO-index rebuild ends in
+  seconds instead of a forced kill after 300 s. 0.3.2 is retired
+  (unpublished pilot number). Finish wallet setup before rolling back.
+
   0.3.1 fixes misleading first-sync status reporting during the pruning-point,
   header and UTXO initialization stages using official kaspad RPC data
   (GetMetrics consensus counters, GetConnectedPeerInfo isIbdPeer); no consensus,
