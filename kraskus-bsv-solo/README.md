@@ -5,6 +5,20 @@ Bitcoin SV (SV Node 1.2.2, pruned) node and private solo-mining controller for
 rewards pay the address configured in the app (external address or the
 built-in wallet). 1% of each block reward is a developer-fee coinbase output.
 
+## 0.5.1
+
+Stratum compatibility for modern SHA-256 ASICs. Nothing else changes: node,
+wallet, payout, difficulty, developer fee and the interface are as in 0.5.0.
+
+- **Version rolling (BIP310 / ASICBoost):** `mining.configure` now grants
+  version rolling with mask `1fffe000` (or the overlap with the miner's own
+  mask), so firmware that requires it (for example LuxOS on an Antminer
+  S19k Pro, the Avalon Nano 3S) can subscribe and mine. Shares and block
+  candidates are checked against the header the miner actually hashed,
+  including its rolled version bits, and a found block is submitted to SV
+  Node with that version.
+- Plain Stratum V1 miners (no `mining.configure`) work exactly as before.
+
 ## 0.5.0
 
 Bitcoin SV on the Kraskus V3 app template (foundation 1.2.0), the same

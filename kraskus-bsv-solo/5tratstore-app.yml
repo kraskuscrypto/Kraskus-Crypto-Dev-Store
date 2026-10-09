@@ -7,8 +7,8 @@ description: >-
   native GMC-to-Stratum V1 solo-mining controller on port 1922. The Kraskus
   V3 interface shows node synchronization, one truthful mining-readiness
   state, workers, shares and blocks confirmed by the node. Miners are refused
-  until the node is synchronized and a valid payout is configured; they must
-  support plain Stratum V1 (version rolling / ASICBoost is not offered). The
+  until the node is synchronized and a valid payout is configured; plain Stratum V1 miners
+  and ASICs that use version rolling (BIP310 / ASICBoost) are supported. The
   built-in wallet receives mining payouts once you have downloaded and
   verified an encrypted backup of the complete wallet file; the same backup
   restores the exact wallet on any install. Wallet and settings changes are
@@ -16,7 +16,7 @@ description: >-
   of wallet set-up protects backups, Forget and payout changes. Sending from
   the built-in wallet is not available. A required 1% developer fee is paid directly from each
   successful block coinbase.
-version: 0.5.0
+version: 0.5.1
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
