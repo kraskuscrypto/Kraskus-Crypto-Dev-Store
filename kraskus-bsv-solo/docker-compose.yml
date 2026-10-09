@@ -1,4 +1,4 @@
-# 5tratumOS package for Bitcoin SV 0.5.1 (Kraskus V3, foundation 1.2.0).
+# 5tratumOS package for Bitcoin SV 0.5.2 (Kraskus V3, foundation 1.2.1).
 #
 # 0.5.0 (V3 migration, owner decisions 2026-10-09): the shared V3 UI, the V3
 # API contract served by the api (coins/bsv/v3_api.py), the foundation 1.1.2
@@ -56,7 +56,7 @@ services:
       - bsv
 
   init:
-    image: ghcr.io/kraskuscrypto/kraskus-bsv-solo:0.5.1@sha256:b1b943c0acb69c05a199bcc6dc14c56cfe81b955b44d4184a826fa5a0cf2e318
+    image: ghcr.io/kraskuscrypto/kraskus-bsv-solo:0.5.2@sha256:98d2cca010000ca5e07e8f1f80bdad76a8f6e77dc658f0ee30c41f1299fb0624
     restart: "no"
     user: "0:0"
     command: ["python3", "/app/init_config.py"]
@@ -72,7 +72,7 @@ services:
       - no-new-privileges:true
 
   svnode:
-    image: ghcr.io/kraskuscrypto/kraskus-bsv-node:0.5.1@sha256:bcb744bcf5d3b36fc3f10392042191ce8cc366f798cddf05fda54873ef2638cb
+    image: ghcr.io/kraskuscrypto/kraskus-bsv-node:0.5.2@sha256:bcb744bcf5d3b36fc3f10392042191ce8cc366f798cddf05fda54873ef2638cb
     restart: unless-stopped
     depends_on:
       init:
@@ -121,7 +121,7 @@ services:
       - no-new-privileges:true
 
   controller:
-    image: ghcr.io/kraskuscrypto/kraskus-bsv-solo:0.5.1@sha256:b1b943c0acb69c05a199bcc6dc14c56cfe81b955b44d4184a826fa5a0cf2e318
+    image: ghcr.io/kraskuscrypto/kraskus-bsv-solo:0.5.2@sha256:98d2cca010000ca5e07e8f1f80bdad76a8f6e77dc658f0ee30c41f1299fb0624
     restart: unless-stopped
     user: "10001:10001"
     command: ["python3", "-m", "kraskus_solo.coins.bsv.main"]
@@ -162,7 +162,7 @@ services:
       - no-new-privileges:true
 
   api:
-    image: ghcr.io/kraskuscrypto/kraskus-bsv-solo:0.5.1@sha256:b1b943c0acb69c05a199bcc6dc14c56cfe81b955b44d4184a826fa5a0cf2e318
+    image: ghcr.io/kraskuscrypto/kraskus-bsv-solo:0.5.2@sha256:98d2cca010000ca5e07e8f1f80bdad76a8f6e77dc658f0ee30c41f1299fb0624
     restart: unless-stopped
     # Token service of the secure-proxy contract: the platform mounts
     # /run/5tratumos/proxy-token as 0440 root:10001, readable through this
@@ -229,7 +229,7 @@ services:
       start_period: 30s
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-bsv-solo-ui:0.5.1@sha256:db6a4d57dec5bbb49581f1e86a88598f809e8dfe7d84e35693925b0fa2880a55
+    image: ghcr.io/kraskuscrypto/kraskus-bsv-solo-ui:0.5.2@sha256:ec037f258930402762c4dbc535747fdb357a66b376a7cb01a935f1d877cd388e
     restart: unless-stopped
     depends_on:
       init:
