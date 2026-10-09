@@ -5,6 +5,18 @@ Bitcoin SV (SV Node 1.2.2, pruned) node and private solo-mining controller for
 rewards pay the address configured in the app (external address or the
 built-in wallet). 1% of each block reward is a developer-fee coinbase output.
 
+## 0.5.2
+
+Display-only cleanup; Stratum, payout, wallet and the node are as in 0.5.1.
+
+- **Worker names:** the Miners list, worker details and found blocks show only
+  the worker name (the part after the last dot), e.g. `Ashborne` for
+  `<address>.Ashborne`. The address part is never shown. Miners keep using
+  the same username.
+- **Miner username help:** any worker name is accepted; an
+  `<address>.<worker>` username is also accepted, and the app shows only the
+  worker name.
+
 ## 0.5.1
 
 Stratum compatibility for modern SHA-256 ASICs. Nothing else changes: node,
