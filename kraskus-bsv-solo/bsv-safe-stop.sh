@@ -1,5 +1,5 @@
 #!/bin/bash
-# Bitcoin Satoshi Vision: stop SV Node cleanly BEFORE any 5tratumOS app
+# Bitcoin SV: stop SV Node cleanly BEFORE any 5tratumOS app
 # update, reinstall, down or uninstall. Run as root on the 5tratumOS host.
 #
 # Why: `5tratumos app down|uninstall` wrap `docker compose down` in

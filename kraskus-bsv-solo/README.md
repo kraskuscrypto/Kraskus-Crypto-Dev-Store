@@ -1,9 +1,83 @@
-# Bitcoin Satoshi Vision
+# Bitcoin SV
 
-Bitcoin Satoshi Vision (SV Node 1.2.2, pruned) node and private solo-mining controller for
+Bitcoin SV (SV Node 1.2.2, pruned) node and private solo-mining controller for
 5tratumOS. Miners connect to `stratum+tcp://<host>:1922` with any worker name;
 rewards pay the address configured in the app (external address or the
 built-in wallet). 1% of each block reward is a developer-fee coinbase output.
+
+## 0.5.0
+
+Bitcoin SV on the Kraskus V3 app template (foundation 1.2.0), the same
+interface as Kaspa by Kraskus 0.4.0. Mining, the node and the wallet work
+exactly as in 0.4.0: SV Node 1.2.2, the same data bind mount, command, prune
+target and 660 s stop grace, the same Stratum port 1922 and 1% developer fee.
+
+- **Interface:** the shared Kraskus V3 UI (Home, Mining with workers, Wallet,
+  Blocks, Settings, hashrate trend, system health). The silver B/SV coin stays.
+- **Wallet:** create -> download the encrypted backup file -> upload it back
+  with its passphrase and confirm (the app checks that the file restores this
+  wallet) -> set the wallet password. Restore by uploading a backup file (or a
+  raw `wallet.dat`); the file is checked before anything is replaced. Payout
+  destination: Native Wallet ON/OFF or your own external address. Sending
+  from the built-in wallet is still not available.
+- **Difficulty** (Settings -> Mining): Automatic (the app default share
+  difficulty, 16,384) or Manual (one value for all miners), with the current
+  difficulty shown.
+- **Platforms without the 5tratumOS proxy token** (stock 5tratumOS, Umbrel):
+  the app creates its own internal token at start, so wallet actions work
+  there too; the wallet password still protects every sensitive action.
+- The 0.4.0 "Rescan wallet history" action is not in this interface (the
+  service is unchanged).
+
+## 0.4.0
+
+Hardened release on the Kraskus foundation 1.1.1 (Kaspa Solo 0.3.3 model).
+Nothing about the chain changes: SV Node 1.2.2, uid 999, the same data bind
+mount, command, prune target and 660 s stop grace.
+
+- **Name and look:** the product is now called **Bitcoin SV** (the
+  top-left label stays BSV Kraskus) and the Home hero is the brushed-silver
+  B/SV coin, replacing the 0.3.3 gold dragon coin. Ticker, network, app id
+  and image names are unchanged.
+- **Access:** the 5tratumOS login + per-app proxy token gate every state
+  change and every wallet-data read; the UI port 18422 is published on
+  127.0.0.1 only (open the app from the 5tratumOS dashboard).
+- **Wallet password** (the only app credential): set as the last step of
+  wallet set-up (create or restore -> back up -> verify -> set password).
+  Required, over the dashboard's HTTPS and behind a lock-out (5 free
+  failures, then 60 s doubling to 1 h), for the encrypted backup export,
+  Forget, payout destination changes and the wallet history rescan.
+- **The app never rebuilds the blockchain.** The 0.3.x "Rebuild History"
+  (SV Node `-reindex`, a full re-download) is removed; the node supervisor
+  also refuses to start if its command or `bitcoin.conf` asks for a reindex.
+- **Rescan wallet history** (Wallet, destructive zone): rescans only the
+  wallet over the blocks this node still has, from the wallet's first block
+  (or the prune height, whichever is later) to the tip. Wallet password +
+  the typed phrase `RESCAN WALLET`. It can take hours and keeps SV Node busy
+  while it runs; nothing is deleted, re-downloaded or rebuilt. History older
+  than the prune height cannot be rescanned and the app says so.
+- **Genesis-sync guard:** SV Node refuses to start (exit 78, nothing changed)
+  when a chain was there before but `chainstate/` is now missing or empty,
+  for example a missing bind mount.
+- **Workers/Miners:** live online / idle / offline state, estimated
+  hashrate, accepted / stale / invalid shares, difficulty, session uptime,
+  session-best share and blocks per miner.
+- Miners use any non-empty username (the worker name); the password is
+  ignored; rewards always go to the payout configured in the app.
+- **Updates from a named Kraskus store (5tratumOS v0.8.28):** the platform
+  refuses `app update` from a `custom-…` store ("invalid channel"). Run the
+  shared Kraskus store-compatibility bootstrap ONCE, as root, to map the
+  store into a free custom2/custom1 slot (never overwrites one):
+
+      sudo bash /opt/5tratumos/store/<kraskus-store-slot>/kraskus-bsv-solo/kraskus-store-bootstrap.sh
+
+  It prints one `KRASKUS_STORE_BOOTSTRAP=…` line; `--check` changes nothing,
+  `--rollback` undoes it. It touches only `/etc/5tratumos/store.json` (with a
+  backup) and the new slot; never the CLI, containers, apps or P2 files.
+  It cannot run automatically on v0.8.28 (root-only host change; 5tratumOS
+  runs no store code).
+- API and controller run as uid 10001; secret and wallet files are 0600.
+- `/api/overview` no longer answers 500 during initial sync.
 
 ## 0.3.3
 
