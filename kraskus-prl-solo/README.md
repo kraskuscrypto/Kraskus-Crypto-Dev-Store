@@ -3,9 +3,24 @@
 Native 5tratStore package for the Kraskus Pearl (PRL) full node, Oyster
 wallet and solo-mining stratum gateway.
 
+## 0.5.0
+
+Kraskus V3 migration (foundation 1.2.0):
+
+- the shared V3 interface (Overview, Mining, Workers, Blocks, Wallet,
+  Settings) and API contract;
+- wallet set-up: the 12-word phrase is shown once, confirmed with a word
+  challenge, then the wallet password is set (it protects payout changes and
+  Forget); 0.2.x wallets keep their existing password;
+- payout destination: the native wallet or your own external Pearl address;
+- every state change and wallet read needs the platform proxy token, or the
+  app token on platforms without it;
+- the share difficulty stays the gateway's fixed 50,000 (shown read-only);
+  no send. pearld, Oyster and the gateway are unchanged from 0.2.1.
+
 ## Ports
 
-- 33068 — 5tratumOS app proxy entry
+- 33068 — the app UI (127.0.0.1 under the 5tratumOS P2 secure proxy)
 - 44108/tcp — Pearl P2P
 - 1902/tcp — Kraskus Pearl Stratum (miners)
 
@@ -18,9 +33,13 @@ All persistent state lives below `${APP_DATA_DIR}`:
 
 - node/ — pearld blockchain data
 - wallet/ — Oyster wallet (`mainnet/wallet.db`) and `.kraskus/` lifecycle
-  state: `lifecycle.json`, the payout activation file `receive-address`, and
-  — only while a new wallet's backup is pending — `pending-backup.json`
-  (0600, deleted on confirmation)
+  state: `lifecycle.json`, the native wallet record `receive-address`, the
+  gateway's payout destination `payout-address` and `v3-payout.json` (0.5.0),
+  and — only while a new wallet is being set up — `pending-backup.json` and
+  `setup-passphrase` (0600, deleted on confirmation / when the wallet
+  password is set)
+- config/app-token/ — the app-token fallback (0.5.0; absent under the P2
+  secure proxy)
 - mining/ — `blocks.jsonl`, the gateway's found-block ledger
 - secrets/ — generated node/wallet RPC credentials
 - logs/ — node and wallet logs
