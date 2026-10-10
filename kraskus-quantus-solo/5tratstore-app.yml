@@ -8,7 +8,7 @@ description: >-
   that they belong together and never asks for your 24 words. An optional
   local CPU miner is included for testing only; it is not profitable on
   mainnet. No developer fee. Upstream telemetry is turned off.
-version: 0.1.0
+version: 0.1.1
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/

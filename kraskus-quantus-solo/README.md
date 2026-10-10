@@ -1,4 +1,4 @@
-# Quantus Solo (kraskus-quantus-solo) 0.1.0 — Dev Store
+# Quantus Solo (kraskus-quantus-solo) 0.1.1 — Dev Store
 
 Quantus (QTC) mainnet full node for your own Quantus miners on the local network. **Dev testing release. Not a Main release.**
 
@@ -19,6 +19,17 @@ Fixed policy:
 - no GPU miner;
 - no developer fee;
 - the app never accepts seed words.
+
+## What's new in 0.1.1
+
+This is an **adapter-only status-correctness maintenance release**.
+
+- **Node verdicts:** a miner's self-reported `Completed` is no longer shown as if it were the node's verdict. The Miners table now shows what the node itself decided about each solution:
+  - **Accepted by node:** the node took the solution as its next block. This does **not** mean a confirmed or found block: the block can still be orphaned. Found blocks appear only under "Blocks found by this node".
+  - **Rejected by node:** the node refused the solution (the submit failed, or the seal was malformed).
+  - **Submitted (no verdict):** the miner submitted, but the node logged no verdict. The job was stale or superseded, the result was dropped under load, or the decision is pending.
+- **Unchanged components:** the node, miner and UI are the existing 0.1.0 binaries (same image digests). Only the adapter changed. Every component reports version 0.1.0 inside the app; the store version is 0.1.1.
+- **Source:** the Corresponding Source for the node is now public and signed at https://github.com/kraskuscrypto/Quantus-Source-Mirror.
 
 ## First run
 

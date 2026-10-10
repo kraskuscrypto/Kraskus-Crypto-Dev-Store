@@ -1,4 +1,4 @@
-# 5StratumOS package for Kraskus Quantus Solo 0.1.0 -- DEV STORE ONLY (not a Main release).
+# 5StratumOS package for Kraskus Quantus Solo 0.1.1 -- DEV STORE ONLY (not a Main release).
 #
 # Structure follows the hardened Kraskus baseline (Kaspa foundation-hardening
 # candidate, Kraskus-Mining-Platform 2fa2f0b): app_proxy -> ui (nginx, plain
@@ -12,8 +12,11 @@
 # Encrypted HTTPS/operator listener 33078/tcp (owner-approved 2026-10-02,
 # docs/PORT-REGISTRY.md). LAN only.
 #
-# Images pinned by GHCR digest (pushed 2026-10-02). Main release stays gated on
-# G5a (source mirror, legal review), F6 (Q trademark) and Dev mining QA.
+# Images pinned by GHCR digest. 0.1.1 is an adapter-only maintenance release:
+# only the adapter digest changed (pushed 2026-10-10, source ef20a7c); node,
+# miner and UI are the 0.1.0 images (pushed 2026-10-02). Main release stays
+# gated on G5a legal review, F6 (Q trademark) and Dev mining QA. The node's
+# Corresponding Source is published at https://github.com/kraskuscrypto/Quantus-Source-Mirror.
 
 services:
   app_proxy:
@@ -71,7 +74,9 @@ services:
       - node
 
   adapter:
-    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-adapter@sha256:3431a115519351a9c9406645280f439db2c11df1090d091a6d6c5c606f515460
+    # 0.1.1 adapter (Kraskus-Crypto-Apps ef20a7c): node verdicts on miner solutions.
+    # Reports component version 0.1.0, like the unchanged node, miner and UI.
+    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-adapter@sha256:621028a1838d1d11495c218fc6526a3e86e84056aff2048df039e3c87a1378b1
     restart: unless-stopped
     stop_grace_period: 5s
     environment:

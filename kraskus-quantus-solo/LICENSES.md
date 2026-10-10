@@ -21,6 +21,16 @@ Quantus Solo by Kraskus is a Kraskus Crypto application. This Store package is r
 
 ## quantus-node source
 
-The Corresponding Source for the shipped quantus-node binary (the chain source at the commit above plus the vendored crate sources) is prepared by Kraskus. It will be published in `kraskuscrypto/Quantus-Source-Mirror` before any Main release (release gate G5a).
+The Corresponding Source for the shipped quantus-node binary is published by Kraskus at:
 
-During Dev testing, the exact upstream source is available at https://github.com/Quantus-Network/chain/tree/482c5b9e02bec0adc70797eade0a67f60baf2619
+**https://github.com/kraskuscrypto/Quantus-Source-Mirror** (release `quantus-solo-v0.1.0`)
+
+It contains:
+
+- the chain source at the commit above;
+- every vendored Rust dependency;
+- the Kraskus build recipe;
+- the licence texts and notices;
+- `SOURCE.md`, which maps each published image digest to its source.
+
+Everything is covered by `SHA256SUMS`, signed with the Kraskus release key `78A44DE8F12BE5F68FDAA493C5AF5FF3489EDF25` (public key in the repository root). The same node binary and image are used in 0.1.0 and 0.1.1. The `SOURCE.md` inside the node image was written before the mirror existed. The mirror is the authoritative source location.
