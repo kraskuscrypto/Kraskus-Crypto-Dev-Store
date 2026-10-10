@@ -1,8 +1,22 @@
+# 5tratumOS package for Pearl by Kraskus 0.5.0 (Kraskus V3, foundation 1.2.0).
+#
+# 0.5.0 (V3 migration): the shared V3 UI (nginx, plain HTTP 8080, published
+# once on the manifest port 33068), the V3 API contract served by the api
+# (api/v3_api.py) and the foundation 1.1.2 app-token fallback for platforms
+# without the P2 proxy token (stock 5tratumOS, Umbrel). pearld, Oyster and the
+# gateway run the unchanged 0.2.1 images; data paths are exactly as 0.2.1.
+# The gateway now reads its payout address from wallet/.kraskus/payout-address,
+# which the api writes (native wallet once set up, or the owner's external
+# address); the wallet's own receive-address record is unchanged.
+#
+# Published host ports: 1902 (Stratum), 44108 (Pearl P2P) and the UI 33068
+# (127.0.0.1 under P2). RPC, the API and the gateway telemetry are internal.
+
 services:
   app_proxy:
     environment:
       APP_HOST: ui
-      APP_PORT: 80
+      APP_PORT: 8080
     networks:
       - public
 
@@ -13,7 +27,8 @@ services:
     command:
       - |
         set -eu
-        mkdir -p /appdata/node /appdata/wallet /appdata/mining /appdata/logs/node /appdata/logs/wallet /appdata/secrets
+        mkdir -p /appdata/node /appdata/wallet /appdata/mining /appdata/logs/node /appdata/logs/wallet /appdata/secrets /appdata/config/app-token
+        chmod 700 /appdata/config/app-token
         if [ ! -s /appdata/secrets/rpc-user ]; then
           printf 'kraskus-prl-%s\n' "$(openssl rand -hex 8)" > /appdata/secrets/rpc-user
         fi
@@ -92,7 +107,8 @@ services:
       PEARLD_RPC_URL: "http://pearld:44107/"
       KRASKUS_PRL_RPC_USER_FILE: "/run/secrets/prl_rpc_user"
       KRASKUS_PRL_RPC_PASSWORD_FILE: "/run/secrets/prl_rpc_password"
-      KRASKUS_PRL_MINING_ADDRESS_FILE: "/wallet/.kraskus/receive-address"
+      # 0.5.0: the payout destination the api publishes (native or external).
+      KRASKUS_PRL_MINING_ADDRESS_FILE: "/wallet/.kraskus/payout-address"
       KRASKUS_PRL_BLOCK_LEDGER: "/mining/blocks.jsonl"
       KRASKUS_PRL_STRATUM_HOST: "0.0.0.0"
       KRASKUS_PRL_STRATUM_PORT: "1902"
@@ -123,7 +139,7 @@ services:
       - no-new-privileges:true
 
   api:
-    image: ghcr.io/kraskuscrypto/kraskus-prl-solo-api@sha256:3c2b81678e7fc0183359c5a66cc53829da48652623663ca7e84d3246c2666105
+    image: ghcr.io/kraskuscrypto/kraskus-prl-solo-api:0.5.0@sha256:ec147115c8a4d6c1bf83f352f35fd094e874f0cd7767c6ea1844e81dfaaa2aea
     restart: unless-stopped
     environment:
       KRASKUS_API_HOST: "0.0.0.0"
@@ -138,8 +154,13 @@ services:
       KRASKUS_PRL_WALLET_PASSWORD_FILE: "/run/secrets/prl_rpc_password"
       KRASKUS_OYSTER_BIN: "/usr/local/bin/oyster"
       KRASKUS_OYSTER_APPDATA: "/wallet"
+      KRASKUS_PRL_SHARE_DIFFICULTY: "50000"
+      # Foundation 1.1.2 app-token fallback: service_init creates it once
+      # when no platform token is mounted (stock 5tratumOS, Umbrel).
+      KRASKUS_APP_TOKEN_FILE: "/data/config/app-token/token"
     volumes:
       - ${APP_DATA_DIR}/wallet:/wallet
+      - ${APP_DATA_DIR}/config:/data/config
       - ${APP_DATA_DIR}/mining:/mining:ro
       - ${APP_DATA_DIR}/secrets/rpc-user:/run/secrets/prl_rpc_user:ro
       - ${APP_DATA_DIR}/secrets/rpc-password:/run/secrets/prl_rpc_password:ro
@@ -151,7 +172,7 @@ services:
       oyster:
         condition: service_started
     healthcheck:
-      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:18441/health', timeout=2).read()"]
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:18441/livez', timeout=2).read()"]
       interval: 5s
       timeout: 4s
       retries: 10
@@ -162,18 +183,42 @@ services:
       - no-new-privileges:true
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-prl-solo-ui@sha256:3f26df4ca7a1548c5ad26daa62738bdf078bd64d2f762e3f5887186911e8a54e
+    image: ghcr.io/kraskuscrypto/kraskus-prl-solo-ui:0.5.0@sha256:75dc905fc3b0969f199bcbb42b432f4c340ea33b88bb40c06eb425565ccd8c7a
     restart: unless-stopped
     environment:
       ADAPTER_HOST: api
     depends_on:
       api:
         condition: service_healthy
+    # The contract's ui_port (8080, plain HTTP, the only listener), published
+    # once on the manifest port. 5tratumOS P2 renders it on 127.0.0.1 only.
+    ports:
+      - "33068:8080/tcp"
+    # Foundation 1.1.2: the app-token fallback directory, read-only;
+    # kraskus-app-token.sh supplies that token only to /api/ requests that
+    # carry no token header (stock 5tratumOS, Umbrel).
+    volumes:
+      - ${APP_DATA_DIR}/config/app-token:/run/kraskus-app-token:ro
+    stop_grace_period: 5s
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1:8080/index.html"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
     networks:
       - public
       - internal
     security_opt:
       - no-new-privileges:true
+
+# Read only by 5tratumOS with the P2 secure proxy: the ui service's port 8080
+# is published on 127.0.0.1 only and the api gets the per-app token mounted.
+x-5tratumos-secure-proxy:
+  version: 1
+  ui_service: ui
+  ui_port: 8080
+  token_services: [api]
 
 networks:
   public:
