@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: approved
 appId: kraskus-chta-solo
-appVersion: 0.3.1
+appVersion: 0.5.0
 reviewedAt: "2026-09-26"
 reviewedBy: "Kraskus Crypto"
 
@@ -44,6 +44,20 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
+  0.5.0 moves the app onto the Kraskus V3 template (foundation 1.2.0): the
+  shared V3 interface, the V3 API served by the backend, and the V3 security
+  model -- every state change and wallet-data read must arrive through the
+  5tratumOS dashboard (P2 proxy token, or an app token created at start on
+  platforms without one), and the wallet password, now set at the end of
+  wallet set-up, is the only credential (backups, sending, Forget and later
+  payout changes; persisted lock-out). The wallet keeps its encrypted
+  complete-file backup; set-up downloads it and uploads it back to verify.
+  Existing 0.3.x wallets keep their password. Settings gains the V3
+  Difficulty control for port 1926's minimum share difficulty; port 1927 is
+  unchanged. CheetahCoin Core is the official 2.5.0 release (SHA-256
+  verified; same chain, wallet and RPC, no reindex). CKPool, the Stratum
+  ports, the payout logic, the wallet file format and the 1% developer fee
+  are unchanged; the CKPool image is the 0.3.1 one.
   0.3.1 corrects the rejected-share count: it is now the number of
   submissions CKPool rejected (a count added to the pool's status file by a
   small reviewed patch), not CKPool's difficulty-weighted reject total that
