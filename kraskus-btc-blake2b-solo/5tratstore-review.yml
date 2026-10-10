@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-btc-blake2b-solo
-appVersion: 0.2.5
+appVersion: 0.2.6
 reviewedAt: ""
 reviewedBy: ""
 
@@ -42,6 +42,23 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
+  0.2.6 (consensus maintenance): Bitcoin Knots 29.4.2.knots20260508. Knots
+  29.4.2 activated a long-coinbase-maturity soft fork on the BTC2b chain at
+  block 973,440 (mined 2026-09-21; enforced to block 979,919), and its wallet
+  and mempool now treat every block reward as spendable only after 6,480
+  blocks (shown as 6,481 confirmations). The Blocks page reads that rule from
+  the node, so rewards that 0.2.5 showed as mature read "Maturing" again until
+  they are deep enough. Knots 29.4.2 no longer reports a "difficulty" for
+  BLAKE2b blocks; the app derives the same network difficulty from the block
+  header, so difficulty, its history and the expected time to block stay as
+  before. DATUM is unchanged. Updating in place keeps the chain, wallet and
+  settings. An existing 0.2.5 install that already synced into the
+  activation window is revalidated locally on its first start with 0.2.6
+  (Knots re-checks the window's blocks from disk); this does not need a full
+  blockchain re-sync while those blocks are still on disk, which the default
+  100 GiB prune keeps. Block rewards need 6,481 confirmations while Knots
+  reports the long-coinbase-maturity deployment (active now, enforced through
+  block 979,919).
   0.2.5 sets the permanent developer-fee address
   bc1q2wvdwgw3qpng8pzw4jx4cmk7vx0d384c8tmr7v (0.2.4's interim address is
   retired). The fee stays 1% of each block found (coinbase split, 99% to
