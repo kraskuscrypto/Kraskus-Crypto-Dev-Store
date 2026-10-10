@@ -59,9 +59,10 @@ class UpdateSafe(unittest.TestCase):
             if "btc-blake2b" not in image:
                 continue
             tag = re.search(r":(\d+\.\d+\.\d+)@", image).group(1)
-            if name in ("datum", "adapter"):  # carry the fee: always rebuilt per release
+            if name == "adapter":  # always rebuilt per release
                 self.assertEqual(tag, str(app["version"]), name)
-            else:  # knots/ui may be carried forward unchanged from an earlier release (still digest-pinned)
+            else:  # knots/ui/datum may be carried forward unchanged from an earlier release (still digest-pinned;
+                # 0.2.6 carries the 0.2.5 DATUM, whose compiled 1% fee is unchanged)
                 self.assertLessEqual(tuple(map(int, tag.split("."))), ver, name)
 
 
