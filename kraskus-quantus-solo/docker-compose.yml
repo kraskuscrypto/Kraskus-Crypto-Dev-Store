@@ -1,22 +1,44 @@
-# 5StratumOS package for Kraskus Quantus Solo 0.1.1 -- DEV STORE ONLY (not a Main release).
+# 5tratumOS package for Quantus Solo 0.3.0 -- the first Kraskus V3 version of
+# Quantus (foundation 1.6.0: wallet-less mode C1 + QUIC miner endpoint C9 +
+# trusted Umbrel deployment mode).
+# DEV STORE RELEASE (not a Main release): every image is pinned by its GHCR
+# digest (pushed 2026-10-11, no rebuild after qualification). Corresponding
+# Source: https://github.com/kraskuscrypto/Quantus-Source-Mirror release
+# quantus-solo-v0.3.0 (signed).
 #
-# Structure follows the hardened Kraskus baseline (Kaspa foundation-hardening
-# candidate, Kraskus-Mining-Platform 2fa2f0b): app_proxy -> ui (nginx, plain
-# app port + encrypted listener), adapter on the internal network only,
-# app-scoped bridge networks, liveness-only healthchecks, x-5tratumos-stop-policy.
+# Owner decisions 2026-10-10 reflected here:
+#   D9  the miner is the UNCHANGED 0.1.0 image, byte-identical by digest.
+#       Dev fee (Option N, owner 2026-10-10): the node is REBUILT by Kraskus
+#       from the official Quantus source plus the disclosed developer-fee
+#       patch (node/; 1% = height % 100 == 0). The node reference below is
+#       that image, pinned by its GHCR digest.
+#       The service definitions are copied verbatim from the published 0.1.1
+#       Dev Store compose (Kraskus-Crypto-Dev-Store 7a8c682), including the
+#       node's working_dir: /app that the 0.1.0 image needs.
+#   D8  the 0.1.x data paths are kept exactly: ${APP_DATA_DIR}/node (chain,
+#       node key, miner TLS cert/key), config/ (rewards.json, settings.json),
+#       state/ (blocks.json), runtime/ and miner-creds/ (token + public pin).
+#       Existing installs and remote miners keep working with no
+#       reconfiguration (documented Quantus exception to the V3 template's
+#       "only node/ and wallet/" data rule).
+#   D7  the 0.1.x operator-layer leftovers (state/operator-auth.json and
+#       ${APP_DATA_DIR}/tls/) are quarantined by the one-shot init step:
+#       moved/marked, never deleted, never read for authentication.
+#   V3  the operator layer is gone: no 33078 HTTPS listener, no passphrase,
+#       sessions or setup codes, no operator_admin.py, no /api/auth/*. The
+#       platform authenticates (5tratumOS P2 secure proxy, or Umbrel's proxy).
+#   D5  S3: the reward identity and the miner token reveal/rotate and TLS
+#       regenerate need the platform's own P2 proxy token; under the app-token
+#       fallback on stock 5tratumOS without P2 they are refused. This 5tratumOS
+#       package never declares a deployment (the adapter defaults to
+#       5tratumOS). Foundation 1.6.0 (owner YES 2026-10-10): only the Umbrel
+#       store generator declares the Umbrel deployment on the adapter, after
+#       removing the UI host port (the adapter publishes none); there the app
+#       token, reachable only through Umbrel's logged-in app proxy, is accepted.
 #
-# Owner-approved ports (2026-10-02):
-#   UI 33076/tcp (app_proxy, manifest `port:`), miner ingress 1935/udp -> 9833,
-#   P2P 30333/tcp. RPC 9944, Prometheus 9615 and miner metrics 9900 are
-#   internal only and never published.
-# Encrypted HTTPS/operator listener 33078/tcp (owner-approved 2026-10-02,
-# docs/PORT-REGISTRY.md). LAN only.
-#
-# Images pinned by GHCR digest. 0.1.1 is an adapter-only maintenance release:
-# only the adapter digest changed (pushed 2026-10-10, source ef20a7c); node,
-# miner and UI are the 0.1.0 images (pushed 2026-10-02). Main release stays
-# gated on G5a legal review, F6 (Q trademark) and Dev mining QA. The node's
-# Corresponding Source is published at https://github.com/kraskuscrypto/Quantus-Source-Mirror.
+# Ports (owner-approved 2026-10-02, unchanged): UI 33076/tcp (manifest port),
+# miner ingress 1935/udp -> 9833 (LAN only), P2P 30333/tcp. RPC 9944,
+# Prometheus 9615 and miner metrics 9900 stay internal. 33078 is removed.
 
 services:
   app_proxy:
@@ -24,15 +46,75 @@ services:
       APP_HOST: ui
       APP_PORT: 80
 
+  init:
+    # One-shot, root, no network, never a token service. 1) Quarantines the
+    # 0.1.x leftovers (D7). 2) Foundation service_init: creates the private
+    # directories (incl. the empty app-token directory the ui mounts), hands
+    # config/, state/ and runtime/ to uid 10001 exactly as the 0.1.x adapter
+    # entrypoint did, drops privileges and runs the versioned migrations of
+    # rewards.json, settings.json and blocks.json (schema 1: no change).
+    # It never mounts node/ (chain, node key) or miner-creds/.
+    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-adapter@sha256:61e008d9d99376e6bba37bb75076fc414532f36c709e7696fe90ff54649b5631
+    restart: "no"
+    user: "0:0"
+    entrypoint:
+      - python
+      - -m
+      - kraskus_solo.coins.quantus.init_step
+      - --state
+      - /data/state
+      - --legacy-tls
+      - /data/legacy-tls
+      - --
+      - python
+      - -m
+      - kraskus_foundation.service_init
+      - --data
+      - /data/config
+      - --data
+      - /data/state
+      - --data
+      - /data/runtime
+      - --private
+      - /data/config:0o750
+      - --private
+      - /data/state:0o700
+      - --private
+      - /data/runtime:0o750
+      - --private
+      - /data/state/app-token:0o700
+      - --migrate
+      - kraskus_solo.coins.quantus.state_docs:migrate_state
+      - --uid
+      - "10001"
+      - --gid
+      - "10001"
+      - --
+      - "true"
+    volumes:
+      - ${APP_DATA_DIR}/config:/data/config
+      - ${APP_DATA_DIR}/state:/data/state
+      - ${APP_DATA_DIR}/runtime:/data/runtime
+      # D7 only: the 0.1.x UI certificate directory, so it can be marked as an
+      # unused leftover (names listed, contents never read). No other 0.3.0
+      # service mounts it. On a fresh install it is an empty directory.
+      - ${APP_DATA_DIR}/tls:/data/legacy-tls
+    network_mode: none
+    security_opt:
+      - no-new-privileges:true
+
   node:
     # quantus-node built from pinned source (Quantus-Network/chain v1.0.2-Qm,
     # 482c5b9e) -- never the unsigned upstream binary (owner decision B-1).
-    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-node@sha256:048b30d951501c8d65cc439f45e40d2166f44c58e4dcd21158f427470f31d888
+    # Kraskus dev-fee node (version 1.0.2-Qm-482c5b9e02b-kraskus-devfee1,
+    # binary sha256 24e28fd8e84b3e3b..., see node/build-inputs.lock), pinned by
+    # its GHCR digest.
+    # This service is otherwise verbatim 0.1.1.
+    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-node@sha256:4d0706016b544f511e3d37eb05a09042625d885297dc52ba8b6d5152a6f3f5cd
     restart: unless-stopped
-    # The accepted 0.1.0 node image (binary e40fdcf0...) was built without a
-    # WORKDIR, so its entrypoint (python -m kraskus_foundation.service_init)
-    # needs /app as the working directory. Set here to keep that artifact
-    # unchanged; node/Dockerfile now sets WORKDIR /app for the next build.
+    # Kept from 0.1.1 (the 0.1.0 node image had no WORKDIR and its entrypoint
+    # needs /app); the dev-fee image sets WORKDIR /app itself, so this is a
+    # harmless no-op that keeps the service verbatim.
     working_dir: /app
     # The supervisor holds quantus-node until a confirmed reward identity
     # exists, re-verifies it before every start, and forwards SIGTERM. The
@@ -58,6 +140,9 @@ services:
 
   miner-local:
     # Optional local CPU miner: OFF by default, testing/fallback only (B-2).
+    # 0.3.0 (D9): the unchanged 0.1.0 image; this service is verbatim 0.1.1.
+    # It mines only while runtime/readiness.json (written by the adapter's
+    # unchanged internal readiness model) allows it.
     image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-miner@sha256:e378ecd0deead1cc3f96097a7c49461e9e6be2f491193260adab4d91ed199988
     restart: unless-stopped
     stop_grace_period: 10s
@@ -74,10 +159,27 @@ services:
       - node
 
   adapter:
-    # 0.1.1 adapter (Kraskus-Crypto-Apps ef20a7c): node verdicts on miner solutions.
-    # Reports component version 0.1.0, like the unchanged node, miner and UI.
-    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-adapter@sha256:621028a1838d1d11495c218fc6526a3e86e84056aff2048df039e3c87a1378b1
+    # V3 adapter (kraskus_solo.coins.quantus): the V3 API contract for the
+    # shared UI, the 0.1.1 node-log verdict tracker and BlockWatcher, the
+    # reward identity (wallet-less, C1) and the miner endpoint (C9).
+    # Token service of the P2 secure proxy. Unprivileged from its first
+    # instruction; its foundation start step (as 10001) creates the app-token
+    # fallback only when no platform token is mounted.
+    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-adapter@sha256:61e008d9d99376e6bba37bb75076fc414532f36c709e7696fe90ff54649b5631
     restart: unless-stopped
+    user: "10001:10001"
+    command:
+      - python
+      - -m
+      - kraskus_foundation.service_init
+      - --uid
+      - "10001"
+      - --gid
+      - "10001"
+      - --
+      - python
+      - -m
+      - kraskus_solo.coins.quantus.server
     stop_grace_period: 5s
     environment:
       LISTEN_PORT: "18430"
@@ -85,8 +187,9 @@ services:
       QUANTUS_NODE_PROMETHEUS: "http://node:9615/metrics"
       QUANTUS_LOCAL_MINER_METRICS: "http://miner-local:9900/metrics"
       QUANTUS_MINER_PUBLIC_PORT: "1935"
-      KRASKUS_REQUIRE_TLS: "1"
-      KRASKUS_SECURE_PORT: "33078"
+      # Foundation 1.1.2 app-token fallback: used only while no P2 platform
+      # token is mounted. Never logged.
+      KRASKUS_APP_TOKEN_FILE: /data/state/app-token/token
     volumes:
       - ${APP_DATA_DIR}/config:/data/config
       - ${APP_DATA_DIR}/state:/data/state
@@ -95,7 +198,17 @@ services:
     networks:
       - internal
     depends_on:
-      - node
+      init:
+        condition: service_completed_successfully
+      node:
+        condition: service_started
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:18430/livez', timeout=4)"]
       interval: 30s
@@ -104,22 +217,29 @@ services:
       start_period: 60s
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-ui@sha256:a82f4f1c9af43769be7bad87dd6d579afbf85736f7e3b6d8ac6ca9285ac2f210
+    # Shared Kraskus V3 web UI (foundation/ui 1.6.0 + the Quantus coin profile),
+    # nginx, plain HTTP 80, published once on the manifest port. 5tratumOS P2
+    # rewrites it to 127.0.0.1:33076:80 and reaches it through its
+    # authenticated HTTPS dashboard route, adding the per-app token. It reads
+    # the app-token fallback directory read-only and supplies that token only
+    # to /api/ requests that carry none (stock 5tratumOS, Umbrel).
+    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-ui@sha256:4ff818d741b5d290dddbc08525461d0f2aebe5620107f5532d4ba73732fd6f75
     restart: unless-stopped
     stop_grace_period: 5s
-    environment:
-      ADAPTER_HOST: adapter
-      ADAPTER_PORT: "18430"
     ports:
-      # Encrypted listener (container 8443): 33078, owner-approved. LAN only.
-      - "33078:8443/tcp"
+      - "33076:80/tcp"
     volumes:
-      - ${APP_DATA_DIR}/tls:/tls
+      - ${APP_DATA_DIR}/state/app-token:/run/kraskus-app-token:ro
     networks:
       - public
       - internal
     depends_on:
-      - adapter
+      init:
+        condition: service_completed_successfully
+      adapter:
+        condition: service_started
+    security_opt:
+      - no-new-privileges:true
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/index.html"]
       interval: 30s
@@ -127,12 +247,14 @@ services:
       retries: 3
       start_period: 20s
 
-x-5tratumos-stop-policy:
+# Read only by 5tratumOS with the P2 secure proxy: the ui service's port 80 is
+# published on 127.0.0.1 only and the token service gets the per-app token
+# mounted read-only at /run/5tratumos/proxy-token.
+x-5tratumos-secure-proxy:
   version: 1
-  services:
-    node:
-      stop_signal: SIGTERM
-      stop_grace_period: 180s
+  ui_service: ui
+  ui_port: 80
+  token_services: [adapter]
 
 networks:
   public:
