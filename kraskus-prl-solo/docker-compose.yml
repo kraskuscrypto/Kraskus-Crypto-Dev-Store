@@ -1,4 +1,8 @@
-# 5tratumOS package for Pearl by Kraskus 0.5.0 (Kraskus V3, foundation 1.2.0).
+# 5tratumOS package for Pearl by Kraskus 0.5.1 (Kraskus V3, foundation 1.2.0).
+#
+# 0.5.1 (miner compatibility): a rebuilt gateway that sends pearl.challenge
+# only to silent miners and reads stratum lines up to 4 MiB; pearld/Oyster
+# stay the 0.2.1 image, api and ui are rebuilt with the version number only.
 #
 # 0.5.0 (V3 migration): the shared V3 UI (nginx, plain HTTP 8080, published
 # once on the manifest port 33068), the V3 API contract served by the api
@@ -97,7 +101,7 @@ services:
       - no-new-privileges:true
 
   gateway:
-    image: ghcr.io/kraskuscrypto/kraskus-prl-solo-gateway@sha256:86d8c3d8cf6a30bdaa2d617675f38902e68107c2072aefb3ab63f632df8a20ec
+    image: ghcr.io/kraskuscrypto/kraskus-prl-solo-gateway:0.5.1@sha256:52253e64871319ffab2539c9a1a1a659f7b891166bd869a0f8c7a943cd39a6cb
     restart: unless-stopped
     # No wallet-wait shell loop any more: without a confirmed customer payout
     # address the gateway itself listens in "wallet_wait" mode and rejects
@@ -139,7 +143,7 @@ services:
       - no-new-privileges:true
 
   api:
-    image: ghcr.io/kraskuscrypto/kraskus-prl-solo-api:0.5.0@sha256:ec147115c8a4d6c1bf83f352f35fd094e874f0cd7767c6ea1844e81dfaaa2aea
+    image: ghcr.io/kraskuscrypto/kraskus-prl-solo-api:0.5.1@sha256:c3801848e0eb730bfe24bc3b9d44af47769934c2dc85aa23509c88e697462c61
     restart: unless-stopped
     environment:
       KRASKUS_API_HOST: "0.0.0.0"
@@ -183,7 +187,7 @@ services:
       - no-new-privileges:true
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-prl-solo-ui:0.5.0@sha256:75dc905fc3b0969f199bcbb42b432f4c340ea33b88bb40c06eb425565ccd8c7a
+    image: ghcr.io/kraskuscrypto/kraskus-prl-solo-ui:0.5.1@sha256:f2cbbbf49f9e14eef26fcca7a3124fd89e135ce531105b918001ee353dfd01c8
     restart: unless-stopped
     environment:
       ADAPTER_HOST: api

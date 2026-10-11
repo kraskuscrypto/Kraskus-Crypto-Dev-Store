@@ -3,6 +3,24 @@
 Native 5tratStore package for the Kraskus Pearl (PRL) full node, Oyster
 wallet and solo-mining stratum gateway.
 
+## 0.5.1
+
+Miner compatibility (stratum gateway only):
+
+- the gateway sends its `pearl.challenge` only to a miner that stays silent
+  for half a second after connecting; AlphaMiner waits for it and works as
+  before, while miners that speak first (SRBMiner-MULTI) no longer get an
+  unsolicited method they reject;
+- one stratum line may be up to 4 MiB (SRBMiner's shares are about 1.07 MB);
+  a larger line gets a clean "Request too large" error and the connection
+  closes;
+- tested miners: **AlphaMiner 1.9.5**, **SRBMiner-MULTI 3.6.9**
+  (`--algorithm pearlhash`); known incompatible: **WildRig 0.51.2**, which
+  opens with a non-JSON handshake this gateway does not speak;
+- pearld, Oyster, payout, difficulty (fixed 50,000), ports, wallet and the
+  developer fee are unchanged; only the gateway image is rebuilt (the api and
+  UI images are rebuilt with the new version number only).
+
 ## 0.5.0
 
 Kraskus V3 migration (foundation 1.2.0):
