@@ -2,6 +2,15 @@
 
 Quantus (QTC) mainnet full node for your own Quantus miners on the local network. **Dev Store release. Not a Main release.**
 
+## 0.3.1
+
+Fresh-install fix for stock 5tratumOS (no P2 secure proxy). Full notes: `apps/quantus-solo/docs/RELEASE-NOTES-0.3.1.md` (Kraskus-Mining-Platform).
+
+- **First run works in the app.** Home shows *Reward identity required — Add your Quantus reward identity to start the node.* with the import form. The first reward identity is saved once; after that the first-run setup is closed for good and the node starts by itself.
+- **Miner token in the app.** Settings → Mining → Miner token → Reveal shows the existing token (read-only) so you can set up your miner.
+- **Still protected.** Changing the reward identity, rotating the miner token and regenerating the TLS certificate still need the platform's own secure login.
+- Unchanged: the 1% developer fee and its disclosure, the node image, the miner, ports, data paths and payout accounting.
+
 ## 0.3.0
 
 The first Kraskus V3 version of Quantus: the shared Kraskus V3 interface (foundation 1.7.0) with wallet-less rewards, the QUIC miner endpoint and the developer-fee disclosure. Full notes: `apps/quantus-solo/docs/RELEASE-NOTES-0.3.0.md` (Kraskus-Mining-Platform).
@@ -25,17 +34,17 @@ The first Kraskus V3 version of Quantus: the shared Kraskus V3 interface (founda
 | `init` | adapter image, one-shot (root, no network) | — |
 | `node` | quantus-node v1.0.2-Qm (`482c5b9e`) + Kraskus dev-fee patch (`1.0.2-Qm-482c5b9e02b-kraskus-devfee1`) + supervisor. Image `sha256:4d070601…f3f5cd` | 30333/tcp (P2P), 1935/udp → 9833 (miners, LAN only) |
 | `miner-local` | quantus-miner 4.2.0 + supervisor, **0.1.0 image** `sha256:e378ecd0…9988`; OFF by default | — |
-| `adapter` | V3 adapter 0.3.0 | — (internal network only) |
-| `ui` | shared V3 UI 0.3.0 (nginx) | 33076/tcp (127.0.0.1 under P2) |
+| `adapter` | V3 adapter 0.3.1 | — (internal network only) |
+| `ui` | shared V3 UI 0.3.1 (nginx) | 33076/tcp (127.0.0.1 under P2) |
 
 RPC (9944), node metrics (9615), miner metrics (9900) and the adapter are internal only. Fixed policy: mainnet only, upstream telemetry off, mDNS off, local CPU miner off by default (testing only, not profitable), no GPU miner, a 1% developer fee (block heights with height % 100 == 0; deterministic, built into the node, not user-editable), seed words never accepted.
 
 ## First run
 
 1. Open Quantus Solo from the 5tratumOS dashboard.
-2. Rewards: paste the wormhole reward address and its inner hash and tick the three statements. Create them with the official Quantus wallet, or `quantus-node key quantus --scheme wormhole`, at account index 0. The app never asks for your 24 words.
+2. Home shows **Reward identity required**: paste the wormhole reward address and its inner hash and tick the three statements, then Save (first run only; this can be done once). Create them with the official Quantus wallet, or `quantus-node key quantus --scheme wormhole`, at account index 0. The app never asks for your 24 words.
 3. The node starts and syncs. Mining is held until it is synced and the tip is fresh.
-4. Mining → Copy Mining Configuration: node address (this computer's LAN IP), UDP port 1935, the TLS fingerprint. Settings → Mining → Miner token → Reveal, save it as `./miner-auth-token` next to quantus-miner 4.2.0.
+4. Mining → Copy Mining Configuration: node address (this computer's LAN IP), UDP port 1935, the TLS fingerprint. Settings → Mining → Miner token → Reveal, save it as `./miner-auth-token` next to quantus-miner 4.2.0 (save the fingerprint as `./miner-tls-cert-sha256`).
 
 ## Data under `${APP_DATA_DIR}`
 

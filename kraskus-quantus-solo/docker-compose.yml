@@ -1,8 +1,8 @@
-# 5tratumOS package for Quantus Solo 0.3.0 -- the first Kraskus V3 version of
+# 5tratumOS package for Quantus Solo 0.3.1 (0.3.0 was the first Kraskus V3 version of
 # Quantus (foundation 1.6.0: wallet-less mode C1 + QUIC miner endpoint C9 +
 # trusted Umbrel deployment mode).
 # DEV STORE RELEASE (not a Main release): every image is pinned by its GHCR
-# digest (pushed 2026-10-11, no rebuild after qualification). Corresponding
+# digest (0.3.1 adapter/ui pushed 2026-10-11; node and miner unchanged). Corresponding
 # Source: https://github.com/kraskuscrypto/Quantus-Source-Mirror release
 # quantus-solo-v0.3.0 (signed).
 #
@@ -54,7 +54,7 @@ services:
     # entrypoint did, drops privileges and runs the versioned migrations of
     # rewards.json, settings.json and blocks.json (schema 1: no change).
     # It never mounts node/ (chain, node key) or miner-creds/.
-    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-adapter@sha256:61e008d9d99376e6bba37bb75076fc414532f36c709e7696fe90ff54649b5631
+    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-adapter@sha256:33d78bc899b5675966bf84673ef4320a353855111581cc5dd71e5882a37d7b21
     restart: "no"
     user: "0:0"
     entrypoint:
@@ -165,7 +165,7 @@ services:
     # Token service of the P2 secure proxy. Unprivileged from its first
     # instruction; its foundation start step (as 10001) creates the app-token
     # fallback only when no platform token is mounted.
-    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-adapter@sha256:61e008d9d99376e6bba37bb75076fc414532f36c709e7696fe90ff54649b5631
+    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-adapter@sha256:33d78bc899b5675966bf84673ef4320a353855111581cc5dd71e5882a37d7b21
     restart: unless-stopped
     user: "10001:10001"
     command:
@@ -223,7 +223,7 @@ services:
     # authenticated HTTPS dashboard route, adding the per-app token. It reads
     # the app-token fallback directory read-only and supplies that token only
     # to /api/ requests that carry none (stock 5tratumOS, Umbrel).
-    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-ui@sha256:4ff818d741b5d290dddbc08525461d0f2aebe5620107f5532d4ba73732fd6f75
+    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-ui@sha256:a3f8e66936839f3b1d30d456da16857c0a7df4136474c12ef7c524c5c0c836bd
     restart: unless-stopped
     stop_grace_period: 5s
     ports:
