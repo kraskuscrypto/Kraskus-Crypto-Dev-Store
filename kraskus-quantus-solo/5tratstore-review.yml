@@ -1,19 +1,20 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-quantus-solo
-appVersion: 0.1.1
+appVersion: 0.3.0
 reviewedAt: ""
 reviewedBy: ""
 
 upstream:
-  sourceUrl: https://github.com/kraskuscrypto/Kraskus-Crypto-Apps
+  sourceUrl: https://github.com/kraskuscrypto/Kraskus-Mining-Platform
   license: mixed
   licenseEvidence: LICENSES.md
 
-# DEV STORE ONLY. These stay false until the Main gates close: G5a legal
-# review of the GPL-3.0 node binary obligations (the source mirror itself is
-# published and signed since 2026-10-10) and F6 (use of the Quantus Q mark). Owner decision 2026-10-02: Dev testing may proceed
-# before them; Main may not.
+# DEV STORE RELEASE, NOT MAIN. These stay false until the Main gates close:
+# G5a legal review of the GPL-3.0 node binary obligations (the source mirror
+# itself is published and signed since 2026-10-10) and F6 (use of the Quantus
+# Q mark). Owner decision 2026-10-02: Dev testing may proceed before them;
+# Main may not.
 rights:
   packageOriginal: true
   softwareDistributionCleared: false
@@ -46,15 +47,30 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
-  Quantus Solo 0.1.1, Dev Store only: adapter-only status-correctness
-  maintenance release (node verdicts Accepted by node / Rejected by node /
-  Submitted (no verdict); node, miner and UI are the 0.1.0 images; node
-  Corresponding Source at https://github.com/kraskuscrypto/Quantus-Source-Mirror). For real LAN mining tests. Quantus
-  mainnet node (quantus-node built by Kraskus from Quantus-Network/chain
-  482c5b9e, v1.0.2-Qm; binary sha256 e40fdcf0613afa5b712c2a6f2a3d329be1ca15fbfc446f3f4080b5c9ca99fefd),
-  remote LAN miners over QUIC on 1935/udp (token + TLS pin), optional local
-  CPU miner off by default, no GPU miner, no developer fee. Reward address
-  and inner hash are imported; seed words are never accepted. Upstream
-  telemetry and mDNS off; RPC and metrics internal only. Ports: UI 33076,
-  HTTPS/operator 33078, miner 1935/udp, P2P 30333. Storage guidance is
-  provisional. Not a Main release.
+  Quantus Solo 0.3.0, the first Kraskus V3 version of Quantus (foundation
+  1.7.0: shared V3 UI, wallet-less rewards, QUIC miner endpoint, mining
+  dev-fee disclosure). Local workstation build only; not on any store.
+  DEVELOPER FEE (owner decisions 2026-10-10): Kraskus Quantus Solo includes a
+  1% developer fee. One out of every 100 block heights is assigned to the
+  Kraskus developer reward identity; all other heights use your configured
+  reward identity. Because solo mining rewards depend on when blocks are
+  actually found, your realized fee percentage over a short period may differ
+  from 1%. Kraskus Quantus Solo uses the official Quantus node source as its
+  base. Kraskus applies a disclosed developer-fee modification to
+  block-template reward selection. The miner remains unmodified. The node is a
+  modified GPL-3.0 combined work (patch 0001-kraskus-dev-fee.patch, notice
+  KRASKUS-MODIFICATIONS.md; Corresponding Source release quantus-solo-v0.3.0
+  of https://github.com/kraskuscrypto/Quantus-Source-Mirror, staged, not
+  published). The dev-fee node image is NOT built yet: the compose still
+  references the unmodified 0.1.0 node digest (TODO) and the adapter reports
+  the fee inactive. The miner is the unchanged 0.1.0 image; the adapter and UI
+  are rebuilt and report 0.3.0. The 0.1.x
+  operator layer and the 33078 HTTPS listener are removed; the platform
+  authenticates. Reward-address change and miner token reveal/rotate/TLS
+  regenerate need the 5tratumOS P2 secure proxy and are refused under the
+  app-token fallback on stock 5tratumOS without P2; the generated Umbrel
+  package declares the Umbrel deployment (foundation 1.6.0) and accepts them
+  through Umbrel's logged-in app proxy. 0.1.x data
+  paths are kept (no miner reconfiguration); operator-auth.json and tls/ are
+  quarantined, never deleted. Ports: UI 33076, miner 1935/udp, P2P 30333.
+  Storage guidance is provisional. Not a Main release.
