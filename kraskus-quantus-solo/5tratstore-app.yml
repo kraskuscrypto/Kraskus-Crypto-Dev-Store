@@ -24,7 +24,7 @@ developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
 repo: https://github.com/kraskuscrypto/Kraskus-Mining-Platform
 support: https://kraskuscrypto.com/
-icon: assets/quantus-solo-emblem.png
+icon: assets/quantus.png
 port: 33076
 path: /
 uiMode: proxy
