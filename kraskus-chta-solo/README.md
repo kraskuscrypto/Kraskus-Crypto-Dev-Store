@@ -42,6 +42,26 @@ from the Blocks page. Per-block share logs are not written.
 `assets/chta-official-emblem-v2.png` is the approved CHTA application emblem
 used by the Store listing.
 
+## 0.5.1
+
+- Network difficulty: the app now reports the regular network difficulty from
+  CheetahCoin Core's block template, the same work CKPool hands to miners.
+  A template counts only when Core is in its regular-work window, 81 to 240 s
+  after the previous block, or at a retarget height. 0.5.0 showed Core's
+  tip-block figure, which reads 0.0025 (shown as "0.002") whenever the tip is
+  a cheetah block. Spike and cheetah work, share, port and worker
+  difficulties are never shown as the network difficulty. While the node
+  syncs, or before a value is confirmed, the interface shows "Updating…" and
+  computes no percentage.
+- Best share (this session) is CKPool's current-round best share, which resets
+  when the pool finds a block. It is no longer the all-time best. CKPool
+  records the block-finding share as the first best of the new round, so
+  right after a found block the percentage starts at 100% or more. A miner
+  idle since before the latest found block shows no round best.
+- Mining, payout, the Stratum ports (1926; 1927 at a fixed 0.002), the wallet
+  and the 1% developer fee are unchanged. CheetahCoin Core 2.5.0 and CKPool are
+  the 0.5.0 and 0.3.1 images, unchanged.
+
 ## 0.5.0
 
 - Kraskus V3: the shared V3 interface (Home, Mining, Workers, Blocks, Wallet,
