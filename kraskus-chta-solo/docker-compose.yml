@@ -1,4 +1,4 @@
-# 5tratumOS package for CheetahCoin by Kraskus (Kraskus CHTA Solo) 0.5.0
+# 5tratumOS package for CheetahCoin by Kraskus (Kraskus CHTA Solo) 0.5.1
 # (Kraskus V3, foundation 1.2.0).
 #
 # 0.5.0 (V3 migration, owner design 2026-10-09): the shared V3 UI (nginx,
@@ -47,7 +47,7 @@ services:
       APP_PORT: 8080
 
   init:
-    image: ghcr.io/kraskuscrypto/kraskus-chta-solo:0.5.0@sha256:2ee394c1e6a8e811f7d7bdd4cae6adda34e46f3dcb95d5efedb39f01ebb12438
+    image: ghcr.io/kraskuscrypto/kraskus-chta-solo:0.5.1@sha256:53e057648bbf3bc66e68393ef3f919d8b3d919d47a3d81114a114648c3729ea6
     restart: "no"
     user: "0:0"
     command:
@@ -131,7 +131,7 @@ services:
       - no-new-privileges:true
 
   kraskus:
-    image: ghcr.io/kraskuscrypto/kraskus-chta-solo:0.5.0@sha256:2ee394c1e6a8e811f7d7bdd4cae6adda34e46f3dcb95d5efedb39f01ebb12438
+    image: ghcr.io/kraskuscrypto/kraskus-chta-solo:0.5.1@sha256:53e057648bbf3bc66e68393ef3f919d8b3d919d47a3d81114a114648c3729ea6
     restart: unless-stopped
     # Foundation 1.1.2 start step, as the image user 1000 (never root):
     # without a platform token it creates the app token once (0400, in the
@@ -196,7 +196,7 @@ services:
       - no-new-privileges:true
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-chta-ui:0.5.0@sha256:c06e718df3ed6c2f0d89a1263a2d463a148796b346a15c546e154966b939e891
+    image: ghcr.io/kraskuscrypto/kraskus-chta-ui:0.5.1@sha256:dd3449c3fd14fa4895063e9604975a33afa2fb846aafc47477f4233c17e2d5f6
     restart: unless-stopped
     depends_on:
       init:
