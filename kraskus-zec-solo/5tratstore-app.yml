@@ -13,7 +13,7 @@ description: >-
   host the app reports it and does not start syncing. A required 1% developer
   fee is paid directly from successful block coinbases. This is the pre-NU7
   release: a follow-up update is required for the Zcash NU7 network upgrade.
-version: 0.5.1
+version: 0.5.2
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/

@@ -9,9 +9,10 @@ notes:
   - Payout configuration is applied through the Kraskus UI and shared safely with Zebra.
   - Mainnet only (since 0.5.0): there is no user network setting; Zebra does not start until the storage preflight (320 GiB free) passes, and the app reports the storage error instead.
   - The wallet password is the only app credential (send, Forget and payout changes); every state change goes through the 5tratumOS dashboard (P2 proxy token or the app-token fallback).
-appVersion: 0.5.1
+appVersion: 0.5.2
 
 releaseNotes:
+  - 0.5.2 corrects a misleading wallet message: when the wallet cannot build a transaction yet (for example while it is still catching up with the chain), Send preview now says so ("Zallet could not build this transaction right now. Try again shortly.") instead of reporting that the wallet password could not be checked. These attempts never count as wrong passwords. Password checks, the lock-out, the preview token, the fee preview, mining and the 1% developer fee are unchanged; this is still the pre-NU7 release.
   - 0.5.1 fixes a fresh-start problem in 0.5.0: Zebra starts after the app's API (the storage preflight gates it), and the API kept sending its node queries without Zebra's newly written RPC credentials, so the dashboard stayed on "Waiting for Zebra" until the app was restarted. The node status now appears as soon as Zebra is running. The Stratum log banner reports the app version. Mining, the wallet, the 1% developer fee, the fixed share difficulty and Zebra 6.2.3 are unchanged; this is still the pre-NU7 release.
   - 0.5.0 moves Zcash by Kraskus onto the Kraskus V3 template (foundation 1.2.3): the shared V3 interface (Home, Mining, Wallet, Blocks, Settings), one truthful readiness state, workers with state aging, share efficiency, Stratum health, data freshness, hashrate history in Sol/s, and copy-ready mining configuration.
   - Wallet (Zallet 0.1.0-beta.3, unchanged): create with a 24-word recovery phrase shown once and a word challenge, restore by phrase, wallet password last, real balance, Send with a fee preview and password confirmation, Receive with QR, transaction activity, and Forget with the wallet password.
