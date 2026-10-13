@@ -1,4 +1,4 @@
-# 5tratumOS package for Zcash by Kraskus (Kraskus ZEC Solo) 0.5.0
+# 5tratumOS package for Zcash by Kraskus (Kraskus ZEC Solo) 0.5.1
 # (Kraskus V3, foundation 1.2.3).
 #
 # 0.5.0 (V3 migration, owner-approved 2026-10-12): the shared V3 UI (nginx,
@@ -37,7 +37,7 @@ services:
       APP_PORT: 8080
 
   zallet-init:
-    image: ghcr.io/kraskuscrypto/kraskus-zec-solo-wallet-controller:0.5.0@sha256:804c8d307a1cb080e96c38ddb4856a078dab806a21a21923ec561a15cc779de2
+    image: ghcr.io/kraskuscrypto/kraskus-zec-solo-wallet-controller:0.5.1@sha256:10ec37603ba6c2ab0e7894cc1a5e2fb14f173673324a3a19f54dd7e38f6b80da
     user: 0:0
     entrypoint:
     - /bin/sh
@@ -71,7 +71,7 @@ services:
     - FOWNER
 
   kraskus:
-    image: ghcr.io/kraskuscrypto/kraskus-zec-solo-wallet-controller:0.5.0@sha256:804c8d307a1cb080e96c38ddb4856a078dab806a21a21923ec561a15cc779de2
+    image: ghcr.io/kraskuscrypto/kraskus-zec-solo-wallet-controller:0.5.1@sha256:10ec37603ba6c2ab0e7894cc1a5e2fb14f173673324a3a19f54dd7e38f6b80da
     restart: unless-stopped
     depends_on:
       zallet-init:
@@ -109,7 +109,7 @@ services:
     - DAC_OVERRIDE
 
   zallet:
-    image: ghcr.io/kraskuscrypto/kraskus-zec-zallet-supervisor:0.5.0@sha256:28241a40e91df0d77e60e748191127bd2631501fb55f2cabb3c33ba8723b62e9
+    image: ghcr.io/kraskuscrypto/kraskus-zec-zallet-supervisor:0.5.1@sha256:cb837271a101b7c7844dac155074fdbff7e5a66544e9cf0ab4155e7ca84f2ccb
     restart: unless-stopped
     user: 10001:10001
     network_mode: service:kraskus
@@ -154,7 +154,7 @@ services:
     - no-new-privileges:true
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-zec-solo-wallet-controller:ui-0.5.0@sha256:a7864a31c899b73349767a70474a5d837e672ad73c26f14252276746a5df47cd
+    image: ghcr.io/kraskuscrypto/kraskus-zec-solo-wallet-controller:ui-0.5.1@sha256:2b104f146e2ed22b34e4c07786b52d8e487dfcdbcb9e262123bcd12de249efde
     restart: unless-stopped
     depends_on:
       zallet-init:
