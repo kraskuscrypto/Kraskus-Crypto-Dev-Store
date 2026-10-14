@@ -158,15 +158,18 @@ notes: >-
 # 0.2.0 release qualification (Kraskus V3, foundation 1.15.0)
 #
 # Source: Kraskus-Mining-Platform v3/xmr; image source commit
-# 7b8a5fcda8a9c7481e8905b183bbb3724acce517 (build.sh, git archive, labelled).
+# 7b8a5fcda8a9c7481e8905b183bbb3724acce517 (build.sh, git archive, labelled);
+# wallet-api rebuilt from 1636d970d834059d2c0ef3067e20b719e6dfc584 (backup
+# challenge stored before create writes the wallet; Mainnet finding).
 # The exact qualified local image IDs were retagged and pushed without a
 # rebuild; each registry manifest's config digest equals the qualified ID.
 #   monerod     sha256:cb8799ae1d042ed506b386939e308239423971f3d2581db84120335de7c06ec1
 #   gateway     sha256:951f679fbb6e75511204ec4ac54deb92235aeebd3099835a051b8191a54928a3
-#   wallet-api  sha256:e9c349c16d05016b0d97c10e4333edf27bb47b50708d77a0060949514b230e29
+#   wallet-api  sha256:f8cbbcaedcd66f0e19e6f545f3f9acb2cb179a2f17ee926299f5e13532ead65c
 #   adapter     sha256:6108ffc166f00d24f27127bec7b710f01d3a0961d6f98bc6ddbb3f9a495f7582
 #   ui          sha256:b097d0d223debed62fc4cb48b6e4ae533a8588b4b1c1ed452c73af11ef50de48
-# Regtest qualification on these images (VM100, 2026-10-14): fresh install
+# Regtest qualification on these images (VM100, 2026-10-14, rerun on the
+# rebuilt wallet-api: 75/75): fresh install
 # 37/37 (real XMRig, real blocks and an orphan, 1% ledger, matured balance,
 # automatic dev-fee settlement, real send, lock-out, restarts, restore,
 # watch-only); released 0.1.22 -> 0.2.0 (A1 11/11, chain, wallet and Fixed
