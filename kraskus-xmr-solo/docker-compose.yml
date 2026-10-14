@@ -180,7 +180,7 @@ services:
       - xmr_core
 
   wallet-api:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-wallet-api:0.2.0@sha256:e9c349c16d05016b0d97c10e4333edf27bb47b50708d77a0060949514b230e29
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-wallet-api:0.2.0@sha256:f8cbbcaedcd66f0e19e6f545f3f9acb2cb179a2f17ee926299f5e13532ead65c
     restart: unless-stopped
     user: "1000:1000"
     environment:

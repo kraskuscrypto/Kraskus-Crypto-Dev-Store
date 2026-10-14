@@ -189,4 +189,4 @@ Kraskus V3: the shared Kraskus app experience (Overview, Mining, Workers, Blocks
 - **Difficulty:** Settings → Mining sets one share difficulty (Automatic = the app default 1000, or a fixed value). Per-worker Fixed difficulties saved in 0.1.20–0.1.22 keep applying, but 0.2.0 has no per-worker editor. Network difficulty is shown only from a synchronized node; nothing is estimated.
 - The `+difficulty` username suffix stays unsupported.
 - The images now carry their third-party licences under `/usr/share/licenses` (Monero, XMRig Proxy with source directions).
-- Pins the five images built from Kraskus-Mining-Platform `v3/xmr` source commit `7b8a5fcda8a9c7481e8905b183bbb3724acce517` (monerod, miner-gateway, wallet-api, adapter, ui).
+- Pins five images built from Kraskus-Mining-Platform `v3/xmr`: monerod, miner-gateway, adapter and ui from source commit `7b8a5fcda8a9c7481e8905b183bbb3724acce517`, wallet-api from `1636d970d834059d2c0ef3067e20b719e6dfc584`.
