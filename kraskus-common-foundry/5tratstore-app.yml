@@ -1,0 +1,30 @@
+id: kraskus-common-foundry
+name: Common Foundry
+tagline: Common Foundry Solo - Dev/Test Release (external GPU qualification required)
+description: >-
+  Common Foundry Solo - Dev/Test Release. External GPU qualification
+  required. A Common Foundry v1.0.8 mainnet node with its encrypted wallet
+  behind the Kraskus interface, plus true solo mining: the official cmfd-miner
+  connects to this node on port 29445 and block rewards go to your own wallet
+  (no pool, no payout ledger). The solo endpoint opens only after a paired
+  LAN GPU prover reports ready. A supported NVIDIA GPU with at least 16 GB
+  VRAM is required for prover qualification; 24 GB is recommended. Kraskus
+  internal hardware cannot complete the final real prover/mining
+  qualification; this release is intended for external tester validation
+  before Main publication. No developer fee.
+version: 0.1.4
+category: Mining
+developer: Kraskus Crypto
+website: https://kraskuscrypto.com/
+repo: https://github.com/kraskuscrypto/Kraskus-Crypto-Apps
+support: https://kraskuscrypto.com/
+icon: assets/cmfd-emblem.png
+port: 33072
+path: /
+uiMode: proxy
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: ui
+      APP_PORT: 8080

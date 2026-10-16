@@ -1,0 +1,157 @@
+# Common Foundry Solo (CMFD Kraskus) 0.1.4, Common Foundry mainnet v1.0.8: 5tratumOS recipe.
+# DEV TEST RELEASE: not Main-qualified; pending external GPU / mining qualification
+# (docs/SOLO-DEV-TESTER-GUIDE.md). Node = Kraskus solo variant of cmfd-node 1.0.8.
+# Not published to Dev/Main before the 0.1.x QA and owner review.
+#
+#   init     one-shot as root: data layout and ownership (uid 1000)
+#   node     official cmfd-node (unmodified) + Kraskus supervisor:
+#            model-bank preparation, node process, wallet control socket,
+#            allowlisted token-protected RPC proxy on 18481 (private only).
+#            P2P 29444 published; solo miner endpoint 29445 published, served by
+#            a relay that listens only while Solo Prover Ready holds (Dev);
+#            no RPC, no metrics, no mDNS, no telemetry; official RPC
+#            127.0.0.1:29443 loopback only.
+#   adapter  readiness, wallet UX, mining gate, UI API (18480), optional
+#            pool statistics fetch (https egress). A normal service: sharing
+#            the node's network namespace left the adapter stranded after
+#            node restarts (RCNet QA).
+#   ui       Template V2 web UI (nginx) behind app_proxy
+#
+# The GPU miner is an overlay (docker-compose.gpu.yml): a compose GPU
+# reservation makes the container fail on hosts without the NVIDIA runtime,
+# which would break installation everywhere else (owner decision D3).
+#
+# Persistent data: node/ (chain, wallet.key, wallet-archive/), inputs/ (the
+# authenticated 6.4 GB model bank; re-downloadable), runtime/ (supervisor
+# state, control socket, adapter state), secrets/ (node container only).
+# Networks: cmfd_public, cmfd_private (internal). Names are permanent.
+services:
+  app_proxy:
+    environment:
+      APP_HOST: ui
+      APP_PORT: 8080
+    networks:
+      - cmfd_private
+
+  init:
+    image: ghcr.io/kraskuscrypto/kraskus-common-foundry-node:0.1.4@sha256:b184316105375b6f7c145b78ab472b266e58d46f0ba8b558dea663313fd090ae
+    pull_policy: missing
+    restart: "no"
+    user: "0:0"
+    entrypoint: ["sh", "-c"]
+    command:
+      - "mkdir -p /d/node /d/inputs /d/runtime /d/secrets /d/miner-scratch && chown 1000:1000 /d/node /d/inputs /d/runtime /d/miner-scratch && chown 0:0 /d/secrets && chmod 700 /d/secrets /d/node && chmod 750 /d/runtime"
+    volumes:
+      - ${APP_DATA_DIR}:/d
+    network_mode: "none"
+    security_opt:
+      - no-new-privileges:true
+
+  node:
+    image: ghcr.io/kraskuscrypto/kraskus-common-foundry-node:0.1.4@sha256:b184316105375b6f7c145b78ab472b266e58d46f0ba8b558dea663313fd090ae
+    pull_policy: missing
+    restart: unless-stopped
+    # Supervisor as root with a minimal capability set so the stored wallet
+    # passphrase is root:root 0600; cmfd-node itself runs as uid 1000.
+    user: "0:0"
+    # The supervisor stops cmfd-node with SIGTERM and waits up to 300 s.
+    stop_grace_period: 6m
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    volumes:
+      - ${APP_DATA_DIR}/node:/data
+      - ${APP_DATA_DIR}/inputs:/inputs
+      - ${APP_DATA_DIR}/runtime:/runtime
+      - ${APP_DATA_DIR}/secrets:/secrets
+    environment:
+      # Solo mining (Dev/experimental): only takes effect with the Kraskus solo
+      # node build; port 29445 accepts miners only while Solo Prover Ready holds.
+      CMFD_SOLO: "1"
+    ports:
+      - "29444:29444/tcp"
+      - "29445:29445/tcp"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import os,socket,sys; s=socket.socket(socket.AF_UNIX); s.settimeout(5); s.connect('/runtime/control.sock'); s.sendall(b'{\"op\":\"state\"}'); s.shutdown(socket.SHUT_WR); sys.exit(0 if b'\"ok\": true' in s.recv(4096) else 1)"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    tmpfs:
+      - /tmp
+      - /run/cmfd:mode=0700
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID
+      - DAC_OVERRIDE
+      - FOWNER
+      - KILL
+    networks:
+      - cmfd_public
+      - cmfd_private
+
+  adapter:
+    image: ghcr.io/kraskuscrypto/kraskus-common-foundry-adapter:0.1.4@sha256:a502b64209140dc18e1c8ace8cac24afbc6e202ea262b11429f286fc373e03f9
+    pull_policy: missing
+    restart: unless-stopped
+    stop_grace_period: 20s
+    depends_on:
+      node:
+        condition: service_started
+    volumes:
+      - ${APP_DATA_DIR}/runtime:/runtime
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:18480/health', timeout=5).read()"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    # cmfd_public only for outbound HTTPS to the pool statistics page the
+    # customer configures (no published ports); everything else is private.
+    networks:
+      - cmfd_private
+      - cmfd_public
+
+  ui:
+    image: ghcr.io/kraskuscrypto/kraskus-common-foundry-ui:0.1.4@sha256:dd7061dd51509a8a867c84304e8c8cd4ff47a20c278aec4b900daf766d36018f
+    pull_policy: missing
+    restart: unless-stopped
+    depends_on:
+      adapter:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/health >/dev/null"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    security_opt:
+      - no-new-privileges:true
+    # 5tratumOS publishes the manifest UI port (33072) on the APP_HOST
+    # service at install (it drops app_proxy and adds "33072:8080" to ui).
+    # Docker publishes nothing for a container whose only network is
+    # internal, so ui must also join the non-internal cmfd_public network or
+    # the portal is refused (Dev 0.1.0 on VM100). The UI still reaches the
+    # adapter over cmfd_private; it publishes no port itself.
+    networks:
+      - cmfd_private
+      - cmfd_public
+
+networks:
+  cmfd_public:
+    driver: bridge
+  cmfd_private:
+    driver: bridge
+    internal: true
