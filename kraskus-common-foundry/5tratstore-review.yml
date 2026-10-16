@@ -1,0 +1,60 @@
+schemaVersion: 1
+status: proposed
+appId: kraskus-common-foundry
+appVersion: 0.1.4
+reviewedAt: ""
+reviewedBy: ""
+
+upstream:
+  sourceUrl: https://github.com/kraskuscrypto/Kraskus-Crypto-Apps
+  license: mixed
+  licenseEvidence: LICENSES.md
+
+rights:
+  packageOriginal: true
+  softwareDistributionCleared: false
+  containerUseCleared: false
+  listingTextCleared: false
+  artworkCleared: false
+  noticesIncluded: true
+
+delivery:
+  mode: immutable-container-appliance
+  storePayload: recipe-only
+  mirrorsThirdPartyPayload: false
+
+compatibility:
+  osVersions:
+    - Debian-13-5tratumOS-clean-room
+  architectures:
+    - amd64
+  installTested: false
+  startTested: false
+  updateTested: false
+  uninstallTested: false
+
+security:
+  privileged: false
+  hostNetwork: false
+  dockerSocket: false
+  hostMountsReviewed: true
+  devicesReviewed: false
+  networkEndpointsReviewed: true
+
+notes: >-
+  0.1.4 COMMON FOUNDRY SOLO - DEV TEST RELEASE. NOT MAIN-QUALIFIED. PENDING
+  EXTERNAL GPU / MINING QUALIFICATION. Node = Kraskus solo variant of cmfd-node
+  1.0.8 (Kraskus-Common-Foundry-Solo ef3ccfe, sha256 532de83f pinned in the
+  profile); gated miner endpoint 29445 (relay to 29446) opens only after the
+  paired LAN prover reports ready. Pending external hardware qualification:
+  real GPU prover self-test, real cmfd-miner connection, live proving/mining,
+  accepted/rejected/stale truth, restart during active mining, mainnet block
+  production. None of these is PASS or waived.
+  0.1.3 targets Common Foundry mainnet v1.0.8 (3aa5369). Not published before Dev Store review.
+  Release gates (docs/CUTOVER.md): the October 2 2026 official source and
+  packages reviewed and signature-verified, exact upstream tag/commit
+  recorded, images rebuilt from the final artifacts, mainnet parameters
+  verified, and gates G1-G9 passed on 5tratumOS. The official binaries are
+  MIT (CUTLASS BSD-3-Clause notices included); the model bank is downloaded
+  at runtime from the official sources and never mirrored. GPU delivery on
+  5tratumOS is owner decision D3; devicesReviewed stays false until then.
