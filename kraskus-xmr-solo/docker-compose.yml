@@ -1,4 +1,4 @@
-# 5tratumOS package for Monero by Kraskus 0.2.0 (Kraskus V3, foundation 1.15.0).
+# 5tratumOS package for Monero by Kraskus 0.2.1 (Kraskus V3, foundation 1.16.1).
 #
 # 0.2.0 (V3 migration, owner decisions 2026-10-13/14): the shared V3 UI (nginx,
 # plain HTTP 8080, published once on the manifest port 33065), the V3 API
@@ -143,7 +143,7 @@ services:
       - xmr_wallet
 
   gateway:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-miner-gateway:0.2.0@sha256:951f679fbb6e75511204ec4ac54deb92235aeebd3099835a051b8191a54928a3
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-miner-gateway:0.2.1@sha256:0fbb89f585bd64d0f0bcc4ca40ac90810855c2db81ca066c022fb855b975efb0
     restart: unless-stopped
     user: "1000:1000"
     depends_on:
@@ -222,7 +222,7 @@ services:
       - xmr_core
 
   adapter:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-adapter:0.2.0@sha256:6108ffc166f00d24f27127bec7b710f01d3a0961d6f98bc6ddbb3f9a495f7582
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-adapter:0.2.1@sha256:3344366701b7e78f675c482d52b3597a97ec7549f8ad709114d7b526d4b540b5
     restart: unless-stopped
     stop_grace_period: 20s
     depends_on:
@@ -261,7 +261,7 @@ services:
       - xmr_private
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-ui:0.2.0@sha256:b097d0d223debed62fc4cb48b6e4ae533a8588b4b1c1ed452c73af11ef50de48
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-ui:0.2.1@sha256:954c17c44a59b483bf8056a19e178d35b9cf29c015615ad202ac4f23875efa34
     restart: unless-stopped
     depends_on:
       adapter:
