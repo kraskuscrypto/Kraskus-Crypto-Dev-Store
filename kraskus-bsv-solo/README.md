@@ -5,6 +5,10 @@ Bitcoin SV (SV Node 1.2.2, pruned) node and private solo-mining controller for
 rewards pay the address configured in the app (external address or the
 built-in wallet). 1% of each block reward is a developer-fee coinbase output.
 
+## 0.5.4
+
+Foundation 1.16.1 maintenance: Home and the Blocks page no longer show READY while the node is syncing or its sync state is not known yet (the Blocks page now uses the same node sync state as Home), and each worker row shows that worker's own best share ("Best", or "Best —" when it has none) on a two-line layout. No other change: node, Stratum, wallet, payout, developer fee and ports are as in 0.5.3.
+
 ## 0.5.3
 
 Packaging-only maintenance release adding the required Open BSV License v5
