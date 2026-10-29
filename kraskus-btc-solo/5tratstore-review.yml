@@ -43,8 +43,9 @@ security:
 
 notes: >-
   DEVELOPMENT PREVIEW, mining disabled (no --enable-mining, no --allow-mainnet, no Stratum port). Images
-  are the exact images qualified on VM100 on 2026-10-29 (app r2 = source 4b968fc: unit 95/95, platform
-  24/24, isolated regtest 33/33; UI and node r1 = source e7bf79f), scanned with Trivy 0.76.1: UI clean;
+  are the exact images qualified on VM100 on 2026-10-29 and re-qualified after publication by anonymous
+  pull by digest (image IDs equal; app = source 4b968fc, UI and node = source e7bf79f): unit 95/95, platform
+  24/24, isolated regtest 33/33, scanned with Trivy 0.76.1: UI clean;
   app/node no critical and no fixable findings (remaining Debian base findings documented in the release
   record). The UI listens on 127.0.0.1:33079 only and is reached through the authenticated portal route;
   RPC stays on the internal rpc network (10.66.43.0/24, fixed because bitcoind -rpcallowip needs it).

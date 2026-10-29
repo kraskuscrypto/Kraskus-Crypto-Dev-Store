@@ -24,7 +24,7 @@ services:
       APP_PORT: 8080
 
   init:
-    image: ghcr.io/kraskuscrypto/kraskus-btc-solo:0.5.0-dev@sha256:replace-me-after-publish
+    image: ghcr.io/kraskuscrypto/kraskus-btc-solo:0.5.0-dev@sha256:3f48a7ed4d7c2be909047c3ee527050c89f4a78618b98bca477c82192fdd9ee7
     user: '0:0'
     network_mode: none
     entrypoint: ['python', '-c']
@@ -36,7 +36,7 @@ services:
     restart: 'no'
 
   node:
-    image: ghcr.io/kraskuscrypto/kraskus-btc-solo-node:0.5.0-dev@sha256:replace-me-after-publish
+    image: ghcr.io/kraskuscrypto/kraskus-btc-solo-node:0.5.0-dev@sha256:3321ad408515a5a3168e3c7e60f6942d2de49dce079d99dd884dab1aa20ab76e
     user: '10001:10001'
     entrypoint: ['bitcoind']
     command: ['-datadir=/node', '-server=1', '-disablewallet=1', '-rpcbind=0.0.0.0', '-rpcallowip=10.66.43.0/24', '-rpcport=8332', '-listen=0', '-prune=30000', '-dbcache=1000', '-maxmempool=300', '-printtoconsole=0']
@@ -57,7 +57,7 @@ services:
       init: {condition: service_completed_successfully}
 
   api:
-    image: ghcr.io/kraskuscrypto/kraskus-btc-solo:0.5.0-dev@sha256:replace-me-after-publish
+    image: ghcr.io/kraskuscrypto/kraskus-btc-solo:0.5.0-dev@sha256:3f48a7ed4d7c2be909047c3ee527050c89f4a78618b98bca477c82192fdd9ee7
     user: '10001:10001'
     init: true
     read_only: true
@@ -86,7 +86,7 @@ services:
     stop_grace_period: 30s
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-btc-solo-ui:0.5.0-dev@sha256:replace-me-after-publish
+    image: ghcr.io/kraskuscrypto/kraskus-btc-solo-ui:0.5.0-dev@sha256:96a2283660adcd67ca03f12617901446978fe633c2810195b9ce98cb53ce4e34
     cap_drop: [ALL]
     cap_add: [CHOWN, SETGID, SETUID, DAC_READ_SEARCH]
     security_opt: ['no-new-privileges:true']
