@@ -6,9 +6,9 @@ reviewedAt: ""
 reviewedBy: ""
 
 upstream:
-  sourceUrl: https://github.com/kraskuscrypto/Kraskus-Crypto-Apps
+  sourceUrl: https://github.com/kraskuscrypto/Kraskus-Crypto-Release-Sources/tree/main/apps/kraskus-btc-solo/0.5.0-dev
   license: mixed
-  licenseEvidence: LICENSES.md
+  licenseEvidence: https://github.com/kraskuscrypto/Kraskus-Crypto-Release-Sources/tree/main/apps/kraskus-btc-solo/0.5.0-dev/THIRD-PARTY.md
 
 rights:
   packageOriginal: true
@@ -51,5 +51,5 @@ notes: >-
   Known open items: a settings save can take several seconds when the host disk stalls during a node's
   initial sync (durable SQLite commit; not weakened); platform limitations of stock 5tratumOS (shared
   portal origin, plain HTTP, local access to app ports, portal routes retained after uninstall).
-  The BTC Solo V3 source is not yet in the public source mirror; the reviewed commits are recorded above.
+  sourceUrl is the release provenance and third-party source information record (not the complete app source; the Kraskus app code is proprietary and preserved privately in Kraskus-Mining-Platform v3/btc).
   Test flags stay false until install/start/update/uninstall are verified from this store entry.
