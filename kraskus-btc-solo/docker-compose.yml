@@ -1,0 +1,124 @@
+# 5tratumOS package for Bitcoin by Kraskus 0.5.0-dev -- DEVELOPMENT PREVIEW (Kraskus V3).
+#
+# Mining is DISABLED in this package: the api runs in platform mode without --enable-mining and without
+# --allow-mainnet, and no Stratum port is published. Listing it does not authorize live mining; mainnet
+# activation is a separate owner decision after mainnet sync/validation and hardware qualification.
+#
+# Images (exact images qualified on VM100 2026-10-29; tag + registry digest pinned after publication):
+#   kraskus-btc-solo       app/API, source btc-solo-v3-050 4b968fc (package/Dockerfile)
+#   kraskus-btc-solo-ui    nginx UI front + app-token relay, source e7bf79f (package/ui/Dockerfile)
+#   kraskus-btc-solo-node  official Bitcoin Core 32.1 binaries on debian:trixie-slim, source e7bf79f
+#
+#   init   app image, one-shot (root, no network): hands data/state, data/node and data/apptoken to uid 10001.
+#   node   bitcoind, wallet disabled, P2P listen off, RPC only on the internal rpc network; pruned to 30000 MiB.
+#          600 s stop grace (clean "Shutdown done" verified on stop/start).
+#   api    appliance API + app-token service (P2 proxy token when the platform provides one).
+#   ui     web UI, published on 127.0.0.1:33079 only and reached through the authenticated portal route.
+#
+# A fresh install starts with empty data/state (no payout address, no history) and creates its own app token.
+# Portable limits only (CPU/memory). Host-specific disk throttles belong in a host-local override, not here.
+services:
+  app_proxy:
+    environment:
+      APP_HOST: ui
+      APP_PORT: 8080
+
+  init:
+    image: ghcr.io/kraskuscrypto/kraskus-btc-solo:0.5.0-dev@sha256:replace-me-after-publish
+    user: '0:0'
+    network_mode: none
+    entrypoint: ['python', '-c']
+    command: ["import os; [(os.chown(p,10001,10001),os.chmod(p,0o700)) for p in ('/state','/node','/apptoken')]"]
+    volumes:
+      - ${APP_DATA_DIR}/data/state:/state
+      - ${APP_DATA_DIR}/data/node:/node
+      - ${APP_DATA_DIR}/data/apptoken:/apptoken
+    restart: 'no'
+
+  node:
+    image: ghcr.io/kraskuscrypto/kraskus-btc-solo-node:0.5.0-dev@sha256:replace-me-after-publish
+    user: '10001:10001'
+    entrypoint: ['bitcoind']
+    command: ['-datadir=/node', '-server=1', '-disablewallet=1', '-rpcbind=0.0.0.0', '-rpcallowip=10.66.43.0/24', '-rpcport=8332', '-listen=0', '-prune=30000', '-dbcache=1000', '-maxmempool=300', '-printtoconsole=0']
+    init: true
+    stop_grace_period: 600s
+    read_only: true
+    tmpfs: ['/tmp:rw,noexec,nosuid,size=64m']
+    cap_drop: [ALL]
+    security_opt: ['no-new-privileges:true']
+    volumes:
+      - ${APP_DATA_DIR}/data/node:/node
+    networks: [rpc, egress]
+    cpus: 2
+    mem_limit: 2560m
+    memswap_limit: 2560m
+    restart: unless-stopped
+    depends_on:
+      init: {condition: service_completed_successfully}
+
+  api:
+    image: ghcr.io/kraskuscrypto/kraskus-btc-solo:0.5.0-dev@sha256:replace-me-after-publish
+    user: '10001:10001'
+    init: true
+    read_only: true
+    tmpfs: ['/tmp:rw,noexec,nosuid,size=32m']
+    cap_drop: [ALL]
+    security_opt: ['no-new-privileges:true']
+    environment:
+      KRASKUS_APP_TOKEN_FILE: /run/kraskus-app-token/token
+    volumes:
+      - ${APP_DATA_DIR}/data/state:/state
+      - ${APP_DATA_DIR}/data/node:/node:ro
+      - ${APP_DATA_DIR}/data/apptoken:/run/kraskus-app-token
+    networks: [rpc, front]
+    cpus: 1
+    mem_limit: 512m
+    pids_limit: 128
+    restart: unless-stopped
+    depends_on:
+      init: {condition: service_completed_successfully}
+    healthcheck:
+      test: ['CMD', 'python', '-c', "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/livez',timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    stop_grace_period: 30s
+
+  ui:
+    image: ghcr.io/kraskuscrypto/kraskus-btc-solo-ui:0.5.0-dev@sha256:replace-me-after-publish
+    cap_drop: [ALL]
+    cap_add: [CHOWN, SETGID, SETUID, DAC_READ_SEARCH]
+    security_opt: ['no-new-privileges:true']
+    volumes:
+      - ${APP_DATA_DIR}/data/apptoken:/run/kraskus-app-token:ro
+    ports: ['127.0.0.1:33079:8080/tcp']
+    networks: [front, publish]
+    cpus: 0.5
+    mem_limit: 128m
+    pids_limit: 64
+    restart: unless-stopped
+    depends_on:
+      api: {condition: service_healthy}
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -q -O /dev/null http://127.0.0.1:8080/livez']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    stop_grace_period: 10s
+
+networks:
+  rpc:
+    internal: true
+    ipam:
+      config: [{subnet: 10.66.43.0/24}]
+  front:
+    internal: true
+  publish: {}
+  egress: {}
+
+x-5tratumos-secure-proxy:
+  version: 1
+  ui_service: ui
+  ui_port: 8080
+  token_services: [api]
