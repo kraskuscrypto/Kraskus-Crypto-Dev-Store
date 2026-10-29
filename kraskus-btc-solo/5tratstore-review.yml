@@ -1,0 +1,56 @@
+schemaVersion: 1
+status: proposed
+appId: kraskus-btc-solo
+appVersion: 0.5.0-dev
+reviewedAt: ""
+reviewedBy: ""
+
+upstream:
+  sourceUrl: https://github.com/kraskuscrypto/Kraskus-Crypto-Release-Sources/tree/main/apps/kraskus-btc-solo/0.5.0-dev
+  license: mixed
+  licenseEvidence: https://github.com/kraskuscrypto/Kraskus-Crypto-Release-Sources/tree/main/apps/kraskus-btc-solo/0.5.0-dev/THIRD-PARTY.md
+
+rights:
+  packageOriginal: true
+  softwareDistributionCleared: true
+  containerUseCleared: true
+  listingTextCleared: true
+  artworkCleared: true
+  noticesIncluded: true
+
+delivery:
+  mode: immutable-container-appliance
+  storePayload: recipe-only
+  mirrorsThirdPartyPayload: false
+
+compatibility:
+  osVersions:
+    - Debian-13-5tratumOS-clean-room
+  architectures:
+    - amd64
+  installTested: false
+  startTested: false
+  updateTested: false
+  uninstallTested: false
+
+security:
+  privileged: false
+  hostNetwork: false
+  dockerSocket: false
+  hostMountsReviewed: true
+  devicesReviewed: true
+  networkEndpointsReviewed: true
+
+notes: >-
+  DEVELOPMENT PREVIEW, mining disabled (no --enable-mining, no --allow-mainnet, no Stratum port). Images
+  are the exact images qualified on VM100 on 2026-10-29 and re-qualified after publication by anonymous
+  pull by digest (image IDs equal; app = source 4b968fc, UI and node = source e7bf79f): unit 95/95, platform
+  24/24, isolated regtest 33/33, scanned with Trivy 0.76.1: UI clean;
+  app/node no critical and no fixable findings (remaining Debian base findings documented in the release
+  record). The UI listens on 127.0.0.1:33079 only and is reached through the authenticated portal route;
+  RPC stays on the internal rpc network (10.66.43.0/24, fixed because bitcoind -rpcallowip needs it).
+  Known open items: a settings save can take several seconds when the host disk stalls during a node's
+  initial sync (durable SQLite commit; not weakened); platform limitations of stock 5tratumOS (shared
+  portal origin, plain HTTP, local access to app ports, portal routes retained after uninstall).
+  sourceUrl is the release provenance and third-party source information record (not the complete app source; the Kraskus app code is proprietary and preserved privately in Kraskus-Mining-Platform v3/btc).
+  Test flags stay false until install/start/update/uninstall are verified from this store entry.
