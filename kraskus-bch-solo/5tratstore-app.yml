@@ -1,0 +1,29 @@
+id: kraskus-bch-solo
+name: Bitcoin Cash (Development Preview)
+tagline: DEVELOPMENT PREVIEW -- Bitcoin Cash node and solo-mining dashboard; mining is disabled in this build
+description: >-
+  DEVELOPMENT PREVIEW. Not production-ready and not qualified for live mining.
+  Bitcoin Cash by Kraskus runs a pruned Bitcoin Cash Node 29.2.0 (wallet disabled,
+  about 10 GB of block data) and a solo-mining dashboard. It uses an external
+  CashAddr payout address only: the app has no wallet and never asks for a
+  recovery phrase, password or private key. A fixed 1 percent developer fee is
+  applied only to successfully mined blocks, as a separate coinbase output; the
+  miner receives the remaining 99 percent. In this preview, mining is disabled:
+  no Stratum port is published and the start control is refused. Mainnet mining
+  requires a later, separately qualified release.
+version: 0.5.1-dev
+category: Mining
+developer: Kraskus Crypto
+website: https://kraskuscrypto.com/
+repo: https://github.com/kraskuscrypto/Kraskus-Crypto-Release-Sources/tree/main/apps/kraskus-bch-solo/0.5.1-dev
+support: https://kraskuscrypto.com/
+icon: assets/bitcoin-cash.png
+port: 33073
+path: /
+uiMode: proxy
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: ui
+      APP_PORT: 8080

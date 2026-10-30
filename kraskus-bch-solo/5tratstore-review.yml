@@ -1,0 +1,59 @@
+schemaVersion: 1
+status: proposed
+appId: kraskus-bch-solo
+appVersion: 0.5.1-dev
+reviewedAt: ""
+reviewedBy: ""
+
+upstream:
+  sourceUrl: https://github.com/kraskuscrypto/Kraskus-Crypto-Release-Sources/tree/main/apps/kraskus-bch-solo/0.5.1-dev
+  license: mixed
+  licenseEvidence: https://github.com/kraskuscrypto/Kraskus-Crypto-Release-Sources/tree/main/apps/kraskus-bch-solo/0.5.1-dev/THIRD-PARTY.md
+
+rights:
+  packageOriginal: true
+  softwareDistributionCleared: true
+  containerUseCleared: true
+  listingTextCleared: true
+  artworkCleared: true
+  noticesIncluded: true
+
+delivery:
+  mode: immutable-container-appliance
+  storePayload: recipe-only
+  mirrorsThirdPartyPayload: false
+
+compatibility:
+  osVersions:
+    - Debian-13-5tratumOS-clean-room
+  architectures:
+    - amd64
+  installTested: false
+  startTested: false
+  updateTested: false
+  uninstallTested: false
+
+security:
+  privileged: false
+  hostNetwork: false
+  dockerSocket: false
+  hostMountsReviewed: true
+  devicesReviewed: true
+  networkEndpointsReviewed: true
+
+notes: >-
+  DEVELOPMENT PREVIEW, mining disabled (no --enable-mining, no --allow-mainnet, no Stratum port). Images
+  are the exact images qualified on VM100 on 2026-10-30 (app = source eba9c11: BTC fixes ported to BCH --
+  BIP310 version rolling, telemetry timeout during sync, rounds only once synced and off the event loop;
+  UI and node = source f767c9b): unit 127/127, platform 24/24, isolated real-node BCHN regtest PASS incl.
+  three rolled-version blocks accepted by BCHN with the exact 99/1 coinbase to the owner-confirmed developer
+  script; scanned with Trivy: UI clean; app/node no critical and no fixable findings (remaining Debian base
+  findings documented in the release record). Developer fee 1 percent to
+  bitcoincash:qp2ua2849drt7aeteqqvgfst08s0gs7rh5xpztkvta (owner-confirmed). The UI listens on
+  127.0.0.1:33073 only and is reached through the authenticated portal route; RPC stays on the internal rpc
+  network (10.66.63.0/24, fixed because bitcoind -rpcallowip needs it). Bitcoin Cash Node 29.2.0 stops
+  serving RPC after its built-in expiry (2027-05-15 12:00 UTC); a node upgrade release must ship before
+  then. Known platform limitations of stock 5tratumOS: shared portal origin, plain HTTP, local access to app
+  ports, portal routes retained after uninstall. sourceUrl is the release provenance and third-party source
+  information record (not the complete app source; the Kraskus app code is proprietary and preserved
+  privately). Test flags stay false until install/start/update/uninstall are verified from this store entry.
