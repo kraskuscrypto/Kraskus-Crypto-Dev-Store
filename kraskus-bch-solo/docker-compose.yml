@@ -1,0 +1,124 @@
+# 5tratumOS package for Bitcoin Cash by Kraskus 0.5.1-dev -- DEVELOPMENT PREVIEW (Kraskus V3).
+#
+# Mining capability is enabled for supervised development testing. Platform startup is paused;
+# a synchronized node, valid external BCH address and authenticated Start are required.
+# Exact CI-built release images qualified on VM100 on 2026-11-01 from source 81ea049.
+# Anonymous digest pulls, code equality, 127 unit, 24 platform and BCHN regtest passed.
+# Hardware qualification of this packaging remains pending; no automatic miner switching.
+#
+#   init   app image, one-shot (root, no network): hands data/state, data/node and data/apptoken to uid 10001.
+#   node   bitcoind (BCHN), wallet disabled, P2P listen off, RPC only on the internal rpc network; pruned to 10000 MiB.
+#          600 s stop grace (clean shutdown verified on stop/start).
+#   api    appliance API + app-token service (P2 proxy token when the platform provides one).
+#   ui     web UI, published on 127.0.0.1:33073 only and reached through the authenticated portal route.
+#
+# A fresh install starts with empty data/state (no payout address, no history) and creates its own app token.
+# Portable limits only (CPU/memory). Host-specific disk throttles belong in a host-local override, not here.
+services:
+  app_proxy:
+    environment:
+      APP_HOST: ui
+      APP_PORT: 8080
+
+  init:
+    image: ghcr.io/kraskuscrypto/kraskus-bch-solo:0.5.1-dev@sha256:04d60a2760f818d86152940fda399b063512b1ac7cbf1f6c47c34d1073f4c36c
+    user: '0:0'
+    network_mode: none
+    entrypoint: ['python', '-c']
+    command: ["import os; [(os.chown(p,10001,10001),os.chmod(p,0o700)) for p in ('/state','/node','/apptoken')]"]
+    volumes:
+      - ${APP_DATA_DIR}/data/state:/state
+      - ${APP_DATA_DIR}/data/node:/node
+      - ${APP_DATA_DIR}/data/apptoken:/apptoken
+    restart: 'no'
+
+  node:
+    image: ghcr.io/kraskuscrypto/kraskus-bch-solo-node:0.5.1-dev@sha256:ab3077a5846e071b22cb4949ceb8f2b412b529b78ff944fe4f4a00a7006a28c5
+    user: '10001:10001'
+    entrypoint: ['bitcoind']
+    command: ['-datadir=/node', '-server=1', '-disablewallet=1', '-rpcbind=0.0.0.0', '-rpcallowip=10.66.63.0/24', '-rpcport=8332', '-listen=0', '-prune=10000', '-dbcache=500', '-maxmempool=300', '-printtoconsole=0']
+    init: true
+    stop_grace_period: 600s
+    read_only: true
+    tmpfs: ['/tmp:rw,noexec,nosuid,size=64m']
+    cap_drop: [ALL]
+    security_opt: ['no-new-privileges:true']
+    volumes:
+      - ${APP_DATA_DIR}/data/node:/node
+    networks: [rpc, egress]
+    cpus: 1
+    mem_limit: 2560m
+    memswap_limit: 2560m
+    restart: unless-stopped
+    depends_on:
+      init: {condition: service_completed_successfully}
+
+  api:
+    image: ghcr.io/kraskuscrypto/kraskus-bch-solo:0.5.1-dev@sha256:04d60a2760f818d86152940fda399b063512b1ac7cbf1f6c47c34d1073f4c36c
+    command: ['--platform', '--http-host', '0.0.0.0', '--port', '8080', '--data-dir', '/state', '--rpc-url', 'http://node:8332', '--rpc-cookie', '/node/.cookie', '--enable-mining', '--allow-mainnet', '--stratum-host', '0.0.0.0', '--stratum-port', '1933']
+    ports: ['${BCH_STRATUM_BIND_IP:-0.0.0.0}:1933:1933/tcp']
+    user: '10001:10001'
+    init: true
+    read_only: true
+    tmpfs: ['/tmp:rw,noexec,nosuid,size=32m']
+    cap_drop: [ALL]
+    security_opt: ['no-new-privileges:true']
+    environment:
+      KRASKUS_APP_TOKEN_FILE: /run/kraskus-app-token/token
+    volumes:
+      - ${APP_DATA_DIR}/data/state:/state
+      - ${APP_DATA_DIR}/data/node:/node:ro
+      - ${APP_DATA_DIR}/data/apptoken:/run/kraskus-app-token
+    networks: [rpc, front, stratum]
+    cpus: 1
+    mem_limit: 512m
+    pids_limit: 128
+    restart: unless-stopped
+    depends_on:
+      init: {condition: service_completed_successfully}
+    healthcheck:
+      test: ['CMD', 'python', '-c', "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/livez',timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    stop_grace_period: 30s
+
+  ui:
+    image: ghcr.io/kraskuscrypto/kraskus-bch-solo-ui:0.5.1-dev@sha256:ab658f8754a7ecda9edb1de4592e9d1c280fc3634d42c00899e2ace4ff4b946d
+    cap_drop: [ALL]
+    cap_add: [CHOWN, SETGID, SETUID, DAC_READ_SEARCH]
+    security_opt: ['no-new-privileges:true']
+    volumes:
+      - ${APP_DATA_DIR}/data/apptoken:/run/kraskus-app-token:ro
+    ports: ['127.0.0.1:33073:8080/tcp']
+    networks: [front, publish]
+    cpus: 0.5
+    mem_limit: 128m
+    pids_limit: 64
+    restart: unless-stopped
+    depends_on:
+      api: {condition: service_healthy}
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -q -O /dev/null http://127.0.0.1:8080/livez']
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    stop_grace_period: 10s
+
+networks:
+  rpc:
+    internal: true
+    ipam:
+      config: [{subnet: 10.66.63.0/24}]
+  front:
+    internal: true
+  stratum: {}
+  publish: {}
+  egress: {}
+
+x-5tratumos-secure-proxy:
+  version: 1
+  ui_service: ui
+  ui_port: 8080
+  token_services: [api]
