@@ -18,7 +18,7 @@ developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
 repo: https://github.com/kraskuscrypto/Kraskus-Mining-Platform/tree/81ea0490fcfeb92287d6a187830e93ee3b5092db/apps/bch-solo
 support: https://kraskuscrypto.com/
-icon: assets/bitcoin-cash.png
+icon: assets/bch-store-emblem-v2.png
 port: 33073
 path: /
 uiMode: proxy
