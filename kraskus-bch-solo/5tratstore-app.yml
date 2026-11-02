@@ -1,8 +1,7 @@
 id: kraskus-bch-solo
-name: Bitcoin Cash (Development Preview)
-tagline: Bitcoin Cash solo mining to your external address -- development testing
+name: Bitcoin Cash by Kraskus
+tagline: Bitcoin Cash solo mining directly to your external wallet
 description: >-
-  DEVELOPMENT BUILD for supervised mining tests. Hardware qualification is pending.
   Bitcoin Cash by Kraskus runs a pruned Bitcoin Cash Node 29.2.0 (wallet disabled,
   about 10 GB of block data) and a solo-mining dashboard. It uses an external
   CashAddr payout address only: the app has no wallet and never asks for a
@@ -11,12 +10,12 @@ description: >-
   miner receives the remaining 99 percent. Mining capability is enabled on TCP
   port 1933. Each startup is paused; save a valid external BCH payout address,
   wait for node sync, then use the authenticated Start control. Do not forward
-  this development miner port to the public internet.
-version: 0.5.5-dev
+  this miner port to the public internet.
+version: 0.5.9
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
-repo: https://github.com/kraskuscrypto/Kraskus-Mining-Platform/tree/9a2c48ebc2cf66b2092ea7a6f689ba1f71ce1514/apps/bch-solo
+repo: https://github.com/kraskuscrypto/Kraskus-Mining-Platform/tree/ea5f14e7dc48124027a31f20ab9b2a343c1f9b23/apps/bch-solo
 support: https://kraskuscrypto.com/
 icon: assets/bch-store-emblem-v2.png
 port: 33073
