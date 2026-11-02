@@ -1,19 +1,5 @@
-# 5tratumOS package for Bitcoin Cash by Kraskus 0.5.1-dev -- DEVELOPMENT PREVIEW (Kraskus V3).
-#
-# Mining capability is enabled for supervised development testing. Platform startup is paused;
-# a synchronized node, valid external BCH address and authenticated Start are required.
-# Exact CI-built release images qualified on VM100 on 2026-11-01 from source 81ea049.
-# Anonymous digest pulls, code equality, 127 unit, 24 platform and BCHN regtest passed.
-# Hardware qualification of this packaging remains pending; no automatic miner switching.
-#
-#   init   app image, one-shot (root, no network): hands data/state, data/node and data/apptoken to uid 10001.
-#   node   bitcoind (BCHN), wallet disabled, P2P listen off, RPC only on the internal rpc network; pruned to 10000 MiB.
-#          600 s stop grace (clean shutdown verified on stop/start).
-#   api    appliance API + app-token service (P2 proxy token when the platform provides one).
-#   ui     web UI, published on 127.0.0.1:33073 only and reached through the authenticated portal route.
-#
-# A fresh install starts with empty data/state (no payout address, no history) and creates its own app token.
-# Portable limits only (CPU/memory). Host-specific disk throttles belong in a host-local override, not here.
+# Bitcoin Cash by Kraskus 0.5.9. Immutable images; starts paused.
+# External wallet rewards; fixed 1% developer fee. RPC remains internal.
 services:
   app_proxy:
     environment:
@@ -21,11 +7,11 @@ services:
       APP_PORT: 8080
 
   init:
-    image: ghcr.io/kraskuscrypto/kraskus-bch-solo@sha256:b7d086b3c3a0280bed838345ce34fc4aa43726e332c3501747cf0064ae7d7cc7
+    image: ghcr.io/kraskuscrypto/kraskus-bch-solo@sha256:6f82ae3b7b2c34fc8290f8bef008d52acb77dc10f8438ac3caca29bb8e783cf2
     user: '0:0'
     network_mode: none
     entrypoint: ['python', '-c']
-    command: ["import os; [(os.chown(p,10001,10001),os.chmod(p,0o700)) for p in ('/state','/node','/apptoken')]"]
+    command: ["import os,pathlib; [(os.chown(p,10001,10001),os.chmod(p,0o700)) for p in ('/state','/node','/apptoken')]; d=pathlib.Path('/state/node-settings'); d.mkdir(mode=0o700,exist_ok=True); os.chown(d,10001,10001); p=d/'prune-mib'; f=None if p.exists() else p.open('x'); f and f.write('10000\\n'); f and f.close(); os.chown(p,10001,10001); os.chmod(p,0o600)"]
     volumes:
       - ${APP_DATA_DIR}/data/state:/state
       - ${APP_DATA_DIR}/data/node:/node
@@ -33,10 +19,10 @@ services:
     restart: 'no'
 
   node:
-    image: ghcr.io/kraskuscrypto/kraskus-bch-solo-node:0.5.1-dev@sha256:ab3077a5846e071b22cb4949ceb8f2b412b529b78ff944fe4f4a00a7006a28c5
+    image: ghcr.io/kraskuscrypto/kraskus-bch-solo-node@sha256:792583db54eb6e1e738f1fd0c633b41ac4c9c70e4291116e7fde5b74e6427b04
     user: '10001:10001'
-    entrypoint: ['bitcoind']
-    command: ['-datadir=/node', '-server=1', '-disablewallet=1', '-rpcbind=0.0.0.0', '-rpcallowip=10.66.63.0/24', '-rpcport=8332', '-listen=0', '-prune=10000', '-dbcache=500', '-maxmempool=300', '-printtoconsole=0']
+    entrypoint: ['/bin/sh', '-c']
+    command: ["prune=$$(cat /node-settings/prune-mib); case \"$$prune\" in \"\"|*[!0-9]*) exit 64;; esac; [ \"$$prune\" -ge 1024 ] && [ \"$$prune\" -le 1024000 ] || exit 64; exec bitcoind \"$$@\" \"-prune=$$prune\"", 'node-pruning', '-datadir=/node', '-server=1', '-disablewallet=1', '-rpcbind=0.0.0.0', '-rpcallowip=10.66.63.0/24', '-rpcport=8332', '-listen=0', '-dbcache=500', '-maxmempool=300', '-printtoconsole=0']
     init: true
     stop_grace_period: 600s
     read_only: true
@@ -45,6 +31,7 @@ services:
     security_opt: ['no-new-privileges:true']
     volumes:
       - ${APP_DATA_DIR}/data/node:/node
+      - ${APP_DATA_DIR}/data/state/node-settings:/node-settings:ro
     networks: [rpc, egress]
     cpus: 1
     mem_limit: 2560m
@@ -54,7 +41,7 @@ services:
       init: {condition: service_completed_successfully}
 
   api:
-    image: ghcr.io/kraskuscrypto/kraskus-bch-solo@sha256:b7d086b3c3a0280bed838345ce34fc4aa43726e332c3501747cf0064ae7d7cc7
+    image: ghcr.io/kraskuscrypto/kraskus-bch-solo@sha256:6f82ae3b7b2c34fc8290f8bef008d52acb77dc10f8438ac3caca29bb8e783cf2
     command: ['--platform', '--http-host', '0.0.0.0', '--port', '8080', '--data-dir', '/state', '--rpc-url', 'http://node:8332', '--rpc-cookie', '/node/.cookie', '--enable-mining', '--allow-mainnet', '--stratum-host', '0.0.0.0', '--stratum-port', '1933']
     ports: ['${BCH_STRATUM_BIND_IP:-0.0.0.0}:1933:1933/tcp']
     user: '10001:10001'
@@ -64,6 +51,7 @@ services:
     cap_drop: [ALL]
     security_opt: ['no-new-privileges:true']
     environment:
+      KRASKUS_NODE_PRUNE_CONTROL: '1'
       KRASKUS_APP_TOKEN_FILE: /run/kraskus-app-token/token
     volumes:
       - ${APP_DATA_DIR}/data/state:/state
@@ -85,7 +73,7 @@ services:
     stop_grace_period: 30s
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-bch-solo-ui:0.5.1-dev@sha256:ab658f8754a7ecda9edb1de4592e9d1c280fc3634d42c00899e2ace4ff4b946d
+    image: ghcr.io/kraskuscrypto/kraskus-bch-solo-ui@sha256:5cc1f255aae527d32ec73c9a90f69a2ab0b9588f307066e5e782d8598398060c
     cap_drop: [ALL]
     cap_add: [CHOWN, SETGID, SETUID, DAC_READ_SEARCH]
     security_opt: ['no-new-privileges:true']

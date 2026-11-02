@@ -1,4 +1,4 @@
-# Bitcoin Cash by Kraskus (Development Preview) -- Licenses and notices
+# Bitcoin Cash by Kraskus -- Licenses and notices
 
 Bitcoin Cash by Kraskus contains original Kraskus application code and packages the official Bitcoin Cash
 Node software and standard open-source base images.
