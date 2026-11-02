@@ -1,27 +1,22 @@
 id: kraskus-btc-solo
-name: Bitcoin (Development Preview)
-tagline: DEVELOPMENT PREVIEW -- Bitcoin node and solo-mining dashboard; mining is disabled in this build
-description: >-
-  DEVELOPMENT PREVIEW. Not production-ready and not qualified for live mining.
-  Bitcoin by Kraskus runs a pruned Bitcoin Core 32.1 node (wallet disabled, about
-  30 GB of block data) and a solo-mining dashboard. It uses an external payout
-  address only: the app has no wallet and never asks for a recovery phrase,
-  password or private key. A fixed 1 percent developer fee is applied only to
-  successfully mined blocks, as a separate coinbase output; the miner receives
-  the remaining 99 percent. In this preview, mining is disabled: no Stratum port
-  is published and the start control is refused. Mainnet mining requires a
-  later, separately qualified release.
-version: 0.5.2-dev
+name: Bitcoin by Kraskus
+tagline: Bitcoin node and external-wallet solo-mining dashboard
+description: Run a pruned Bitcoin Core node with an external-wallet dashboard, live
+  worker telemetry, an interactive hashrate graph, block records, Bitcoin themes and
+  safe pruning controls. A fixed 1% developer fee is a separate output in each found
+  block; the miner receives the remainder. No native wallet, seed or private-key controls.
+  This Store profile keeps mainnet mining disabled pending separate activation and
+  a synchronized node. Kraskus Pool remains under development.
+version: 0.5.3
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
-repo: https://github.com/kraskuscrypto/Kraskus-Mining-Platform/tree/ce8638217dd22edc36189895c18599c4b8d1a096/apps/btc-solo
+repo: https://github.com/kraskuscrypto/Kraskus-Mining-Platform/tree/3770ee318ae233d810c29bee4dfce79d8616247c/apps/btc-solo
 support: https://kraskuscrypto.com/
 icon: assets/btc-store-emblem-v2.png
 port: 33079
 path: /
 uiMode: proxy
-
 services:
   app_proxy:
     environment:
