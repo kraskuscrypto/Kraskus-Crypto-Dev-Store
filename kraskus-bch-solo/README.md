@@ -17,3 +17,7 @@ Source: private Kraskus-Mining-Platform, apps/bch-solo at 81ea0490fcfeb92287d6a1
 A fresh install uses fresh app state/token. Seed an existing chain only after clean shutdown, copying blocks and chainstate into a separate datadir. Never run two nodes on one writable datadir.
 
 BCHN has a recorded RPC expiry of 2027-05-15 12:00 UTC; plan its update before that date.
+
+## External-wallet UI gold-standard update
+
+0.5.5-dev adopts the audited external-wallet design: local-HTTP Copy fallback, refresh-safe worker editing, single-render navigation, compact share/difficulty displays and the planned Kraskus Pool page. Backend coin rules and the fixed 1% fee remain unchanged from each release source branch; node and front-proxy pins are retained. BTC mining stays disabled in this store profile. The gold-standard tag certifies the design/function baseline, not mainnet launch qualification.

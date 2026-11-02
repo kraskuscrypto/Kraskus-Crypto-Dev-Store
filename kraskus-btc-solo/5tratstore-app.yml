@@ -11,11 +11,11 @@ description: >-
   the remaining 99 percent. In this preview, mining is disabled: no Stratum port
   is published and the start control is refused. Mainnet mining requires a
   later, separately qualified release.
-version: 0.5.0-dev
+version: 0.5.2-dev
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
-repo: https://github.com/kraskuscrypto/Kraskus-Crypto-Release-Sources/tree/main/apps/kraskus-btc-solo/0.5.0-dev
+repo: https://github.com/kraskuscrypto/Kraskus-Mining-Platform/tree/ce8638217dd22edc36189895c18599c4b8d1a096/apps/btc-solo
 support: https://kraskuscrypto.com/
 icon: assets/btc-store-emblem-v2.png
 port: 33079

@@ -12,11 +12,11 @@ description: >-
   port 1933. Each startup is paused; save a valid external BCH payout address,
   wait for node sync, then use the authenticated Start control. Do not forward
   this development miner port to the public internet.
-version: 0.5.1-dev
+version: 0.5.5-dev
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
-repo: https://github.com/kraskuscrypto/Kraskus-Mining-Platform/tree/81ea0490fcfeb92287d6a187830e93ee3b5092db/apps/bch-solo
+repo: https://github.com/kraskuscrypto/Kraskus-Mining-Platform/tree/9a2c48ebc2cf66b2092ea7a6f689ba1f71ce1514/apps/bch-solo
 support: https://kraskuscrypto.com/
 icon: assets/bch-store-emblem-v2.png
 port: 33073
