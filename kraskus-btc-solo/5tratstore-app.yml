@@ -17,7 +17,7 @@ developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
 repo: https://github.com/kraskuscrypto/Kraskus-Crypto-Release-Sources/tree/main/apps/kraskus-btc-solo/0.5.0-dev
 support: https://kraskuscrypto.com/
-icon: assets/bitcoin.png
+icon: assets/btc-store-emblem-v2.png
 port: 33079
 path: /
 uiMode: proxy
