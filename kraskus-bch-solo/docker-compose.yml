@@ -21,7 +21,7 @@ services:
       APP_PORT: 8080
 
   init:
-    image: ghcr.io/kraskuscrypto/kraskus-bch-solo:0.5.1-dev@sha256:04d60a2760f818d86152940fda399b063512b1ac7cbf1f6c47c34d1073f4c36c
+    image: ghcr.io/kraskuscrypto/kraskus-bch-solo@sha256:b7d086b3c3a0280bed838345ce34fc4aa43726e332c3501747cf0064ae7d7cc7
     user: '0:0'
     network_mode: none
     entrypoint: ['python', '-c']
@@ -54,7 +54,7 @@ services:
       init: {condition: service_completed_successfully}
 
   api:
-    image: ghcr.io/kraskuscrypto/kraskus-bch-solo:0.5.1-dev@sha256:04d60a2760f818d86152940fda399b063512b1ac7cbf1f6c47c34d1073f4c36c
+    image: ghcr.io/kraskuscrypto/kraskus-bch-solo@sha256:b7d086b3c3a0280bed838345ce34fc4aa43726e332c3501747cf0064ae7d7cc7
     command: ['--platform', '--http-host', '0.0.0.0', '--port', '8080', '--data-dir', '/state', '--rpc-url', 'http://node:8332', '--rpc-cookie', '/node/.cookie', '--enable-mining', '--allow-mainnet', '--stratum-host', '0.0.0.0', '--stratum-port', '1933']
     ports: ['${BCH_STRATUM_BIND_IP:-0.0.0.0}:1933:1933/tcp']
     user: '10001:10001'

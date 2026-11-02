@@ -12,3 +12,7 @@ A fresh install starts with no payout address, no history and its own app token.
 
 Initial sync downloads and validates the whole chain; on a shared host, apply host-local disk limits
 (a compose override in the app directory) rather than editing this recipe.
+
+## External-wallet UI gold-standard update
+
+0.5.2-dev adopts the audited external-wallet design: local-HTTP Copy fallback, refresh-safe worker editing, single-render navigation, compact share/difficulty displays and the planned Kraskus Pool page. Backend coin rules and the fixed 1% fee remain unchanged from each release source branch; node and front-proxy pins are retained. BTC mining stays disabled in this store profile. The gold-standard tag certifies the design/function baseline, not mainnet launch qualification.

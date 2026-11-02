@@ -24,7 +24,7 @@ services:
       APP_PORT: 8080
 
   init:
-    image: ghcr.io/kraskuscrypto/kraskus-btc-solo:0.5.0-dev@sha256:3f48a7ed4d7c2be909047c3ee527050c89f4a78618b98bca477c82192fdd9ee7
+    image: ghcr.io/kraskuscrypto/kraskus-btc-solo@sha256:ca29188505fd935b7fe2a5c96881ec1634b5cac55edce208efcf320e3f9ad9fb
     user: '0:0'
     network_mode: none
     entrypoint: ['python', '-c']
@@ -57,7 +57,7 @@ services:
       init: {condition: service_completed_successfully}
 
   api:
-    image: ghcr.io/kraskuscrypto/kraskus-btc-solo:0.5.0-dev@sha256:3f48a7ed4d7c2be909047c3ee527050c89f4a78618b98bca477c82192fdd9ee7
+    image: ghcr.io/kraskuscrypto/kraskus-btc-solo@sha256:ca29188505fd935b7fe2a5c96881ec1634b5cac55edce208efcf320e3f9ad9fb
     user: '10001:10001'
     init: true
     read_only: true
