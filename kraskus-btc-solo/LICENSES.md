@@ -1,4 +1,4 @@
-# Bitcoin by Kraskus (Development Preview) -- Licenses and notices
+# Bitcoin by Kraskus -- Licenses and notices
 
 Bitcoin by Kraskus contains original Kraskus application code and packages the official Bitcoin Core
 software and standard open-source base images.

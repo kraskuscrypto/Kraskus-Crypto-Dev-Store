@@ -1,18 +1,9 @@
-# Bitcoin (Development Preview) -- kraskus-btc-solo 0.5.0-dev
+# Bitcoin by Kraskus0.5.3
 
-**Development preview. Mining is disabled. Not for production or live mining.**
+BCH0.5.9 interface standard, adapted to Bitcoin: original hero, six themes and independent light/dark, interactive graph, round best-share percentage, worker details, external payout confirmation and safe pruning. Kraskus Pool remains under development.
 
-* Pruned Bitcoin Core 32.1 node (about 30 GB of block data), wallet disabled, P2P listening off.
-* Solo-mining dashboard with an external payout address only (no wallet, never asks for secrets).
-* Fixed 1 percent developer fee on found blocks only (separate coinbase output); 99 percent to the miner.
-* In this preview no Stratum port is published and the start control is refused.
+No native wallet or key controls. The existing1% developer output and Bitcoin-specific address/SegWit/version-rolling rules are preserved. This Store profile keeps mainnet mining disabled; syncing and separately approved activation remain necessary.
 
-Ports: UI `127.0.0.1:33079` (portal route only). Data: `${APP_DATA_DIR}/data/{node,state,apptoken}`.
-A fresh install starts with no payout address, no history and its own app token.
+Pruning starts at30000MiB of block data, excluding chainstate/indexes. Adjusting1–1000GiB requires paused mining, fresh node telemetry and a clean node restart. Host-local resource overrides must be retained during updates, including their node command wrapper. Existing installations require the reviewed migration kit, which preserves chain/state paths, payout and limits. Never uninstall/purge to apply this update.
 
-Initial sync downloads and validates the whole chain; on a shared host, apply host-local disk limits
-(a compose override in the app directory) rather than editing this recipe.
-
-## External-wallet UI gold-standard update
-
-0.5.2-dev adopts the audited external-wallet design: local-HTTP Copy fallback, refresh-safe worker editing, single-render navigation, compact share/difficulty displays and the planned Kraskus Pool page. Backend coin rules and the fixed 1% fee remain unchanged from each release source branch; node and front-proxy pins are retained. BTC mining stays disabled in this store profile. The gold-standard tag certifies the design/function baseline, not mainnet launch qualification.
+Software qualification:121 backend tests,12 real-node regtest checks, authenticated pruning restart and responsive/theme checks pass. Installed-platform migration is still pending. All app images are digest-pinned.
