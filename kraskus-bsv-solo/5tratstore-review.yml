@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "status": "proposed",
   "appId": "kraskus-bsv-solo",
-  "appVersion": "0.6.1",
+  "appVersion": "0.6.2",
   "reviewedAt": "2026-11-03",
   "reviewedBy": "Codex software qualification",
   "upstream": {
@@ -44,7 +44,7 @@
     "networkEndpointsReviewed": true
   },
   "qualification": {
-    "softwareRegtest": "PASS",
+    "softwareRegtest": "Existing node/controller/gateway images retain their prior real-node qualification; no new full mining run is claimed for the API/UI-only change.",
     "immutableImageVerification": "PASS",
     "physicalMinerTested": false,
     "nativeWalletUI": false,
@@ -53,7 +53,10 @@
     "feePercent": 1,
     "sourceCommits": [
       "c96915a9b2298a0d2dd83a6519f35e91540d7e3a"
-    ]
+    ],
+    "apiTests": 43,
+    "startupAndSyncUI": "PASS: startup label, no fabricated percent, real sync percent restored",
+    "releaseMiningCapability": "Owner-enabled for beta testers; valid external payout and node-readiness guards remain enforced"
   },
-  "notes": "External-wallet conversion with BCH0.5.9 interaction standard and coin-specific consensus, fee and maturity rules retained. Exact images passed isolated real-node tests, not a physical-miner test or platform migration. Packages must be anonymously pullable before this draft is merged. Protected owner-root migration keeps both installed apps stopped and legacy wallet/chain data unchanged."
+  "notes": "API/UI-only startup-status update. Shows Verifying blocks and other node-reported warmup phases; current chain sync percentage appears after RPC readiness. Node, controller, gateway and init image references are unchanged. Scoped owner-root update preserves node identities/start times, payout settings and paused mining."
 }
