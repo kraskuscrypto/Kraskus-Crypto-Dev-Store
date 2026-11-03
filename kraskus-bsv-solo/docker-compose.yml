@@ -156,7 +156,7 @@
         "KRASKUS_BSV_RPC_URL": "http://svnode:8332/",
         "KRASKUS_BSV_PUBLIC_CONFIG": "/data/external",
         "KRASKUS_BSV_SECRET_DIR": "/data/secrets",
-        "KRASKUS_BSV_MINING_CAPABLE": "0",
+        "KRASKUS_BSV_MINING_CAPABLE": "1",
         "KRASKUS_APP_TOKEN_FILE": "/run/kraskus-app-token/token",
         "KRASKUS_PLATFORM": "5tratumos"
       },

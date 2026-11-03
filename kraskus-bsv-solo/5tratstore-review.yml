@@ -55,7 +55,8 @@
       "c96915a9b2298a0d2dd83a6519f35e91540d7e3a"
     ],
     "apiTests": 43,
-    "startupAndSyncUI": "PASS: startup label, no fabricated percent, real sync percent restored"
+    "startupAndSyncUI": "PASS: startup label, no fabricated percent, real sync percent restored",
+    "releaseMiningCapability": "Owner-enabled for beta testers; valid external payout and node-readiness guards remain enforced"
   },
   "notes": "API/UI-only startup-status update. Shows Verifying blocks and other node-reported warmup phases; current chain sync percentage appears after RPC readiness. Node, controller, gateway and init image references are unchanged. Scoped owner-root update preserves node identities/start times, payout settings and paused mining."
 }

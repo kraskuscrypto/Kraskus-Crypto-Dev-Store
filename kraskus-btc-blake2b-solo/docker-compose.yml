@@ -152,7 +152,7 @@
         "KRASKUS_B2B_BLOCK_EVENTS_FILE": "/events/block-events.jsonl",
         "KRASKUS_APP_TOKEN_FILE": "/run/kraskus-app-token/token",
         "KRASKUS_XBT_PUBLIC_CONFIG": "/runtime",
-        "KRASKUS_XBT_MINING_CAPABLE": "0"
+        "KRASKUS_XBT_MINING_CAPABLE": "1"
       },
       "volumes": [
         "${APP_DATA_DIR}/runtime/external-030:/runtime",
