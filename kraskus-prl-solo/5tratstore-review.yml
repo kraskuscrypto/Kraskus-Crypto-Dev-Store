@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: approved
 appId: kraskus-prl-solo
-appVersion: 0.5.1
+appVersion: 0.6.2
 reviewedAt: "2026-10-09"
 reviewedBy: "Kraskus Crypto"
 
@@ -77,3 +77,9 @@ notes: >-
   Oyster RPC, gateway telemetry (1903), API and UI backend traffic remain
   app-internal. The fixed required 1.00% developer-fee coinbase split is
   unchanged and applies only to successfully mined blocks.
+
+uiConsistency:
+  source: d2e118347f219f46bc27552db2a79839cc3d29c7
+  responsivePages: 18
+  bestShareFormattingCases: 9
+  runtimeChange: previously-qualified-PRL-external-wallet-recipe
