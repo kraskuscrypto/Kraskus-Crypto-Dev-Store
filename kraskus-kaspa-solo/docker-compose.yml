@@ -203,6 +203,7 @@ services:
 
     # Paused-by-default adapter gate; the bridge protocol and reward engine are unchanged.
     networks:
+      - public
       - internal
 
     depends_on:
