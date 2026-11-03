@@ -14,3 +14,5 @@ Images are pinned by digest. Source: private Mining-Platform commit ea5f14e7dc48
 Fresh installs create their own state and token. Upgrades retain the external address, history and prune target. Never share a writable node datadir between nodes. Use a stopped-service or SQLite-supported backup for app state.
 
 BCHN 29.2.0 has a recorded RPC expiry of 2027-05-15 12:00 UTC; update the node before that date. Mining rewards are probabilistic and never guaranteed.
+
+UI update 0.5.10: the header duplicates the hero coin face and the Home Node card shows current sync progress. Node, API, payout rules and fee are unchanged. UI source: https://github.com/kraskuscrypto/Kraskus-Mining-Platform/commit/ff4cf14fab1eb3a63b4e0419bdd47e018d68da37.

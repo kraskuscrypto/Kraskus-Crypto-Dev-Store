@@ -7,3 +7,5 @@ No native wallet or key controls. The existing1% developer output and Bitcoin-sp
 Pruning starts at30000MiB of block data, excluding chainstate/indexes. Adjusting1–1000GiB requires paused mining, fresh node telemetry and a clean node restart. Host-local resource overrides must be retained during updates, including their node command wrapper. Existing installations require the reviewed migration kit, which preserves chain/state paths, payout and limits. Never uninstall/purge to apply this update.
 
 Software qualification:121 backend tests,12 real-node regtest checks, authenticated pruning restart and responsive/theme checks pass. Installed-platform migration is still pending. All app images are digest-pinned.
+
+UI update 0.5.4: the header duplicates the hero coin face and the Home Node card shows current sync progress. Node, API, payout rules and fee are unchanged. UI source: https://github.com/kraskuscrypto/Kraskus-Mining-Platform/commit/6de2683454de0a413f6ee70b0c6edb1462868181.

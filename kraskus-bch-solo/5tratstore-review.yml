@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-bch-solo
-appVersion: 0.5.9
+appVersion: 0.5.10
 reviewedAt: "2026-11-02"
 reviewedBy: "Codex automated release checks; owner-authorized publication"
 
