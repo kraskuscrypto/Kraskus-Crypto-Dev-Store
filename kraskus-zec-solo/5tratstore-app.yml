@@ -1,23 +1,22 @@
 id: kraskus-zec-solo
 name: Zcash by Kraskus
 tagline: Zcash full node and solo mining pool
-description: >-
-  Zcash by Kraskus turns 5tratumOS into a self-contained Zcash Mainnet full node
-  (Zebra), Zallet wallet and Equihash solo-mining appliance on the Kraskus V3
-  interface. It shows node synchronization, one truthful mining-readiness state,
-  workers, shares and node-confirmed blocks. Miners connect on port 3335; no
-  work is issued until the node is synchronized and a payout is configured.
-  The built-in wallet is created or restored with a 24-word recovery phrase,
-  protected by a wallet password, and can receive, send and act as the mining
-  payout. Zebra needs about 320 GiB of free storage for Mainnet; on a smaller
-  host the app reports it and does not start syncing. A required 1% developer
-  fee is paid directly from successful block coinbases. This is the pre-NU7
-  release: a follow-up update is required for the Zcash NU7 network upgrade.
-version: 0.5.2
+description: "Zcash node and Equihash(200,9) solo mining with an external transparent\
+  \ P2PKH(t1) payout address. Uses the BCH-standard interaction template with Zcash\u2019\
+  s original gold hero, themes, solution-rate graph and six simple pages. Enter and\
+  \ confirm your address and explicitly start mining after node readiness and the\
+  \ storage preflight pass. Port3335 and fixed share difficulty500000 are preserved.\
+  \ The existing1% developer allocation applies only to the miner-controlled reward;\
+  \ mandatory consensus allocations are unchanged. No native wallet, seed, send or\
+  \ automatic shielding is exposed. Existing wallet files/funds are retained through\
+  \ the protected migration, which stops the legacy wallet daemon. Zebra\u2019s existing320GiB\
+  \ Mainnet storage preflight and pre-NU7 compatibility limits remain; this is not\
+  \ a node or network-upgrade qualification. No Bitcoin-style prune control is offered."
+version: 0.6.0
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
-repo: https://github.com/kraskuscrypto/Kraskus-Crypto-Apps
+repo: https://github.com/kraskuscrypto/Kraskus-Mining-Platform/tree/fc34e8511d35455976c876846772bd4754e4f659/apps/zec-solo
 support: https://kraskuscrypto.com/
 icon: assets/zcash.png
 port: 33062
