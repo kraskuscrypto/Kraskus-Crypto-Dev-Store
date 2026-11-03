@@ -7,7 +7,7 @@ description: Run a pruned Bitcoin Core node with an external-wallet dashboard, l
   block; the miner receives the remainder. No native wallet, seed or private-key controls.
   This Store profile keeps mainnet mining disabled pending separate activation and
   a synchronized node. Kraskus Pool remains under development.
-version: 0.5.3
+version: 0.5.4
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
