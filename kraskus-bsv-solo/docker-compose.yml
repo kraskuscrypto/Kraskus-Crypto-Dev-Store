@@ -10,7 +10,7 @@
       ]
     },
     "init": {
-      "image": "ghcr.io/kraskuscrypto/kraskus-bsv-external-backend@sha256:7557c91c1b7f11cc65ea31be9f898b8762386e2003a53451c479520b743cc308",
+      "image": "ghcr.io/kraskuscrypto/kraskus-bsv-external-backend@sha256:b0fe13d0a00213e52622ce08033421342dcc34ff70fb916a372138080fec8908",
       "restart": "no",
       "user": "0:0",
       "command": [
@@ -28,7 +28,7 @@
       ]
     },
     "svnode": {
-      "image": "ghcr.io/kraskuscrypto/kraskus-bsv-external-node@sha256:f34cf01955ecc1575e26291c2a53bfe73a5c47d2f815af1e51dfe28f41835749",
+      "image": "ghcr.io/kraskuscrypto/kraskus-bsv-external-node@sha256:cc0e8d3f83c8c0f2925378188c9ac8b27b256ea3d21f011954b70d7f419fe82e",
       "restart": "unless-stopped",
       "depends_on": {
         "init": {
@@ -79,7 +79,7 @@
       "cpus": 2
     },
     "controller": {
-      "image": "ghcr.io/kraskuscrypto/kraskus-bsv-external-backend@sha256:7557c91c1b7f11cc65ea31be9f898b8762386e2003a53451c479520b743cc308",
+      "image": "ghcr.io/kraskuscrypto/kraskus-bsv-external-backend@sha256:b0fe13d0a00213e52622ce08033421342dcc34ff70fb916a372138080fec8908",
       "restart": "unless-stopped",
       "user": "10001:10001",
       "command": [
@@ -136,7 +136,7 @@
       "init": true
     },
     "api": {
-      "image": "ghcr.io/kraskuscrypto/kraskus-bsv-external-backend@sha256:7557c91c1b7f11cc65ea31be9f898b8762386e2003a53451c479520b743cc308",
+      "image": "ghcr.io/kraskuscrypto/kraskus-bsv-external-backend@sha256:b0fe13d0a00213e52622ce08033421342dcc34ff70fb916a372138080fec8908",
       "restart": "unless-stopped",
       "user": "10001:10001",
       "command": [
@@ -197,7 +197,7 @@
       "init": true
     },
     "ui": {
-      "image": "ghcr.io/kraskuscrypto/kraskus-bsv-external-ui@sha256:d8dc617e387ad2465a6e69d4c50f3d93c6e37ef9d84c76b420f179f22c7c1a2a",
+      "image": "ghcr.io/kraskuscrypto/kraskus-bsv-external-ui@sha256:0de39ba96fc4165c4f8b0c78e54fc6ccb4a06afa8125acae045339ad58044b7f",
       "restart": "unless-stopped",
       "depends_on": {
         "init": {
