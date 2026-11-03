@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: approved
 appId: kraskus-prl-solo
-appVersion: 0.6.2
+appVersion: 0.6.3
 reviewedAt: "2026-10-09"
 reviewedBy: "Kraskus Crypto"
 
@@ -83,3 +83,10 @@ uiConsistency:
   responsivePages: 18
   bestShareFormattingCases: 9
   runtimeChange: previously-qualified-PRL-external-wallet-recipe
+
+upgradeRecipeFix:
+  source: c8db170
+  version: 0.6.3
+  issue: Missing bind source directories prevent the initializer from running during an older-app upgrade.
+  runtimeImagesChanged: false
+  validation: Real bind mounts, preserved legacy data, no payout adoption, paused mining and restart persistence.
