@@ -11,11 +11,11 @@ description: CheetahCoin Core node and solo mining with external payout addresse
   data and funds are retained during the protected migration. Core 2.5.0 and both
   CKPool images are unchanged. Existing storage settings are preserved; prune changes
   are not supported by this supervisor.
-version: 0.6.0
+version: 0.6.1
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
-repo: https://github.com/kraskuscrypto/Kraskus-Mining-Platform/tree/0bf9f796de6df870291806698c26d0d2b92c3148/apps/chta-solo
+repo: https://github.com/kraskuscrypto/Kraskus-Mining-Platform/tree/d2e118347f219f46bc27552db2a79839cc3d29c7/releases/ui-consistency-20261103/ui/chta
 support: https://kraskuscrypto.com/
 icon: assets/cheetahcoin.png
 port: 33064

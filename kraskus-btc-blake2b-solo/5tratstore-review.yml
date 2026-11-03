@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "status": "proposed",
   "appId": "kraskus-btc-blake2b-solo",
-  "appVersion": "0.3.1",
+  "appVersion": "0.3.2",
   "reviewedAt": "2026-11-03",
   "reviewedBy": "Codex software qualification",
   "upstream": {
@@ -58,5 +58,12 @@
     "startupAndSyncUI": "PASS: startup label, no fabricated percent, real sync percent restored",
     "releaseMiningCapability": "Owner-enabled for beta testers; valid external payout and node-readiness guards remain enforced"
   },
-  "notes": "API/UI-only startup-status update. Shows Verifying blocks and other node-reported warmup phases; current chain sync percentage appears after RPC readiness. Node, controller, gateway and init image references are unchanged. Scoped owner-root update preserves node identities/start times, payout settings and paused mining."
+  "notes": "API/UI-only startup-status update. Shows Verifying blocks and other node-reported warmup phases; current chain sync percentage appears after RPC readiness. Node, controller, gateway and init image references are unchanged. Scoped owner-root update preserves node identities/start times, payout settings and paused mining.",
+  "uiConsistency": {
+    "source": "d2e118347f219f46bc27552db2a79839cc3d29c7",
+    "responsivePages": 18,
+    "bestShareFormattingCases": 9,
+    "backendChanged": false,
+    "notes": "PRL lists the already qualified external-wallet runtime; other apps change only UI image. No new hardware qualification."
+  }
 }

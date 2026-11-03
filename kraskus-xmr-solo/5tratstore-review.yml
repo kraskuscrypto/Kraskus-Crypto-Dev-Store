@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-xmr-solo
-appVersion: 0.3.1
+appVersion: 0.3.2
 reviewedAt: ''
 reviewedBy: ''
 upstream:
@@ -40,3 +40,9 @@ notes: External-wallet migration candidate. Frozen runtime source119617e; BCH0.5
   or wallet executables. Software, real-node ownership, fee-bearing block and isolated
   recipe checks pass. All four images are publicly published and anonymous digest pulls match the
   qualified image IDs. Installed-platform migration remains pending. Legacy wallet files must be preserved.
+
+uiConsistency:
+  source: d2e118347f219f46bc27552db2a79839cc3d29c7
+  responsivePages: 18
+  bestShareFormattingCases: 9
+  runtimeChange: UI-only
