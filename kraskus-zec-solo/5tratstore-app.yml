@@ -11,11 +11,11 @@ description: Run a Zcash node and solo mine to your external wallet. Monitor syn
   320 GiB Mainnet storage preflight and pre-NU7 compatibility limits remain enforced;
   this release does not update the node or add pruning. Kraskus Pool remains under
   development.
-version: 0.6.0
+version: 0.6.1
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
-repo: https://github.com/kraskuscrypto/Kraskus-Mining-Platform/tree/fc34e8511d35455976c876846772bd4754e4f659/apps/zec-solo
+repo: https://github.com/kraskuscrypto/Kraskus-Mining-Platform/tree/d2e118347f219f46bc27552db2a79839cc3d29c7/releases/ui-consistency-20261103/ui/zec
 support: https://kraskuscrypto.com/
 icon: assets/zcash.png
 port: 33062

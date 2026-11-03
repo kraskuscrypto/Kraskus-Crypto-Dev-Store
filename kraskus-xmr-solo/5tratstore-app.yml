@@ -11,11 +11,11 @@ description: >-
   Native-wallet access is removed. Existing wallet files are preserved during
   an upgrade; they are never deleted, automatically swept or exposed by this app.
   Kraskus Pool remains under development.
-version: 0.3.1
+version: 0.3.2
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
-repo: https://github.com/kraskuscrypto/Kraskus-Mining-Platform/tree/release/xmr-external-wallet-0.3.0/apps/xmr-solo
+repo: https://github.com/kraskuscrypto/Kraskus-Mining-Platform/tree/d2e118347f219f46bc27552db2a79839cc3d29c7/releases/ui-consistency-20261103/ui/xmr
 support: https://kraskuscrypto.com/
 icon: assets/monero.png
 port: 33065

@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-bch-solo
-appVersion: 0.5.10
+appVersion: 0.5.11
 reviewedAt: "2026-11-02"
 reviewedBy: "Codex automated release checks; owner-authorized publication"
 
@@ -55,3 +55,9 @@ notes: >-
   was performed. Formal clean-room OS lifecycle fields remain false below this evidence.
   Scan: app 185 findings (45 high), node 188 (44 high), UI 0; no critical or fixed versions.
   Private source access required; third-party notices are in LICENSES.md.
+
+uiConsistency:
+  source: d2e118347f219f46bc27552db2a79839cc3d29c7
+  responsivePages: 18
+  bestShareFormattingCases: 9
+  runtimeChange: UI-only

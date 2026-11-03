@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-btc-solo
-appVersion: 0.5.4
+appVersion: 0.5.5
 reviewedAt: ''
 reviewedBy: ''
 upstream:
@@ -41,3 +41,9 @@ notes: Current BCH0.5.9 UI standard adapted to Bitcoin. Original BTC hero, addre
   and 22 shipped-file hash comparisons pass. Public digest pull matches qualified
   ID. Store profile keeps mainnet mining disabled. Installed-platform update still
   pending; compatibility flags remain false.
+
+uiConsistency:
+  source: d2e118347f219f46bc27552db2a79839cc3d29c7
+  responsivePages: 18
+  bestShareFormattingCases: 9
+  runtimeChange: UI-only
