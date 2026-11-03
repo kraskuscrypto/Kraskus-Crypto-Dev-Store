@@ -10,3 +10,5 @@ BCH-standard external-wallet mining interface adapted to Monero. No user-facing 
 - Kraskus Pool is under development; no pool forwarding is enabled.
 
 Release checks and migration qualification must pass before this candidate is published or installed. See `qualification/external-wallet/RESULTS.md` in the source repository.
+
+UI 0.3.1 restores the original Monero hero styling in the header miniature and shows fresh node sync progress. Node, gateway, adapter, external-wallet policy and 1% fee remain unchanged. UI source: https://github.com/kraskuscrypto/Kraskus-Mining-Platform/commit/87ade4a1b010f4f397c1a4a779a31fca6df44c91.
