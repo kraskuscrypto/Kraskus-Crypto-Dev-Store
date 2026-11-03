@@ -159,8 +159,6 @@ services:
     volumes:
       - ${APP_DATA_DIR}/wallet/.kraskus:/run/kraskus:ro
 
-    ports:
-      - "1900:5556/tcp"
 
     networks:
       - public
@@ -172,7 +170,7 @@ services:
     stop_grace_period: 5s
 
   adapter:
-    image: ghcr.io/kraskuscrypto/kraskus-kaspa-solo-adapter@sha256:573a4338573114561b103fe1a21f291469e43a54e76baf4ecbd4e7d27c03b5e5
+    image: ghcr.io/kraskuscrypto/kraskus-kaspa-solo-adapter@sha256:583e7f01147b0dca0a75faaf818fb64145c55def2d8fd6d3ed5c81aa3d272b33
 
     restart: unless-stopped
 
@@ -200,7 +198,10 @@ services:
     volumes:
       - ${APP_DATA_DIR}/wallet:/wallet
 
-    # No host port — only "ui" (same "internal" network) talks to this.
+    ports:
+      - "1900:5556/tcp"
+
+    # Paused-by-default adapter gate; the bridge protocol and reward engine are unchanged.
     networks:
       - internal
 
@@ -283,7 +284,7 @@ services:
       start_period: 60s
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-kaspa-solo-ui@sha256:3fb66fc3cb7f577e4e8ef29b68f8a158942b2403bf3ad2ec6b46ffcb08a261f5
+    image: ghcr.io/kraskuscrypto/kraskus-kaspa-solo-ui@sha256:a78b76cd0251245f3e41f667405bbbf8a9ffc6b6f8e3b2338d9a864742637338
 
     restart: unless-stopped
 
