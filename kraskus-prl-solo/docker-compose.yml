@@ -21,8 +21,8 @@
       "environment": {
         "KRASKUS_API_PORT": "18441",
         "KRASKUS_PRL_RPC_URL": "http://pearld:44107/",
-        "KRASKUS_PRL_RPC_USER_FILE": "/run/secrets/prl_rpc_user",
-        "KRASKUS_PRL_RPC_PASSWORD_FILE": "/run/secrets/prl_rpc_password",
+        "KRASKUS_PRL_RPC_USER_FILE": "/run/secrets/rpc-user",
+        "KRASKUS_PRL_RPC_PASSWORD_FILE": "/run/secrets/rpc-password",
         "KRASKUS_PRL_GATEWAY_URL": "http://gateway:1903",
         "KRASKUS_PRL_BLOCK_LEDGER": "/mining/blocks.jsonl",
         "KRASKUS_PRL_PUBLIC_CONFIG": "/runtime/payout",
@@ -53,31 +53,37 @@
           "type": "bind",
           "source": "${APP_DATA_DIR}/external-060/payout",
           "target": "/runtime/payout",
-          "read_only": false
+          "read_only": false,
+          "bind": {
+            "create_host_path": true
+          }
         },
         {
           "type": "bind",
           "source": "${APP_DATA_DIR}/external-060/mining",
           "target": "/mining",
-          "read_only": true
+          "read_only": true,
+          "bind": {
+            "create_host_path": true
+          }
         },
         {
           "type": "bind",
           "source": "${APP_DATA_DIR}/external-060/app-token",
           "target": "/run/kraskus-app-token",
-          "read_only": true
+          "read_only": true,
+          "bind": {
+            "create_host_path": true
+          }
         },
         {
           "type": "bind",
-          "source": "${APP_DATA_DIR}/external-060/secrets/rpc-user",
-          "target": "/run/secrets/prl_rpc_user",
-          "read_only": true
-        },
-        {
-          "type": "bind",
-          "source": "${APP_DATA_DIR}/external-060/secrets/rpc-password",
-          "target": "/run/secrets/prl_rpc_password",
-          "read_only": true
+          "source": "${APP_DATA_DIR}/external-060/secrets",
+          "target": "/run/secrets",
+          "read_only": true,
+          "bind": {
+            "create_host_path": true
+          }
         }
       ],
       "mem_limit": "256m",
@@ -101,8 +107,8 @@
       "environment": {
         "KRASKUS_PRL_BLOCK_LEDGER": "/mining/blocks.jsonl",
         "KRASKUS_PRL_MINING_ADDRESS_FILE": "/payout/payout-address",
-        "KRASKUS_PRL_RPC_PASSWORD_FILE": "/run/secrets/prl_rpc_password",
-        "KRASKUS_PRL_RPC_USER_FILE": "/run/secrets/prl_rpc_user",
+        "KRASKUS_PRL_RPC_PASSWORD_FILE": "/run/secrets/rpc-password",
+        "KRASKUS_PRL_RPC_USER_FILE": "/run/secrets/rpc-user",
         "KRASKUS_PRL_STRATUM_HOST": "0.0.0.0",
         "KRASKUS_PRL_STRATUM_PORT": "1902",
         "KRASKUS_PRL_TELEMETRY_HOST": "0.0.0.0",
@@ -145,25 +151,28 @@
           "type": "bind",
           "source": "${APP_DATA_DIR}/external-060/payout",
           "target": "/payout",
-          "read_only": true
+          "read_only": true,
+          "bind": {
+            "create_host_path": true
+          }
         },
         {
           "type": "bind",
           "source": "${APP_DATA_DIR}/external-060/mining",
           "target": "/mining",
-          "read_only": false
+          "read_only": false,
+          "bind": {
+            "create_host_path": true
+          }
         },
         {
           "type": "bind",
-          "source": "${APP_DATA_DIR}/external-060/secrets/rpc-user",
-          "target": "/run/secrets/prl_rpc_user",
-          "read_only": true
-        },
-        {
-          "type": "bind",
-          "source": "${APP_DATA_DIR}/external-060/secrets/rpc-password",
-          "target": "/run/secrets/prl_rpc_password",
-          "read_only": true
+          "source": "${APP_DATA_DIR}/external-060/secrets",
+          "target": "/run/secrets",
+          "read_only": true,
+          "bind": {
+            "create_host_path": true
+          }
         }
       ],
       "mem_limit": "6g",
@@ -178,7 +187,7 @@
         "start_period": "20s",
         "test": [
           "CMD-SHELL",
-          "prlctl --notls --rpcserver=127.0.0.1:44107 --rpcuser=$$(cat /run/secrets/prl_rpc_user) --rpcpass=$$(cat /run/secrets/prl_rpc_password) getblockcount >/dev/null 2>&1"
+          "prlctl --notls --rpcserver=127.0.0.1:44107 --rpcuser=$$(cat /run/secrets/rpc-user) --rpcpass=$$(cat /run/secrets/rpc-password) getblockcount >/dev/null 2>&1"
         ],
         "timeout": "8s"
       },
@@ -205,25 +214,28 @@
           "type": "bind",
           "source": "${APP_DATA_DIR}/node-155",
           "target": "/data",
-          "read_only": false
+          "read_only": false,
+          "bind": {
+            "create_host_path": true
+          }
         },
         {
           "type": "bind",
           "source": "${APP_DATA_DIR}/external-060/logs",
           "target": "/logs",
-          "read_only": false
+          "read_only": false,
+          "bind": {
+            "create_host_path": true
+          }
         },
         {
           "type": "bind",
-          "source": "${APP_DATA_DIR}/external-060/secrets/rpc-user",
-          "target": "/run/secrets/prl_rpc_user",
-          "read_only": true
-        },
-        {
-          "type": "bind",
-          "source": "${APP_DATA_DIR}/external-060/secrets/rpc-password",
-          "target": "/run/secrets/prl_rpc_password",
-          "read_only": true
+          "source": "${APP_DATA_DIR}/external-060/secrets",
+          "target": "/run/secrets",
+          "read_only": true,
+          "bind": {
+            "create_host_path": true
+          }
         }
       ],
       "mem_limit": "2g",
@@ -237,7 +249,12 @@
         "init": {
           "condition": "service_completed_successfully"
         }
-      }
+      },
+      "entrypoint": [
+        "/bin/sh",
+        "-ec",
+        "RPC_USER=\"$$(cat /run/secrets/rpc-user)\"; RPC_PASS=\"$$(cat /run/secrets/rpc-password)\"; exec /usr/local/bin/pearld --configfile=/dev/null --datadir=/data --logdir=/logs --notls --rpcuser=\"$$RPC_USER\" --rpcpass=\"$$RPC_PASS\" --rpclisten=0.0.0.0:44107 --listen=0.0.0.0:44108 --txindex --addrindex --maxpeers=32 --utxocachemaxsize=256 --rpcmaxclients=40 --debuglevel=info"
+      ]
     },
     "ui": {
       "depends_on": {
@@ -289,7 +306,10 @@
           "type": "bind",
           "source": "${APP_DATA_DIR}/external-060/app-token",
           "target": "/run/kraskus-app-token",
-          "read_only": true
+          "read_only": true,
+          "bind": {
+            "create_host_path": true
+          }
         }
       ],
       "mem_limit": "128m",
@@ -303,7 +323,7 @@
         "-c"
       ],
       "command": [
-        "\"\"\"Initialize new external-wallet runtime only; never open legacy wallet directories.\"\"\"\nimport os,pathlib,secrets,json\nroot=pathlib.Path('/appdata');runtime=root/'external-060'\nfor d in [root/'node-155',runtime,*[runtime/s for s in ['logs','payout','mining','secrets','app-token']]]:\n if d.is_symlink():raise SystemExit('Refusing symlink in new runtime')\n d.mkdir(mode=0o700,parents=True,exist_ok=True);os.chown(d,10001,10001);os.chmod(d,0o700)\nfor name,value,mode in [('secrets/rpc-user','kraskus-prl-'+secrets.token_hex(8)+'\\n',0o400),('secrets/rpc-password',secrets.token_hex(32)+'\\n',0o400),('app-token/token',secrets.token_hex(32)+'\\n',0o400),('payout/external-payout.json',json.dumps({'mode':'external','address':None,'enabled':False})+'\\n',0o600)]:\n f=runtime/name\n if f.is_symlink():raise SystemExit('Refusing runtime file symlink')\n if not f.exists():\n  fd=os.open(f,os.O_WRONLY|os.O_CREAT|os.O_EXCL,mode)\n  with os.fdopen(fd,'w') as out:out.write(value)\n os.chown(f,10001,10001);os.chmod(f,mode)\n"
+        "\"\"\"Initialize new external-wallet runtime only; never open legacy wallet directories.\"\"\"\nimport os,pathlib,secrets,json\nroot=pathlib.Path('/appdata');runtime=root/'external-060'\nfor d in [root/'node-155',runtime,*[runtime/s for s in ['logs','payout','mining','secrets','app-token']]]:\n if d.is_symlink():raise SystemExit('Refusing symlink in new runtime')\n d.mkdir(mode=0o700,parents=True,exist_ok=True);os.chown(d,10001,10001);os.chmod(d,0o700)\nfor name,value,mode in [('secrets/rpc-user','kraskus-prl-'+secrets.token_hex(8)+'\\n',0o400),('secrets/rpc-password',secrets.token_hex(32)+'\\n',0o400),('app-token/token',secrets.token_hex(32)+'\\n',0o400),('payout/external-payout.json',json.dumps({'mode':'external','address':None,'enabled':False})+'\\n',0o600)]:\n f=runtime/name\n if f.is_symlink():raise SystemExit('Refusing runtime file symlink')\n if f.is_dir():\n  try:f.rmdir()\n  except OSError:raise SystemExit('Refusing nonempty directory at a runtime file path')\n if not f.exists():\n  fd=os.open(f,os.O_WRONLY|os.O_CREAT|os.O_EXCL,mode)\n  with os.fdopen(fd,'w') as out:out.write(value)\n os.chown(f,10001,10001);os.chmod(f,mode)\n"
       ],
       "user": "0:0",
       "restart": "no",
@@ -313,7 +333,10 @@
         {
           "type": "bind",
           "source": "${APP_DATA_DIR}",
-          "target": "/appdata"
+          "target": "/appdata",
+          "bind": {
+            "create_host_path": true
+          }
         }
       ],
       "security_opt": [

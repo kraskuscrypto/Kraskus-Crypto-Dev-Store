@@ -1,4 +1,4 @@
-# Pearl by Kraskus 0.6.2
+# Pearl by Kraskus 0.6.3
 
 Solo mine Pearl to a public external mainnet address. The app has no native-wallet setup, seed, private-key, balance or send interface. Configure and confirm your own address in Settings; wait for synchronization before choosing Start mining.
 
@@ -26,3 +26,8 @@ Images are pinned by digest. UI and external-wallet application source: private 
 ## UI consistency update
 
 Version 0.6.2 supplies the shared external-wallet interface, truthful startup/capability messages and normalized best-share values. This does not claim a new physical GPU test.
+
+
+## Upgrade startup fix in 0.6.3
+
+Directory bind mounts can be prepared before the initializer runs. RPC credentials are mounted through their read-only parent directory, avoiding missing individual file sources during container creation. Credentials already present are preserved. An empty directory accidentally created at a runtime-file location can be replaced with the required file; a nonempty directory is refused. Legacy wallet and chain directories are retained. No images, fee values, miner ports or mining intent are changed by this recipe patch.
