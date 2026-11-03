@@ -1,17 +1,16 @@
 id: kraskus-zec-solo
 name: Zcash by Kraskus
 tagline: Zcash full node and solo mining pool
-description: "Zcash node and Equihash(200,9) solo mining with an external transparent\
-  \ P2PKH(t1) payout address. Uses the BCH-standard interaction template with Zcash\u2019\
-  s original gold hero, themes, solution-rate graph and six simple pages. Enter and\
-  \ confirm your address and explicitly start mining after node readiness and the\
-  \ storage preflight pass. Port3335 and fixed share difficulty500000 are preserved.\
-  \ The existing1% developer allocation applies only to the miner-controlled reward;\
-  \ mandatory consensus allocations are unchanged. No native wallet, seed, send or\
-  \ automatic shielding is exposed. Existing wallet files/funds are retained through\
-  \ the protected migration, which stops the legacy wallet daemon. Zebra\u2019s existing320GiB\
-  \ Mainnet storage preflight and pre-NU7 compatibility limits remain; this is not\
-  \ a node or network-upgrade qualification. No Bitcoin-style prune control is offered."
+description: Run a Zcash node and solo mine to your external wallet. Monitor synchronization,
+  workers, solution rate and found blocks in a simple dashboard. Connect Equihash
+  (200,9) miners on port 3335. Mining stays paused until you enter and confirm a transparent
+  P2PKH (t1) payout address and explicitly start it. The fixed 1% developer fee applies
+  to the miner-controlled reward; required network allocations are unchanged. There
+  is no built-in wallet, seed prompt, send function or automatic shielding. Existing
+  wallet files and funds are preserved through the protected migration. The existing
+  320 GiB Mainnet storage preflight and pre-NU7 compatibility limits remain enforced;
+  this release does not update the node or add pruning. Kraskus Pool remains under
+  development.
 version: 0.6.0
 category: Mining
 developer: Kraskus Crypto
