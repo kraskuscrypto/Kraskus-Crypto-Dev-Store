@@ -1,0 +1,62 @@
+# Mainnet-capable beta; starts paused, valid external addresses and synced nodes required.
+# APP_DATA_DIR must be an app-specific absolute directory, never a shared node path.
+x-base: &base
+  image: ghcr.io/kraskuscrypto/kraskus-ltc-doge-solo@sha256:b1740622556c31fa499f36671a25e8931a53f52c13bfb195541b64c9cfb91ba9
+  user: '10001:10001'
+  read_only: true
+  tmpfs: [/tmp]
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  restart: unless-stopped
+services:
+  app_proxy:
+    environment: {APP_HOST: app, APP_PORT: 8080}
+  init:
+    <<: *base
+    user: '0:0'
+    cap_add: [CHOWN, FOWNER, DAC_OVERRIDE]
+    restart: 'no'
+    entrypoint: [python3, /app/init.py]
+    volumes:
+      - ${APP_DATA_DIR:?}/app:/data
+      - ${APP_DATA_DIR:?}/ltc:/ltc
+      - ${APP_DATA_DIR:?}/doge:/doge
+      - ${APP_DATA_DIR:?}/runtime:/runtime
+      - ${APP_DATA_DIR:?}/vendor:/vendor
+  vendor:
+    <<: *base
+    restart: 'no'
+    entrypoint: [python3, /app/fetch-vendor.py]
+    depends_on: {init: {condition: service_completed_successfully}}
+    volumes: ['${APP_DATA_DIR:?}/vendor:/vendor']
+  ltc:
+    <<: *base
+    entrypoint: [python3, /app/node-supervisor.py]
+    environment: {SCRYPT_NODE_COIN: ltc}
+    depends_on: {vendor: {condition: service_completed_successfully}}
+    volumes: ['${APP_DATA_DIR:?}/ltc:/ltc', '${APP_DATA_DIR:?}/runtime:/runtime', '${APP_DATA_DIR:?}/vendor:/vendor:ro']
+    stop_grace_period: 330s
+    mem_limit: 1g
+    cpus: 1
+  doge:
+    <<: *base
+    entrypoint: [python3, /app/node-supervisor.py]
+    environment: {SCRYPT_NODE_COIN: doge}
+    depends_on: {vendor: {condition: service_completed_successfully}}
+    volumes: ['${APP_DATA_DIR:?}/doge:/doge', '${APP_DATA_DIR:?}/runtime:/runtime', '${APP_DATA_DIR:?}/vendor:/vendor:ro']
+    stop_grace_period: 330s
+    mem_limit: 1g
+    cpus: 1
+  app:
+    <<: *base
+    environment:
+      SCRYPT_NETWORK: main
+      SCRYPT_MAINNET_QUALIFIED: '1'
+      SCRYPT_EXTERNAL_STRATUM_PORT: '19346'
+      SCRYPT_LTC_RPC: http://ltc:9332
+      SCRYPT_DOGE_RPC: http://doge:22555
+    depends_on: {init: {condition: service_completed_successfully}}
+    volumes: ['${APP_DATA_DIR:?}/app:/data', '${APP_DATA_DIR:?}/runtime:/runtime', '${APP_DATA_DIR:?}/ltc:/ltc:ro', '${APP_DATA_DIR:?}/doge:/doge:ro']
+    ports: ['19346:3334/tcp']
+    mem_limit: 512m
+    cpus: 1

@@ -1,0 +1,30 @@
+id: kraskus-ltc-doge-solo
+name: Litecoin + Dogecoin by Kraskus
+tagline: Wallet-free Scrypt node and merged-mining beta
+description: >-
+  Litecoin and Dogecoin in the shared Kraskus interface, with independent
+  external reward addresses, node synchronization, worker telemetry and
+  block history. The intended direct allocation is 99 percent to your
+  address and 1 percent developer support on each coin independently.
+  This mainnet-capable beta starts paused and requires your external
+  reward addresses and synchronized nodes before mining. Physical Scrypt
+  hardware is not yet qualified. No native wallet is exposed; only the
+  Stratum mining port is published, never node RPC or P2P ports. Default pruning retains 10 GiB of block files per
+  chain, excluding chainstate and other data. New synchronization requires
+  at least 100 GiB free; ongoing operation pauses below 20 GiB free.
+  Linux amd64 only. First start downloads signature-verified official nodes.
+version: 0.1.0-beta
+category: Mining
+developer: Kraskus Crypto
+website: https://kraskuscrypto.com/
+repo: https://github.com/kraskuscrypto/Kraskus-Mining-Platform
+support: https://kraskuscrypto.com/
+icon: assets/ltc.svg
+port: 33125
+path: /
+uiMode: proxy
+services:
+  app_proxy:
+    environment:
+      APP_HOST: app
+      APP_PORT: 8080
