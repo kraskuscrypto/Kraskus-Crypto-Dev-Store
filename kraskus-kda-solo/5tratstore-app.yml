@@ -11,13 +11,13 @@ description: >-
   Syncing does not require a wallet. Mining remains paused until external
   rewards, the owner-managed signer and recovery backup are configured.
 
-version: 0.2.1
+version: 0.2.2
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
 repo: https://github.com/kraskuscrypto/Kraskus-Mining-Platform
 support: https://kraskuscrypto.com/
-icon: assets/kadena.png
+icon: assets/kda-hero-0.2.2.svg
 port: 33075
 path: /
 uiMode: proxy
