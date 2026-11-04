@@ -1,3 +1,7 @@
+# Quantus 0.4.2
+
+Current runtime and UI changes are documented in [TEMPLATE-UPDATE.md](TEMPLATE-UPDATE.md). Older release details below are historical.
+
 # Quantus Solo (kraskus-quantus-solo)
 
 Quantus (QTC) mainnet full node for your own Quantus miners on the local network. **Dev Store release. Not a Main release.**
@@ -6,7 +10,7 @@ Quantus (QTC) mainnet full node for your own Quantus miners on the local network
 
 Fresh-install fix for stock 5tratumOS (no P2 secure proxy). Full notes: `apps/quantus-solo/docs/RELEASE-NOTES-0.3.1.md` (Kraskus-Mining-Platform).
 
-- **First run works in the app.** Home shows *Reward identity required — Add your Quantus reward identity to start the node.* with the import form. The first reward identity is saved once; after that the first-run setup is closed for good and the node starts by itself.
+- **Independent node sync (0.4.2).** The full node starts and synchronizes without a wallet, reward address or backup confirmation. Reward setup is needed only for mining; without it, validator/miner flags are omitted. Existing external identity validation and first-import permissions are preserved.
 - **Miner token in the app.** Settings → Mining → Miner token → Reveal shows the existing token (read-only) so you can set up your miner.
 - **Still protected.** Changing the reward identity, rotating the miner token and regenerating the TLS certificate still need the platform's own secure login.
 - Unchanged: the 1% developer fee and its disclosure, the node image, the miner, ports, data paths and payout accounting.

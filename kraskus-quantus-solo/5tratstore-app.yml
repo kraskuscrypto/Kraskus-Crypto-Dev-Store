@@ -4,7 +4,8 @@ tagline: Quantus (QTC) full node and solo mining node
 description: >-
   Quantus Solo runs a Quantus mainnet full node on 5tratumOS and lets your
   Quantus miners on the local network mine to your own wormhole reward
-  address. You import the reward address and its inner hash; the app checks
+  address. The node syncs without a reward address or wallet-backup confirmation;
+  reward setup is required only for mining. You import the reward address and its inner hash; the app checks
   that they belong together and never asks for your 24 words. On first run
   you add the reward identity in the app; changing it later, rotating the
   miner token or regenerating its TLS certificate needs the platform's secure
@@ -18,7 +19,7 @@ description: >-
   Quantus node source as its base. Kraskus applies a disclosed developer-fee
   modification to block-template reward selection. The miner remains
   unmodified.
-version: 0.4.1
+version: 0.4.2
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/

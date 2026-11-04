@@ -54,7 +54,7 @@ services:
     # entrypoint did, drops privileges and runs the versioned migrations of
     # rewards.json, settings.json and blocks.json (schema 1: no change).
     # It never mounts node/ (chain, node key) or miner-creds/.
-    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-adapter@sha256:33d78bc899b5675966bf84673ef4320a353855111581cc5dd71e5882a37d7b21
+    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-ui@sha256:a17f73de03ed81fb96c3f740d90253193f019ec4ca00976ddbce04cc995c4732
     restart: "no"
     user: "0:0"
     entrypoint:
@@ -110,14 +110,14 @@ services:
     # binary sha256 24e28fd8e84b3e3b..., see node/build-inputs.lock), pinned by
     # its GHCR digest.
     # This service is otherwise verbatim 0.1.1.
-    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-node@sha256:4d0706016b544f511e3d37eb05a09042625d885297dc52ba8b6d5152a6f3f5cd
+    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-ui@sha256:c573734f5301d79d260cfb36709801a4509dfa39997b3fb3f25af07ef3596d37
     restart: unless-stopped
     # Kept from 0.1.1 (the 0.1.0 node image had no WORKDIR and its entrypoint
     # needs /app); the dev-fee image sets WORKDIR /app itself, so this is a
     # harmless no-op that keeps the service verbatim.
     working_dir: /app
-    # The supervisor holds quantus-node until a confirmed reward identity
-    # exists, re-verifies it before every start, and forwards SIGTERM. The
+    # The supervisor starts a non-authoring full node independently of reward
+    # setup. Mining flags require the existing verified reward gate. The
     # node needed 17-29 s to stop cleanly in Phase 1 (synced); 100 s fits the
     # older CLI's 120 s budget (ui 5 + adapter 5 + miner 10 + node 100).
     stop_grace_period: 100s
@@ -165,7 +165,7 @@ services:
     # Token service of the P2 secure proxy. Unprivileged from its first
     # instruction; its foundation start step (as 10001) creates the app-token
     # fallback only when no platform token is mounted.
-    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-adapter@sha256:33d78bc899b5675966bf84673ef4320a353855111581cc5dd71e5882a37d7b21
+    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-ui@sha256:a17f73de03ed81fb96c3f740d90253193f019ec4ca00976ddbce04cc995c4732
     restart: unless-stopped
     user: "10001:10001"
     command:
@@ -223,7 +223,7 @@ services:
     # authenticated HTTPS dashboard route, adding the per-app token. It reads
     # the app-token fallback directory read-only and supplies that token only
     # to /api/ requests that carry none (stock 5tratumOS, Umbrel).
-    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-ui@sha256:1c921572f850cc0a2e2190c892a31f5c2933728209116fc52ee446f1b60c290a
+    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-ui@sha256:8d3498d182f475e4731bdcd9e8d3c553d5d38aec7c3b331e4b2410b52f76eb28
     restart: unless-stopped
     stop_grace_period: 5s
     ports:
