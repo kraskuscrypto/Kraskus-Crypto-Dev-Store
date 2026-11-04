@@ -1,4 +1,4 @@
-# Kadena by Kraskus 0.2.0
+# Kadena by Kraskus 0.2.1
 
 Community Chainweb node with the shared Home, Mining, Blocks, Blockchain,
 Kraskus Pool and Settings interface. Per-chain sync status is retained.
@@ -40,3 +40,5 @@ credential is needed for unattended signing; the internal signer is a hot
 custody account, not a user-owned external wallet. Keep the encrypted recovery
 copy outside the app before approving signer operation. Never paste credentials
 or backup passwords into chat.
+
+The snapshot helper uses the platform-recognized `bootstrap-init` name so a successful one-shot does not leave the app marked degraded.
