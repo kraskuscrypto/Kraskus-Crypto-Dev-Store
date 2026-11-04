@@ -1,13 +1,9 @@
-# Quantus 0.4.0 template update
+# Quantus 0.4.2 — independent node sync
 
-Shared six-page UI, true light/dark and Quantus amber/violet/silver themes, appearance preferences, fixed original face and matching header emblem, graph and Copy controls. External wormhole address and matching inner hash remain validated by the unchanged adapter. Credentials remain masked until explicitly revealed; token reveal, rotation and certificate regeneration retain their existing authorization rules. The optional local CPU miner remains off by default.
+The node starts as a non-authoring full node without a reward identity or backup confirmation. Sync-only mode omits validator, reward hash, miner port and miner-token flags: no QUIC mining listener or local authoring exists. Missing, unconfirmed or invalid reward settings do not halt node syncing. Once synchronized, the node pill can report100% even while mining setup remains incomplete.
 
-Quantus uses authenticated LAN-only QUIC, not Stratum. The connection panel preserves IP, token-file and certificate-pin instructions. Solutions are distinct from shares: unsupported best-share statistics are explicitly unavailable. No invented mining pause switch is offered; the node manages the endpoint. Do not forward UDP1935 to the internet.
+Mining still uses the existing externally validated wormhole identity and its existing setup/authorization gate. No confirmation is invented, no private key or seed is requested, and legacy wallet data is untouched. A native wallet is not required or exposed. Completing/changing reward setup transitions the node through a controlled restart; invalid configuration returns it to sync-only mode. Existing backup fields are retained, not cleared or marked confirmed.
 
-The approved height-based developer fee is unchanged (height modulo100 equals0). The node, adapter/init and miner images, data mounts and credential paths are unchanged. This release changes only the web image. Existing users retain configured identities; fresh catalog installs stay unconfigured. Only the owner's separate VM100 migration may use the developer identity when missing, without starting services.
+The Quantus node binary and its approved height-based1% fee are byte-identical to the previous release. Changes are confined to its supervisor, adapter readiness/status view and shared UI. The official local miner remains unchanged and off by default. The node/adapter variants are published under the existing authorized Quantus package with distinct node-/adapter-/ui- tags, all pinned by digest.
 
-Checks: 18 responsive page checks; six themes; fixed original face/header match; endpoint Copy and masked token Copy; actual bind-source container creation/init; exact-image web serving and anonymous digest pull. These checks do not newly clear existing Main-store legal/artwork gates or claim a hardware mining test.
-
-## Live phone layout follow-up — 0.4.1
-
-Long live node-sync labels and setup actions wrap at320px. Verified on all six pages against the running APIs at1280/375/320px; zero browser errors. Web image only; nodes and mining controls unchanged.
+Validation:10 regression tests; actual node RPC works with missing, unconfirmed and corrupt reward settings, with no QUIC listener; unusable configuration edits do not restart the node. Original/new node executable hashes match. Shared UI passes18 responsive page checks, themes, fixed face and Copy, including sync progress and reward setup remaining incomplete. Running web-image files match the tested sources and published digest pulls match qualified image IDs. No hardware mining qualification or new Main-store legal/artwork clearance is claimed.
