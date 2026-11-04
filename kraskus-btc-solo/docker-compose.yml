@@ -1,11 +1,11 @@
-# BTC0.5.3: external-wallet UI; mainnet mining remains disabled in this Store profile.
+# Explicit Start requires synchronized node and valid external address; new installs remain paused.
 services:
   app_proxy:
     environment:
       APP_HOST: ui
       APP_PORT: 8080
   init:
-    image: ghcr.io/kraskuscrypto/kraskus-btc-solo@sha256:6851765a0c7d9f11bf035c0fb0fd170e3c087d4fd4940a385cc3c431a2f69626
+    image: ghcr.io/kraskuscrypto/kraskus-btc-solo-ui@sha256:5bdff8216eb7f09888323740905803fb7802e4611e1d01263e4fba70ca047509
     user: 0:0
     network_mode: none
     entrypoint:
@@ -22,7 +22,7 @@ services:
     - ${APP_DATA_DIR}/data/apptoken:/apptoken
     restart: 'no'
   node:
-    image: ghcr.io/kraskuscrypto/kraskus-btc-solo-node:0.5.0-dev@sha256:3321ad408515a5a3168e3c7e60f6942d2de49dce079d99dd884dab1aa20ab76e
+    image: ghcr.io/kraskuscrypto/kraskus-btc-solo-ui@sha256:81b0068708202f7fe8e6bd5957ddbe1d7714d9cb8d027dac4fb91bbfe95f7c18
     user: 10001:10001
     entrypoint:
     - /bin/sh
@@ -65,7 +65,9 @@ services:
       init:
         condition: service_completed_successfully
   api:
-    image: ghcr.io/kraskuscrypto/kraskus-btc-solo@sha256:6851765a0c7d9f11bf035c0fb0fd170e3c087d4fd4940a385cc3c431a2f69626
+    command: [--platform, --http-host, 0.0.0.0, --port, '8080', --data-dir, /state, --rpc-url, 'http://node:8332', --rpc-cookie, /node/.cookie, --enable-mining, --allow-mainnet, --stratum-host, 0.0.0.0, --stratum-port, '1932']
+    ports: ['1932:1932/tcp']
+    image: ghcr.io/kraskuscrypto/kraskus-btc-solo-ui@sha256:5bdff8216eb7f09888323740905803fb7802e4611e1d01263e4fba70ca047509
     user: 10001:10001
     init: true
     read_only: true
@@ -85,6 +87,7 @@ services:
     networks:
     - rpc
     - front
+    - publish
     cpus: 1
     mem_limit: 512m
     pids_limit: 128
@@ -104,7 +107,7 @@ services:
       start_period: 10s
     stop_grace_period: 30s
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-btc-solo-ui@sha256:b83e4f0c08eceb47881205cda5fdb2d592890c811561b2bee4b8a1e655f62a8a
+    image: ghcr.io/kraskuscrypto/kraskus-btc-solo-ui@sha256:7cf0f87d290806ab838de4ba55f6941d3e1db191f811c02418ec2f69535dc07a
     cap_drop:
     - ALL
     cap_add:

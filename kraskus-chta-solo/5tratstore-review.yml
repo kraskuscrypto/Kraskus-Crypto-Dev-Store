@@ -1,9 +1,9 @@
 schemaVersion: 1
 status: approved
 appId: kraskus-chta-solo
-appVersion: 0.6.1
-reviewedAt: '2026-11-03'
-reviewedBy: Kraskus Crypto
+appVersion: 0.6.2
+reviewedAt: "2026-11-04"
+reviewedBy: "Owner-authorized Main promotion; Codex verification"
 upstream:
   sourceUrl: https://github.com/kraskuscrypto/Kraskus-Mining-Platform
   license: mixed
@@ -27,7 +27,7 @@ compatibility:
   installTested: false
   startTested: false
   updateTested: false
-  uninstallTested: true
+  uninstallTested: false
 security:
   privileged: false
   hostNetwork: false
@@ -35,12 +35,16 @@ security:
   hostMountsReviewed: true
   devicesReviewed: true
   networkEndpointsReviewed: true
-notes: 'External-payout API/UI conversion: 143 exact-code tests, 6 themes, 6 pages
-  at desktop/375/320px, exact shipped files, no vulnerabilities or secrets in new
-  API/UI scans. Existing node/CKPool qualification is retained; no new physical-miner
-  run is claimed. Native-wallet routes are inaccessible; old data/funds preserved.
-  Owner-approved API/UI-only migration is root-gated. New release fresh-install lifecycle
-  has not been independently rehearsed on another host.'
+notes: >-
+  Main promotion authorized by owner on 2026-11-04 after beta feedback.
+  Fresh bind-mounted creation, initializer, recreation and synthetic legacy-file
+  preservation passed. Application code and mining binaries match previously
+  qualified images; base packages refreshed and exact images rescanned.
+  BTC explicit Start capability approved; new installs remain paused.
+  DGB native wallet disabled; external mining lanes retain their existing rules.
+  Security exceptions are image/package-specific and documented with reachability
+  evidence, not a zero-vulnerability claim. No new physical-miner test or full
+  clean-room OS lifecycle is claimed. See MAIN-RELEASE.md.
 
 uiConsistency:
   source: d2e118347f219f46bc27552db2a79839cc3d29c7

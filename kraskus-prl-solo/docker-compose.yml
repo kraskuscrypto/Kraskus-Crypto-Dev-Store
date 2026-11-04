@@ -40,7 +40,7 @@
         "timeout": "5s",
         "retries": 6
       },
-      "image": "ghcr.io/kraskuscrypto/kraskus-prl-solo-ui@sha256:d3d7576811b2cc84f344b990f0800bd3faeeb864b6fd1e1488f67f5e27d6beab",
+      "image": "ghcr.io/kraskuscrypto/kraskus-prl-solo-ui@sha256:f622bfa701a9c92f8ea217ff902318c8ea773bc791f14cb7cda84ee32d5a0bf3",
       "networks": {
         "internal": null
       },
@@ -129,7 +129,7 @@
         ],
         "timeout": "5s"
       },
-      "image": "ghcr.io/kraskuscrypto/kraskus-prl-solo-ui@sha256:22f362063383074f8f6f989afd4d01db6f20930b1013adae90381115215c308d",
+      "image": "ghcr.io/kraskuscrypto/kraskus-prl-solo-ui@sha256:91ac1ee8f286a2423bdff8ad3c5dc398e45dd5a9f2a3ae94d02c28ebd06065e9",
       "networks": {
         "internal": null,
         "public": null
@@ -317,7 +317,7 @@
       "cpus": 0.25
     },
     "init": {
-      "image": "ghcr.io/kraskuscrypto/kraskus-prl-solo-ui@sha256:d3d7576811b2cc84f344b990f0800bd3faeeb864b6fd1e1488f67f5e27d6beab",
+      "image": "ghcr.io/kraskuscrypto/kraskus-prl-solo-ui@sha256:f622bfa701a9c92f8ea217ff902318c8ea773bc791f14cb7cda84ee32d5a0bf3",
       "entrypoint": [
         "python",
         "-c"

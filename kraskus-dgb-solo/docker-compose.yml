@@ -50,7 +50,7 @@ services:
       - dgb_private
 
   init:
-    image: ghcr.io/kraskuscrypto/kraskus-dgb-solo-adapter@sha256:e333bfb81c049a9e830b3bd26a16bc3576f5b27c4dd3112f37b7fcb8249463e2
+    image: ghcr.io/kraskuscrypto/kraskus-dgb-solo-ui@sha256:f4f64948413e6532515974587cd616a75a23e189bb23fe8afed419e06833a59a
     pull_policy: missing
     restart: "no"
     user: "0:0"
@@ -67,7 +67,8 @@ services:
       - no-new-privileges:true
 
   node:
-    image: ghcr.io/kraskuscrypto/kraskus-dgb-solo-node:0.1.3@sha256:32efdc8ecd8c5b3866539cda24efabd0ed3cd209dc41c5d06e5fb00bc71f8a33
+    command: ["-disablewallet=1"]
+    image: ghcr.io/kraskuscrypto/kraskus-dgb-solo-ui@sha256:3cdd8eca974ab94d9ab0485475fe8880f594cc8627080a95474fe387aec5ae20
     pull_policy: missing
     restart: unless-stopped
     # Never SIGKILL digibyted while it flushes its UTXO cache. The 5tratumOS
@@ -102,7 +103,7 @@ services:
       - dgb_private
 
   stratum-sha256d:
-    image: ghcr.io/kraskuscrypto/kraskus-dgb-solo-stratum:0.2.2@sha256:7e15f8e604ed0cdfc4577f51e8c1f3593d377665a841bc6d29f0e6b6a89c70e3
+    image: ghcr.io/kraskuscrypto/kraskus-dgb-solo-ui@sha256:087a14560a2710b5ae1c3acf9d284c3426c495368354377b464ddf6f4c19afdb
     pull_policy: missing
     restart: unless-stopped
     stop_grace_period: 30s
@@ -143,7 +144,7 @@ services:
       - dgb_private
 
   stratum-scrypt:
-    image: ghcr.io/kraskuscrypto/kraskus-dgb-solo-stratum:0.2.2@sha256:7e15f8e604ed0cdfc4577f51e8c1f3593d377665a841bc6d29f0e6b6a89c70e3
+    image: ghcr.io/kraskuscrypto/kraskus-dgb-solo-ui@sha256:087a14560a2710b5ae1c3acf9d284c3426c495368354377b464ddf6f4c19afdb
     pull_policy: missing
     restart: unless-stopped
     stop_grace_period: 30s
@@ -184,7 +185,7 @@ services:
       - dgb_private
 
   stratum-skein:
-    image: ghcr.io/kraskuscrypto/kraskus-dgb-solo-stratum:0.2.2@sha256:7e15f8e604ed0cdfc4577f51e8c1f3593d377665a841bc6d29f0e6b6a89c70e3
+    image: ghcr.io/kraskuscrypto/kraskus-dgb-solo-ui@sha256:087a14560a2710b5ae1c3acf9d284c3426c495368354377b464ddf6f4c19afdb
     pull_policy: missing
     restart: unless-stopped
     stop_grace_period: 30s
@@ -225,7 +226,7 @@ services:
       - dgb_private
 
   adapter:
-    image: ghcr.io/kraskuscrypto/kraskus-dgb-solo-adapter@sha256:e333bfb81c049a9e830b3bd26a16bc3576f5b27c4dd3112f37b7fcb8249463e2
+    image: ghcr.io/kraskuscrypto/kraskus-dgb-solo-ui@sha256:f4f64948413e6532515974587cd616a75a23e189bb23fe8afed419e06833a59a
     pull_policy: missing
     restart: unless-stopped
     stop_grace_period: 20s
@@ -271,7 +272,7 @@ services:
       - dgb_private
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-dgb-solo-ui@sha256:da55d8b41243758159bde143a74f320044f7250031dab20eacd7ea6ea278087f
+    image: ghcr.io/kraskuscrypto/kraskus-dgb-solo-ui@sha256:0c2f33a30c95c7ec0aeba4f1692a25756f832c072adea8200895f6ca2ea2065f
     pull_policy: missing
     restart: unless-stopped
     depends_on:

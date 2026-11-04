@@ -7,7 +7,7 @@
       }
     },
     "init": {
-      "image": "ghcr.io/kraskuscrypto/kraskus-chta-solo:0.5.2@sha256:94fd7d89bba150cc08cce65e21d49fbac4e0cc1541ed0adb91f6d5979847416b",
+      "image": "ghcr.io/kraskuscrypto/kraskus-chta-ui@sha256:29184caacc0c243369f761ed994ab41efa1f3ac1a09f82150f233106bb702dd0",
       "restart": "no",
       "user": "0:0",
       "command": [
@@ -28,7 +28,7 @@
       ]
     },
     "cheetahcoin": {
-      "image": "ghcr.io/kraskuscrypto/kraskus-cheetahcoin-core:0.5.0@sha256:2a4a4d30010f04fd4304a0241d51ad0027502e59d0728d464533aad2b3e08742",
+      "image": "ghcr.io/kraskuscrypto/kraskus-chta-ui@sha256:05542ca802f8f0295dd452d0db4afa067e6f7af404777749d00a69ff3ccccc8c",
       "restart": "unless-stopped",
       "depends_on": {
         "init": {
@@ -59,7 +59,7 @@
       ]
     },
     "pool": {
-      "image": "ghcr.io/kraskuscrypto/kraskus-chta-ckpool:0.3.1@sha256:2355f9ca770776dcaa3f4091cb57af827b58338f80065a3d3ecf9b92c8618082",
+      "image": "ghcr.io/kraskuscrypto/kraskus-chta-ui@sha256:09c8ecf0168c1cb0ef8938f67b7358c2687cd98a4433c53f31537a33195ba80e",
       "restart": "unless-stopped",
       "depends_on": {
         "init": {
@@ -88,7 +88,7 @@
       ]
     },
     "pool_lowhash": {
-      "image": "ghcr.io/kraskuscrypto/kraskus-chta-ckpool:0.3.1@sha256:2355f9ca770776dcaa3f4091cb57af827b58338f80065a3d3ecf9b92c8618082",
+      "image": "ghcr.io/kraskuscrypto/kraskus-chta-ui@sha256:09c8ecf0168c1cb0ef8938f67b7358c2687cd98a4433c53f31537a33195ba80e",
       "restart": "unless-stopped",
       "depends_on": {
         "init": {

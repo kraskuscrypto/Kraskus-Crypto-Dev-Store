@@ -1,4 +1,6 @@
-# kraskus-btc-blake2b-solo 0.3.1
+> **BEFORE UPDATING: move any funds held in the old native wallet to another wallet you control, confirm receipt, and securely back up the wallet and recovery information. This release removes native-wallet controls. Never purge legacy app data to upgrade.**
+
+# kraskus-btc-blake2b-solo 0.3.3
 
 Node startup stages are displayed truthfully. During startup verification the node does not supply current sync percentage; the pill shows the stage only. Once chain RPC is ready, the node-reported sync percentage returns.
 

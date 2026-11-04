@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "status": "proposed",
+  "status": "approved",
   "appId": "kraskus-btc-blake2b-solo",
-  "appVersion": "0.3.2",
-  "reviewedAt": "2026-11-03",
-  "reviewedBy": "Codex software qualification",
+  "appVersion": "0.3.3",
+  "reviewedAt": "2026-11-04",
+  "reviewedBy": "Owner-authorized Main promotion; Codex verification",
   "upstream": {
     "sourceUrl": "https://github.com/kraskuscrypto/Kraskus-Crypto-Apps",
     "license": "mixed",
@@ -58,7 +58,7 @@
     "startupAndSyncUI": "PASS: startup label, no fabricated percent, real sync percent restored",
     "releaseMiningCapability": "Owner-enabled for beta testers; valid external payout and node-readiness guards remain enforced"
   },
-  "notes": "API/UI-only startup-status update. Shows Verifying blocks and other node-reported warmup phases; current chain sync percentage appears after RPC readiness. Node, controller, gateway and init image references are unchanged. Scoped owner-root update preserves node identities/start times, payout settings and paused mining.",
+  "notes": "Main promotion: unchanged application and mining binaries, refreshed base packages; fresh actual-bind initializer/recreation and legacy-file preservation passed. Image/package-specific security assessment retained. No new physical-miner test or full clean-room lifecycle claimed. See MAIN-RELEASE.md.",
   "uiConsistency": {
     "source": "d2e118347f219f46bc27552db2a79839cc3d29c7",
     "responsivePages": 18,

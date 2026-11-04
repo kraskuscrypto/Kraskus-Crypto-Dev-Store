@@ -1,9 +1,9 @@
 schemaVersion: 1
-status: proposed
+status: approved
 appId: kraskus-btc-solo
-appVersion: 0.5.5
-reviewedAt: ''
-reviewedBy: ''
+appVersion: 0.5.6
+reviewedAt: "2026-11-04"
+reviewedBy: "Owner-authorized Main promotion; Codex verification"
 upstream:
   sourceUrl: https://github.com/kraskuscrypto/Kraskus-Crypto-Release-Sources/tree/main/apps/kraskus-btc-solo/0.5.0-dev
   license: mixed
@@ -35,12 +35,16 @@ security:
   hostMountsReviewed: true
   devicesReviewed: true
   networkEndpointsReviewed: true
-notes: Current BCH0.5.9 UI standard adapted to Bitcoin. Original BTC hero, address
-  formats, SegWit, version rolling and 1% fee preserved. Qualified image source3770ee3:121
-  backend tests, six UI files,12 real-node regtest checks, authenticated pruning restart
-  and 22 shipped-file hash comparisons pass. Public digest pull matches qualified
-  ID. Store profile keeps mainnet mining disabled. Installed-platform update still
-  pending; compatibility flags remain false.
+notes: >-
+  Main promotion authorized by owner on 2026-11-04 after beta feedback.
+  Fresh bind-mounted creation, initializer, recreation and synthetic legacy-file
+  preservation passed. Application code and mining binaries match previously
+  qualified images; base packages refreshed and exact images rescanned.
+  BTC explicit Start capability approved; new installs remain paused.
+  DGB native wallet disabled; external mining lanes retain their existing rules.
+  Security exceptions are image/package-specific and documented with reachability
+  evidence, not a zero-vulnerability claim. No new physical-miner test or full
+  clean-room OS lifecycle is claimed. See MAIN-RELEASE.md.
 
 uiConsistency:
   source: d2e118347f219f46bc27552db2a79839cc3d29c7
