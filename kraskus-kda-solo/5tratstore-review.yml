@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-kda-solo
-appVersion: 0.2.0
+appVersion: 0.2.1
 reviewedAt: ""
 reviewedBy: ""
 
@@ -42,7 +42,7 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
-  0.2.0 uses the shared external-reward interface and a separate internal
+  0.2.1 uses the shared external-reward interface and a separate internal
   custody signer. Legacy wallet files and history are retained without
   automatic adoption or sweeping. The existing 1% confirmed-reward fee
   and same-chain settlement policy remain. Exact-image backend, API,

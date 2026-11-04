@@ -1,4 +1,4 @@
-# Kadena by Kraskus 0.2.0 -- external rewards; separate internal custody signer.
+# Kadena by Kraskus 0.2.1 -- external rewards; separate internal custody signer.
 #
 #   init       adapter image, one-shot as root: data layout and ownership
 #   bootstrap  adapter image, one-shot as root: community snapshot download +
@@ -29,7 +29,7 @@ services:
       - kda_private
 
   init:
-    image: ghcr.io/kraskuscrypto/kraskus-kda-solo-adapter@sha256:b75b868ac70282947f1d05e8f8eb2844b4080ad6a2cd58aa58445979c5aaa99f
+    image: ghcr.io/kraskuscrypto/kraskus-kda-solo-adapter@sha256:fe7df29f764a18ebcda70c3d463b355045af003992ceef5e0f6b1e45173c3c38
     pull_policy: missing
     restart: "no"
     user: "0:0"
@@ -43,8 +43,8 @@ services:
     security_opt:
       - no-new-privileges:true
 
-  bootstrap:
-    image: ghcr.io/kraskuscrypto/kraskus-kda-solo-adapter@sha256:b75b868ac70282947f1d05e8f8eb2844b4080ad6a2cd58aa58445979c5aaa99f
+  bootstrap-init:
+    image: ghcr.io/kraskuscrypto/kraskus-kda-solo-adapter@sha256:fe7df29f764a18ebcda70c3d463b355045af003992ceef5e0f6b1e45173c3c38
     pull_policy: missing
     restart: "no"
     user: "0:0"
@@ -86,7 +86,7 @@ services:
     # until THIS bootstrap has finished (state DONE or SKIPPED and no partial download present) before
     # starting chainweb-node, so it never opens a database that is still being written.
     depends_on:
-      bootstrap:
+      bootstrap-init:
         condition: service_started
     entrypoint:
       - /bin/sh
@@ -168,7 +168,7 @@ services:
       - kda_private
 
   adapter:
-    image: ghcr.io/kraskuscrypto/kraskus-kda-solo-adapter@sha256:b75b868ac70282947f1d05e8f8eb2844b4080ad6a2cd58aa58445979c5aaa99f
+    image: ghcr.io/kraskuscrypto/kraskus-kda-solo-adapter@sha256:fe7df29f764a18ebcda70c3d463b355045af003992ceef5e0f6b1e45173c3c38
     pull_policy: missing
     restart: unless-stopped
     stop_grace_period: 20s
@@ -201,7 +201,7 @@ services:
   ui:
     volumes:
       - ${APP_DATA_DIR}/runtime:/runtime:ro
-    image: ghcr.io/kraskuscrypto/kraskus-kda-solo-ui@sha256:4ba0b51349490a8635077ebac894684a4503b2085c81a7cf5bcae4a1b2ced10b
+    image: ghcr.io/kraskuscrypto/kraskus-kda-solo-ui@sha256:bc2657760975812d7a91cb4b32f8c63560c4a406e1b37256290f559a4086117f
     pull_policy: missing
     restart: unless-stopped
     depends_on:
