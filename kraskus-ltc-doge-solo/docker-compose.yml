@@ -23,7 +23,7 @@ services:
       - ${APP_DATA_DIR:?}/doge:/doge
       - ${APP_DATA_DIR:?}/runtime:/runtime
       - ${APP_DATA_DIR:?}/vendor:/vendor
-  vendor:
+  vendor-init:
     <<: *base
     restart: 'no'
     entrypoint: [python3, /app/fetch-vendor.py]
@@ -33,7 +33,7 @@ services:
     <<: *base
     entrypoint: [python3, /app/node-supervisor.py]
     environment: {SCRYPT_NODE_COIN: ltc}
-    depends_on: {vendor: {condition: service_completed_successfully}}
+    depends_on: {vendor-init: {condition: service_completed_successfully}}
     volumes: ['${APP_DATA_DIR:?}/ltc:/ltc', '${APP_DATA_DIR:?}/runtime:/runtime', '${APP_DATA_DIR:?}/vendor:/vendor:ro']
     stop_grace_period: 330s
     mem_limit: 1g
@@ -42,7 +42,7 @@ services:
     <<: *base
     entrypoint: [python3, /app/node-supervisor.py]
     environment: {SCRYPT_NODE_COIN: doge}
-    depends_on: {vendor: {condition: service_completed_successfully}}
+    depends_on: {vendor-init: {condition: service_completed_successfully}}
     volumes: ['${APP_DATA_DIR:?}/doge:/doge', '${APP_DATA_DIR:?}/runtime:/runtime', '${APP_DATA_DIR:?}/vendor:/vendor:ro']
     stop_grace_period: 330s
     mem_limit: 1g
