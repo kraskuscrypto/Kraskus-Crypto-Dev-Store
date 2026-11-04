@@ -12,5 +12,9 @@
     "tag": "ghcr.io/kraskuscrypto/kraskus-ecx-solo:0.1.0"
   },
   "workflow": "https://github.com/kraskuscrypto/Kraskus-Mining-Platform/actions/runs/41865688008",
-  "visibility": "private; public visibility requires explicit owner approval"
+  "visibility": "public; explicitly approved by owner on 2026-11-04",
+  "anonymous_pull": {
+    "status": "PASS",
+    "image_id": "sha256:7486d1d6b5358863d438c2a53b320928fb42abe9394581b5e398c9ea8502d747"
+  }
 }

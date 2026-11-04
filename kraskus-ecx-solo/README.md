@@ -8,7 +8,7 @@ The recipe image contains the Kraskus app and MIT simplepool. First start downlo
 
 A fresh full chain requires a data filesystem with at least 1 TiB free (conservative installation policy, not a consensus rule). Under that threshold, the UI says Storage needed and no chain download starts. An existing chain pauses below 20 GiB free. ECX cannot be pruned while using this enforcer. VM100 currently lacks capacity for a fresh mainnet chain; this recipe is not installed there.
 
-The image is pinned to the immutable GHCR digest in release-manifest.json. Do not substitute a mutable tag. The image is currently private; anonymous installation is blocked until the owner approves public package visibility. Preserve all APP_DATA_DIR directories on updates and rollback. Restart always leaves mining paused. This is a new app ID, not a migration of BTC or another chain.
+The image is pinned to the immutable GHCR digest in release-manifest.json. Do not substitute a mutable tag. The image is public. Anonymous digest pull passed and its image ID matches the qualified build. Preserve all APP_DATA_DIR directories on updates and rollback. Restart always leaves mining paused. This is a new app ID, not a migration of BTC or another chain.
 
 The developer destination is public; the separate developer wallet and recovery files are never included in this recipe. No miner payout address is prefilled.
 
