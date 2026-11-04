@@ -1,4 +1,4 @@
-# Review recipe: no public Stratum mapping; mainnet mining locked off.
+# Mainnet-capable beta; starts paused, valid external addresses and synced nodes required.
 # APP_DATA_DIR must be an app-specific absolute directory, never a shared node path.
 x-base: &base
   image: ghcr.io/kraskuscrypto/kraskus-ltc-doge-solo@sha256:b1740622556c31fa499f36671a25e8931a53f52c13bfb195541b64c9cfb91ba9
@@ -51,10 +51,12 @@ services:
     <<: *base
     environment:
       SCRYPT_NETWORK: main
-      SCRYPT_MAINNET_QUALIFIED: '0'
+      SCRYPT_MAINNET_QUALIFIED: '1'
+      SCRYPT_EXTERNAL_STRATUM_PORT: '19346'
       SCRYPT_LTC_RPC: http://ltc:9332
       SCRYPT_DOGE_RPC: http://doge:22555
     depends_on: {init: {condition: service_completed_successfully}}
     volumes: ['${APP_DATA_DIR:?}/app:/data', '${APP_DATA_DIR:?}/runtime:/runtime', '${APP_DATA_DIR:?}/ltc:/ltc:ro', '${APP_DATA_DIR:?}/doge:/doge:ro']
+    ports: ['19346:3334/tcp']
     mem_limit: 512m
     cpus: 1

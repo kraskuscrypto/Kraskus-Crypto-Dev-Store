@@ -1,9 +1,12 @@
 {
-  "version": "0.1.0-preview",
+  "version": "0.1.0-beta",
   "source_commit": "d77a56ba584fd62644f68a3fe812468fff6f9846",
   "image_id": "sha256:5133235f34ba5985c31adcc253fef759f54298b771e273061eb3787d6363267b",
   "image_reference": "ghcr.io/kraskuscrypto/kraskus-ltc-doge-solo@sha256:b1740622556c31fa499f36671a25e8931a53f52c13bfb195541b64c9cfb91ba9",
-  "mainnet_mining_enabled": false,
+  "mainnet_mining_enabled": true,
   "physical_miner_qualified": false,
-  "anonymous_pull_verified": false
+  "anonymous_pull_verified": true,
+  "starts_paused": true,
+  "owner_mainnet_authorization": "2026-11-04: Package is public but I want to launch it mainnet",
+  "qualification_scope": "isolated native-node software tests; physical hardware unverified"
 }
