@@ -285,7 +285,7 @@ services:
       start_period: 60s
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-kaspa-solo-ui@sha256:a78b76cd0251245f3e41f667405bbbf8a9ffc6b6f8e3b2338d9a864742637338
+    image: ghcr.io/kraskuscrypto/kraskus-kaspa-solo-ui@sha256:6af6536b2d402946ca180e3bd1cd816396066809a41d65211460a74a6faa8e1a
 
     restart: unless-stopped
 

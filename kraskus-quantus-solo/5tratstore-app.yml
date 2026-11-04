@@ -18,7 +18,7 @@ description: >-
   Quantus node source as its base. Kraskus applies a disclosed developer-fee
   modification to block-template reward selection. The miner remains
   unmodified.
-version: 0.4.0
+version: 0.4.1
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
