@@ -1,0 +1,69 @@
+# Mining-disabled preview. Immutable image matches the qualified release.
+x-image: &image ghcr.io/kraskuscrypto/kraskus-ecx-solo@sha256:ad5782d32168561d211fe5ea24be632aa4ddb07ecff2403fbd67c68c6fa36295
+x-hardening: &hardening
+  read_only: true
+  tmpfs: [/tmp]
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+services:
+  app_proxy:
+    environment: {APP_HOST: app, APP_PORT: 8080}
+  init:
+    image: *image
+    user: '0:0'
+    entrypoint: [python3, /app/init.py]
+    network_mode: none
+    restart: 'no'
+    volumes: ['${APP_DATA_DIR}/data:/data', '${APP_DATA_DIR}/node:/node', '${APP_DATA_DIR}/enforcer:/enforcer', '${APP_DATA_DIR}/runtime:/runtime', '${APP_DATA_DIR}/vendor:/vendor']
+    security_opt: [no-new-privileges:true]
+  vendor-init:
+    <<: *hardening
+    image: *image
+    entrypoint: [python3, /app/fetch-vendor.py, /vendor]
+    restart: 'no'
+    depends_on: {init: {condition: service_completed_successfully}}
+    volumes: ['${APP_DATA_DIR}/vendor:/vendor']
+    mem_limit: 256m
+    cpus: 0.5
+  node:
+    <<: *hardening
+    image: *image
+    entrypoint: [python3, /app/node-supervisor.py]
+    depends_on: {vendor-init: {condition: service_completed_successfully}}
+    volumes: ['${APP_DATA_DIR}/node:/node', '${APP_DATA_DIR}/runtime:/runtime', '${APP_DATA_DIR}/vendor:/vendor:ro']
+    restart: unless-stopped
+    stop_grace_period: 6m
+    mem_limit: 1g
+    cpus: 1.0
+  enforcer:
+    <<: *hardening
+    image: *image
+    entrypoint: [python3, /app/enforcer-supervisor.py]
+    command: [--fork=ecash, --data-dir=/enforcer, --enable-mempool, --gbt-cache-lifetime-s=1, --enable-block-template-server, --coinbase-recipient=bc1qtmp06rdpnkp4mv3eeq6xhu6620mtxwe8mr4nvg, --node-rpc-addr=node:8532, --node-rpc-cookie-path=/node/.cookie, --node-zmq-addr-sequence=tcp://node:29000, --serve-rpc-addr=0.0.0.0:8122, --serve-grpc-addr=0.0.0.0:50051]
+    depends_on: {vendor-init: {condition: service_completed_successfully}, node: {condition: service_started}}
+    volumes: ['${APP_DATA_DIR}/enforcer:/enforcer', '${APP_DATA_DIR}/node:/node:ro', '${APP_DATA_DIR}/vendor:/vendor:ro']
+    restart: unless-stopped
+    mem_limit: 1g
+    cpus: 1.0
+  app:
+    <<: *hardening
+    image: *image
+    depends_on: {init: {condition: service_completed_successfully}}
+    environment:
+      ECX_NETWORK: main
+      ECX_NODE_RPC: http://node:8532
+      ECX_NODE_COOKIE: /node/.cookie
+      ECX_NODE_STATUS: /runtime/node-status.json
+      ECX_ENFORCER_RPC: http://enforcer:8122
+      ECX_MAINNET_QUALIFIED: '0'
+      ECX_EXTERNAL_STRATUM_PORT: '19345'
+    volumes: ['${APP_DATA_DIR}/data:/data', '${APP_DATA_DIR}/node:/node:ro', '${APP_DATA_DIR}/runtime:/runtime:ro']
+    restart: unless-stopped
+    mem_limit: 384m
+    cpus: 0.75
+    healthcheck:
+      test: [CMD, python3, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health',timeout=3)"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+# No published Stratum/P2P/RPC ports in this preview. Mainnet mining is locked off.

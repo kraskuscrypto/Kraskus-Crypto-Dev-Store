@@ -1,0 +1,28 @@
+id: kraskus-ecx-solo
+name: ECX by Kraskus
+tagline: Wallet-free ECX node and Drivechain solo mining preview
+description: >-
+  ECX by Kraskus follows the shared Kraskus mining interface with external
+  reward addresses, real node status, worker telemetry and block history.
+  This is the ecash.com Drivechain fork, not XEC. The node and enforcer run
+  without native wallets. Mining remains disabled in this preview pending
+  mainnet and physical-miner qualification. The intended solo allocation
+  is 99 percent to the finder and 1 percent developer support.
+  An unpruned chain is required. A new installation waits for a data disk
+  with at least 1 TiB free; ongoing operation stops below 20 GiB free.
+  Linux amd64 only. Downloads checksum-pinned vendor executables on first start.
+version: 0.1.0-preview
+category: Mining
+developer: Kraskus Crypto
+website: https://kraskuscrypto.com/
+repo: https://github.com/kraskuscrypto/Kraskus-Mining-Platform
+support: https://kraskuscrypto.com/
+icon: assets/ecx.svg
+port: 33124
+path: /
+uiMode: proxy
+services:
+  app_proxy:
+    environment:
+      APP_HOST: app
+      APP_PORT: 8080
