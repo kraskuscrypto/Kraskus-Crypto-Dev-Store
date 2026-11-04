@@ -1,7 +1,7 @@
 # External-wallet edition; legacy wallet files are preserved and never mounted.
 services:
   # Display-only node statistics; no wallet mounts or host ports.
-  mempool-metrics: {"image": "ghcr.io/kraskuscrypto/kraskus-kaspa-solo-adapter@sha256:7c4d117b71eb90f6b2ae008983e7f889751cf0f67f2f1f819878375fc9ca450f", "restart": "unless-stopped", "environment": {"METRICS_COIN": "xmr"}, "read_only": true, "user": "10001:10001", "cap_drop": ["ALL"], "security_opt": ["no-new-privileges:true"], "mem_limit": "96m", "cpus": 0.15, "pids_limit": 48, "networks": ["xmr_api", "xmr_private"], "healthcheck": {"test": ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:18429/healthz',timeout=3).read()"], "interval": "30s", "timeout": "5s", "retries": 3, "start_period": "10s"}}
+  mempool-metrics: {"image": "ghcr.io/kraskuscrypto/kraskus-kaspa-solo-adapter@sha256:1a0efc2e5728a88568f1052283fce46e96adb8d32751f04c176201af1351dec1", "restart": "unless-stopped", "environment": {"METRICS_COIN": "xmr"}, "read_only": true, "user": "10001:10001", "cap_drop": ["ALL"], "security_opt": ["no-new-privileges:true"], "mem_limit": "96m", "cpus": 0.15, "pids_limit": 48, "networks": ["xmr_api", "xmr_private"], "healthcheck": {"test": ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:18429/healthz',timeout=3).read()"], "interval": "30s", "timeout": "5s", "retries": 3, "start_period": "10s"}}
   app_proxy:
     environment:
       APP_HOST: ui
@@ -9,7 +9,7 @@ services:
     networks:
     - xmr_api
   monerod:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-monerod@sha256:a45c7fb06c48b8a23ce4b5dcbadddf0522551375d98b0dd88639b1bdfa5a283b
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-ui@sha256:e0f6b573c1c307e50564ff664d32e0c3b6222446392bb297acfc1981e176ee0c
     restart: unless-stopped
     stop_grace_period: 2m
     depends_on:
@@ -155,7 +155,7 @@ services:
     networks:
     - xmr_api
   state-init:
-    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-monerod@sha256:a45c7fb06c48b8a23ce4b5dcbadddf0522551375d98b0dd88639b1bdfa5a283b
+    image: ghcr.io/kraskuscrypto/kraskus-5trat-xmr-ui@sha256:e0f6b573c1c307e50564ff664d32e0c3b6222446392bb297acfc1981e176ee0c
     restart: 'no'
     user: 0:0
     command:

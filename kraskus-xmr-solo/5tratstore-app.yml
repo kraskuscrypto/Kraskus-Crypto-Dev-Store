@@ -2,6 +2,10 @@ id: kraskus-xmr-solo
 name: Monero by Kraskus
 tagline: Monero node and RandomX solo mining to your external wallet
 description: >-
+  BEFORE UPDATING: send any crypto held in the app native wallet to another wallet
+  you control, confirm receipt, and back up the old wallet and recovery information.
+  This version removes native-wallet access from the app. Never delete legacy wallet
+  data or assume uninstalling will preserve it.
   Run a Monero node and connect your RandomX miners on TCP 1921.
   Use an external primary address or subaddress you control. Each found block
   pays 99% directly to that address and a separate fixed 1% developer output,
@@ -11,7 +15,7 @@ description: >-
   Native-wallet access is removed. Existing wallet files are preserved during
   an upgrade; they are never deleted, automatically swept or exposed by this app.
   Kraskus Pool remains under development.
-version: 0.3.4
+version: 0.3.5
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/

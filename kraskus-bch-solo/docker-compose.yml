@@ -7,7 +7,7 @@ services:
       APP_PORT: 8080
 
   init:
-    image: ghcr.io/kraskuscrypto/kraskus-bch-solo@sha256:6f82ae3b7b2c34fc8290f8bef008d52acb77dc10f8438ac3caca29bb8e783cf2
+    image: ghcr.io/kraskuscrypto/kraskus-bch-solo@sha256:c47e7642bd46c03a239b9cb0dfc0e736d0860be81ca74b1761e8d61fc159130d
     user: '0:0'
     network_mode: none
     entrypoint: ['python', '-c']
@@ -19,7 +19,7 @@ services:
     restart: 'no'
 
   node:
-    image: ghcr.io/kraskuscrypto/kraskus-bch-solo-node@sha256:792583db54eb6e1e738f1fd0c633b41ac4c9c70e4291116e7fde5b74e6427b04
+    image: ghcr.io/kraskuscrypto/kraskus-bch-solo-node@sha256:d1ccc1360e7db7a8b84bacd2fac1521c0837d6ffcd2b6add6e19ccf1d0bfff51
     user: '10001:10001'
     entrypoint: ['/bin/sh', '-c']
     command: ["prune=$$(cat /node-settings/prune-mib); case \"$$prune\" in \"\"|*[!0-9]*) exit 64;; esac; [ \"$$prune\" -ge 1024 ] && [ \"$$prune\" -le 1024000 ] || exit 64; exec bitcoind \"$$@\" \"-prune=$$prune\"", 'node-pruning', '-datadir=/node', '-server=1', '-disablewallet=1', '-rpcbind=0.0.0.0', '-rpcallowip=10.66.63.0/24', '-rpcport=8332', '-listen=0', '-dbcache=500', '-maxmempool=300', '-printtoconsole=0']
@@ -41,7 +41,7 @@ services:
       init: {condition: service_completed_successfully}
 
   api:
-    image: ghcr.io/kraskuscrypto/kraskus-bch-solo@sha256:6f82ae3b7b2c34fc8290f8bef008d52acb77dc10f8438ac3caca29bb8e783cf2
+    image: ghcr.io/kraskuscrypto/kraskus-bch-solo@sha256:c47e7642bd46c03a239b9cb0dfc0e736d0860be81ca74b1761e8d61fc159130d
     command: ['--platform', '--http-host', '0.0.0.0', '--port', '8080', '--data-dir', '/state', '--rpc-url', 'http://node:8332', '--rpc-cookie', '/node/.cookie', '--enable-mining', '--allow-mainnet', '--stratum-host', '0.0.0.0', '--stratum-port', '1933']
     ports: ['${BCH_STRATUM_BIND_IP:-0.0.0.0}:1933:1933/tcp']
     user: '10001:10001'

@@ -1,9 +1,9 @@
 schemaVersion: 1
-status: proposed
+status: approved
 appId: kraskus-xmr-solo
-appVersion: 0.3.2
-reviewedAt: ''
-reviewedBy: ''
+appVersion: 0.3.5
+reviewedAt: "2026-11-04"
+reviewedBy: "Owner-authorized promotion; Codex release verification"
 upstream:
   sourceUrl: https://github.com/kraskuscrypto/Kraskus-Mining-Platform/tree/119617e1956cc0d32baa78202e2c583797487e97/apps/xmr-solo
   license: mixed
@@ -35,14 +35,33 @@ security:
   hostMountsReviewed: true
   devicesReviewed: true
   networkEndpointsReviewed: true
-notes: External-wallet migration candidate. Frozen runtime source119617e; BCH0.5.9
-  interface adapted to Monero. Direct99/1 coinbase outputs, no native-wallet services
-  or wallet executables. Software, real-node ownership, fee-bearing block and isolated
-  recipe checks pass. All four images are publicly published and anonymous digest pulls match the
-  qualified image IDs. Installed-platform migration remains pending. Legacy wallet files must be preserved.
+notes: >-
+  Owner-authorized Main Store promotion on 2026-11-04. Published immutable images
+  passed anonymous pull checks, shipped-application/mining-binary equality and
+  fresh actual-bind creation, initialization, recreation and synthetic legacy-file
+  preservation. Security refresh changes base libraries only; no mining economics,
+  consensus code or external destinations changed. Current UI/control checks and
+  original coin-specific hardware/reward evidence are retained. BCH134 backend
+  tests and isolated BCHN reward/restart checks pass. Kaspa159 wallet/settlement
+  tests pass; final settlement6 and external gate15 tests pass. Monero retains
+  independent primary/subaddress reward ownership and exact99/1 fee-bearing block
+  qualification. Refreshed images have no critical or fixable scan findings;
+  unfixed Debian findings remain. Full clean-room OS lifecycle was not rerun.
+  See MAIN-RELEASE.md for exact evidence scope and migration warning.
 
 uiConsistency:
   source: d2e118347f219f46bc27552db2a79839cc3d29c7
   responsivePages: 18
   bestShareFormattingCases: 9
   runtimeChange: UI-only
+
+mainPromotion:
+  date: "2026-11-04"
+  scope: "Exact Dev Store images; no backend rebuild"
+  freshBindCreation: passed
+  initialization: passed
+  recreation: passed
+  legacySentinelsPreserved: passed
+  anonymousImagePulls: passed
+  fullCleanRoomOsLifecycle: not-rerun
+  evidence: MAIN-RELEASE.md

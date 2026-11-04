@@ -1,9 +1,9 @@
 schemaVersion: 1
 status: approved
 appId: kraskus-kaspa-solo
-appVersion: 0.5.1
-reviewedAt: "2026-09-23"
-reviewedBy: "Kraskus Crypto"
+appVersion: 0.5.4
+reviewedAt: "2026-11-04"
+reviewedBy: "Owner-authorized promotion; Codex release verification"
 
 upstream:
   sourceUrl: https://github.com/kraskuscrypto/Kraskus-Mining-Platform
@@ -28,10 +28,10 @@ compatibility:
     - Debian-13-5tratumOS-clean-room
   architectures:
     - amd64
-  installTested: true
-  startTested: true
-  updateTested: true
-  uninstallTested: true
+  installTested: false
+  startTested: false
+  updateTested: false
+  uninstallTested: false
 
 security:
   privileged: false
@@ -42,54 +42,26 @@ security:
   networkEndpointsReviewed: true
 
 notes: >-
-  0.3.3 (DRAFT, not released) hardens the app foundation (Kraskus
-  foundation 1.1.1) without changing consensus, wallet, Stratum, mining or
-  fee behaviour, and keeps the original wallet flow: open the app, create
-  the wallet and save its recovery phrase (or restore it from the phrase),
-  then set the wallet password as the last step, mine. Create and restore
-  share the same final password step. The wallet password is the only
-  user-facing credential (send,
-  forget wallet, payout-destination changes after the first-run choice;
-  persisted lock-out). Requires 5tratumOS with the P1 HTTPS front door and
-  the P2 secure proxy: the recipe declares x-5tratumos-secure-proxy (UI port
-  80 on 127.0.0.1, platform token mounted into the adapter and wallet-api
-  only) and the app refuses every state change and wallet-data read without
-  the token.
-  No app TLS port, certificate, operator passphrase or setup code. No
-  wildcard CORS, Host/Origin checks, JSON-only state changes, bounded
-  requests, header-free logs; crash-safe state with corrupt/newer-schema
-  detection and quarantine; adapter and wallet-api run as uid 10001, never
-  as root (the only root step is a one-shot init service without the token
-  that hands data written by 0.3.0/0.3.1 to that user, file modes kept;
-  the encrypted wallet files, 0644 until now, become 0600);
-  pinned build inputs and a verified release manifest. kaspad runs under
-  Docker's init, so a stop during its start-up UTXO-index rebuild ends in
-  seconds instead of a forced kill after 300 s. 0.3.2 is retired
-  (unpublished pilot number). Finish wallet setup before rolling back.
+  Owner-authorized Main Store promotion on 2026-11-04. Published immutable images
+  passed anonymous pull checks, shipped-application/mining-binary equality and
+  fresh actual-bind creation, initialization, recreation and synthetic legacy-file
+  preservation. Security refresh changes base libraries only; no mining economics,
+  consensus code or external destinations changed. Current UI/control checks and
+  original coin-specific hardware/reward evidence are retained. BCH134 backend
+  tests and isolated BCHN reward/restart checks pass. Kaspa159 wallet/settlement
+  tests pass; final settlement6 and external gate15 tests pass. Monero retains
+  independent primary/subaddress reward ownership and exact99/1 fee-bearing block
+  qualification. Refreshed images have no critical or fixable scan findings;
+  unfixed Debian findings remain. Full clean-room OS lifecycle was not rerun.
+  See MAIN-RELEASE.md for exact evidence scope and migration warning.
 
-  0.3.1 fixes misleading first-sync status reporting during the pruning-point,
-  header and UTXO initialization stages using official kaspad RPC data
-  (GetMetrics consensus counters, GetConnectedPeerInfo isIbdPeer); no consensus,
-  wallet, Stratum or mining behaviour changed. Below: the 0.3.0 baseline it
-  builds on.
-
-  0.3.0 release-qualification update for the Kraskus Kaspa Solo true-solo
-  appliance, replacing the 0.2.x line (0.2.0-beta in the Main Store, 0.2.4/0.2.5
-  in the Dev Store). Readiness is now derived from real state -- kaspad
-  GetSyncStatus, block/header counts, peers, the Stratum bridge's own phase
-  and a live stratum handshake -- and reported as one STARTING/SYNCING/
-  SYNCED/STRATUM_NOT_READY/READY/DEGRADED/NETWORK_UNAVAILABLE/ERROR state on
-  every surface; the app no longer reports synced or mining-ready while the
-  node is at genesis. Wallet fund safety: a new wallet's recovery phrase is
-  persisted to a root-only 0600 artifact before the wallet is marked
-  configured, shown through a one-time backup ceremony, and deleted on
-  confirmation; Send is disabled until the backup is confirmed (restored
-  wallets are exempt). A customer Reset/Forget wallet flow (Settings ->
-  Wallet, typed "FORGET WALLET") removes only the customer wallet; the
-  internal settlement wallet, unsettled rewards, developer-fee records and
-  chain data are preserved. All runtime images are built from committed
-  source by apps/kaspa-solo/build.sh with org.opencontainers.image.version
-  and .revision labels; the UI is built inside its Dockerfile. Public Stratum
-  port is 1900 (bridge 5556 internal). Automatic 1% developer fee on
-  successful blocks after coinbase maturity is unchanged; miner hashrate is
-  never diverted.
+mainPromotion:
+  date: "2026-11-04"
+  scope: "Exact Dev Store images; no backend rebuild"
+  freshBindCreation: passed
+  initialization: passed
+  recreation: passed
+  legacySentinelsPreserved: passed
+  anonymousImagePulls: passed
+  fullCleanRoomOsLifecycle: not-rerun
+  evidence: MAIN-RELEASE.md
