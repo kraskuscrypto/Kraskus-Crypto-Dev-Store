@@ -1,14 +1,11 @@
-# Monero by Kraskus 0.3.0
+# Monero by Kraskus 0.3.4
 
-BCH-standard external-wallet mining interface adapted to Monero. No user-facing native wallet, seed, send, restore or wallet-balance controls.
+> **Before updating:** Send any crypto held in the app’s native wallet to another wallet you control and confirm receipt. Securely back up the original wallet and recovery information. This release removes user-facing native-wallet access. Preserved legacy files are a recovery safeguard, not a substitute for moving funds. Never purge app data during an upgrade.
 
-- RandomX Stratum TCP1921; UI33065; Monero P2P18080. No wallet or daemon RPC is published.
-- A confirmed external primary address or subaddress receives99% of each found coinbase reward. The remaining1%, rounded down to whole piconero, is a separate developer output. Both mature under Monero's60-block rule.
-- A fresh install or native-wallet migration starts paused. After the operator explicitly starts external mining, that Start/Stop choice is retained across ordinary restarts.
-- Protocol-defined pruning has no arbitrary GiB slider. Unavailable telemetry stays unavailable.
-- Legacy wallet directories, keys, funds and backup files must be preserved. This edition does not mount or sweep them. Keep the old compose and encrypted backups for recovery with the previous wallet tooling.
-- Kraskus Pool is under development; no pool forwarding is enabled.
+Use an external Monero mainnet primary address or subaddress. Confirm it in Settings, wait for node synchronization, then explicitly Start mining. Fresh installations and native-wallet migrations start paused; an explicitly selected Start/Stop state persists through ordinary restarts.
 
-Release checks and migration qualification must pass before this candidate is published or installed. See `qualification/external-wallet/RESULTS.md` in the source repository.
+Each found block allocates 99% directly to the miner and a separate 1% developer output, rounded down to whole piconero. No hashrate is diverted. Monero rewards mature under its 60-block rule. No user wallet controls, seed prompts, balance or send interface remain. Legacy wallet directories and secrets are preserved on disk and are not mounted by this external-wallet recipe.
 
-UI 0.3.1 restores the original Monero hero styling in the header miniature and shows fresh node sync progress. Node, gateway, adapter, external-wallet policy and 1% fee remain unchanged. UI source: https://github.com/kraskuscrypto/Kraskus-Mining-Platform/commit/87ade4a1b010f4f397c1a4a779a31fca6df44c91.
+Local Stratum TCP1921; P2P18080; authenticated platform UI on loopback33065. Daemon RPC is internal. Protocol-defined pruning has no arbitrary disk-size slider. The read-only mempool reader reports actual counts and byte size and has no wallet mount or published port. Kraskus Pool remains Under development.
+
+The current release is linux/amd64. See MAIN-RELEASE.md and LICENSES.md.
