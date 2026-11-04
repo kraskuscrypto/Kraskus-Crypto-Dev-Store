@@ -2,11 +2,12 @@ id: kraskus-prl-solo
 name: Pearl by Kraskus
 tagline: Pearl solo mining directly to your external wallet
 description: >-
+  BEFORE UPDATING: move any funds held in the old native wallet to another wallet you control, confirm receipt, and securely back up the wallet and recovery information. This release removes native-wallet controls. Never purge legacy app data to upgrade.
   Pearl 1.5.5 solo mining to your external wallet, with the shared Kraskus
   interface and fixed 1% developer fee. Fresh installs start paused.
   Native-wallet access is removed; legacy data must be preserved.
   The physical GPU miner test was waived by the owner.
-version: 0.6.3
+version: 0.6.4
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/

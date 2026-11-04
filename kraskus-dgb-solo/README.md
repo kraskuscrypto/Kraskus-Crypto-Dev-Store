@@ -1,4 +1,6 @@
-# DigiByte by Kraskus0.3.0
+> **BEFORE UPDATING: move any funds held in the old native wallet to another wallet you control, confirm receipt, and securely back up the wallet and recovery information. This release removes native-wallet controls. Never purge legacy app data to upgrade.**
+
+# DigiByte by Kraskus0.3.1
 
 Shared six-page mining interface with Home, Mining, Blocks, Blockchain, Kraskus Pool and Settings. A fixed blue DigiByte coin, matching header emblem, true light/dark modes, Kraskus/Divinity/coin themes, orbiting dots and responsive navigation follow the common app standard.
 
@@ -21,3 +23,5 @@ Kraskus Pool is Under development; its page does not activate pool forwarding. Q
 ## Release validation
 
 15 backend/HTTP/initialization tests;18 responsive page checks;12 theme/mode combinations; independent3-lane switching, worker privacy, best-share rendering, Copy and block-allocation display. A full isolated real-node regtest check uses the actual catalog bind mounts and verifies initialization, all three lane APIs, blocked native routes/RPCs, paused mining, credential persistence and legacy metadata preservation. Exact web-image serving matches the tested files. Node, lane and fee implementation changes are not introduced; no new physical-miner qualification is claimed.
+
+The node runs with its native wallet disabled; legacy wallet files remain preserved.

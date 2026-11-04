@@ -1,4 +1,6 @@
-# Pearl by Kraskus 0.6.3
+> **BEFORE UPDATING: move any funds held in the old native wallet to another wallet you control, confirm receipt, and securely back up the wallet and recovery information. This release removes native-wallet controls. Never purge legacy app data to upgrade.**
+
+# Pearl by Kraskus 0.6.4
 
 Solo mine Pearl to a public external mainnet address. The app has no native-wallet setup, seed, private-key, balance or send interface. Configure and confirm your own address in Settings; wait for synchronization before choosing Start mining.
 
