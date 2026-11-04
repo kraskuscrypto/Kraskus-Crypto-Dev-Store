@@ -1,4 +1,6 @@
-# 5tratumOS package for Quantus Solo 0.3.1 (0.3.0 was the first Kraskus V3 version of
+# Current0.4.2: sync-only supervisor, adapter status and UI updated; node binary
+# and miner are unchanged. Earlier0.3.x design decisions below are historical.
+# 5tratumOS package for Quantus Solo 0.4.2 (0.3.0 was the first Kraskus V3 version of
 # Quantus (foundation 1.6.0: wallet-less mode C1 + QUIC miner endpoint C9 +
 # trusted Umbrel deployment mode).
 # DEV STORE RELEASE (not a Main release): every image is pinned by its GHCR
