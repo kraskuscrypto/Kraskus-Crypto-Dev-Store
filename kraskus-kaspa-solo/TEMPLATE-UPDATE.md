@@ -7,3 +7,7 @@ The approved 1% post-maturity settlement mechanism is unchanged, including its n
 Fresh installs have no external beneficiary and stay paused. Only the owner's separately approved VM100 migration may fill a missing destination with the developer destination. That migration leaves the app stopped.
 
 Software checks: 15 adapter/gate/HTTP tests; 18 responsive page checks; six themes; Copy and fixed face; actual bind-source container creation and init; exact-image served-file checks and anonymous digest pulls. Hardware on this new pause gate has not been tested. Existing metadata rights and unrelated review gates are not newly approved by these checks.
+
+## Live phone layout follow-up — 0.5.1
+
+Long live node-sync labels and setup actions wrap at320px. Verified on all six pages against the running APIs at1280/375/320px; zero browser errors. Web image only; nodes and mining controls unchanged.

@@ -223,7 +223,7 @@ services:
     # authenticated HTTPS dashboard route, adding the per-app token. It reads
     # the app-token fallback directory read-only and supplies that token only
     # to /api/ requests that carry none (stock 5tratumOS, Umbrel).
-    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-ui@sha256:377d35d9aff4dccabfbd9a5c4eae6bad7bfac92d18c70dbdd601ed10b49d1ac1
+    image: ghcr.io/kraskuscrypto/kraskus-quantus-solo-ui@sha256:1c921572f850cc0a2e2190c892a31f5c2933728209116fc52ee446f1b60c290a
     restart: unless-stopped
     stop_grace_period: 5s
     ports:
