@@ -1,0 +1,31 @@
+schemaVersion: 1
+status: proposed
+appId: kraskus-ecx-solo
+appVersion: 0.1.0-preview
+reviewedAt: ""
+reviewedBy: ""
+upstream:
+  sourceUrl: https://github.com/kraskuscrypto/Kraskus-Mining-Platform
+  license: mixed
+  licenseEvidence: LICENSES.md
+delivery:
+  mode: immutable-container-appliance
+  storePayload: recipe-only
+  mirrorsThirdPartyPayload: false
+compatibility:
+  architectures: [amd64]
+  installTested: false
+  startTested: false
+  updateTested: false
+  uninstallTested: false
+security:
+  privileged: false
+  hostNetwork: false
+  dockerSocket: false
+  hostMountsReviewed: true
+  devicesReviewed: true
+  networkEndpointsReviewed: true
+notes: >-
+  Preview only. Mainnet mining locked off; new full chain requires storage planning.
+  Raw Compose bind-mount checks are recorded separately and do not claim a complete
+  5tratumOS install/update/uninstall cycle.

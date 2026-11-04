@@ -1,0 +1,20 @@
+{
+  "preview": true,
+  "mainnet_mining": false,
+  "image": {
+    "app": "ecx",
+    "role": "adapter",
+    "repository": "ghcr.io/kraskuscrypto/kraskus-ecx-solo",
+    "version": "0.1.0",
+    "source_commit": "4999f8f4bcc004df2d9657eb262dee64069b3953",
+    "image_id": "sha256:7486d1d6b5358863d438c2a53b320928fb42abe9394581b5e398c9ea8502d747",
+    "reference": "ghcr.io/kraskuscrypto/kraskus-ecx-solo@sha256:ad5782d32168561d211fe5ea24be632aa4ddb07ecff2403fbd67c68c6fa36295",
+    "tag": "ghcr.io/kraskuscrypto/kraskus-ecx-solo:0.1.0"
+  },
+  "workflow": "https://github.com/kraskuscrypto/Kraskus-Mining-Platform/actions/runs/41865688008",
+  "visibility": "public; explicitly approved by owner on 2026-11-04",
+  "anonymous_pull": {
+    "status": "PASS",
+    "image_id": "sha256:7486d1d6b5358863d438c2a53b320928fb42abe9394581b5e398c9ea8502d747"
+  }
+}
