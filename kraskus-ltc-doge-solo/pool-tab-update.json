@@ -1,0 +1,14 @@
+{
+  "app": "kraskus-ltc-doge-solo",
+  "source_commit": "91d7b5d77b2cd799b0929e208c6a4a2859c00d3d",
+  "ui_reference": "ghcr.io/kraskuscrypto/kraskus-ltc-doge-solo@sha256:24742ec1f1fb893b5ac1085aace5acddf9b7856f112a8f2199981fb6e8130f60",
+  "qualified_image_id": "sha256:2f6e9824ba52eece7cf287c3e9668ab4c94c4146cb08887e061c29e5af6158e5",
+  "base_reference": "ghcr.io/kraskuscrypto/kraskus-ltc-doge-solo@sha256:26fbc5c83c0e1e3b081eb2ae9a1717b2a8b4d05c2139918a7b78b985a7b6033f",
+  "assets": {
+    "app.js": "dc55520d7f8e79d274166bb86252cbaf4873097ca7317d6c3dd952bb4ce28c2f",
+    "app.css": "bcc137f1d0d3b1fa1a3cdc278f442f55a9b280d2ef0f927cb4773ed72c1fb445",
+    "index.html": "b98acdaddc5abee1fbc0869d685aaf15324a8dc4479b7ffd12cc6b25e64b3525"
+  },
+  "scope": "Planned Pool introduction, layout and asset cache keys only; no mining controls or economic changes",
+  "layout_checks": "1280/375/320px; no horizontal overflow, no active Pool controls"
+}

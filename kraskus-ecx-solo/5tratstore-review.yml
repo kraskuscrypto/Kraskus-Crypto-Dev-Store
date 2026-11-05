@@ -1,8 +1,8 @@
 schemaVersion: 1
 status: proposed
 appId: kraskus-ecx-solo
-appVersion: 0.1.0-preview
-reviewedAt: ""
+appVersion: 0.1.1
+reviewedAt: "2026-11-05"
 reviewedBy: ""
 upstream:
   sourceUrl: https://github.com/kraskuscrypto/Kraskus-Mining-Platform

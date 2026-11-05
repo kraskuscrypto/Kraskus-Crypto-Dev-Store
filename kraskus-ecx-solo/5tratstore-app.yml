@@ -11,7 +11,7 @@ description: >-
   An unpruned chain is required. A new installation waits for a data disk
   with at least 1 TiB free; ongoing operation stops below 20 GiB free.
   Linux amd64 only. Downloads checksum-pinned vendor executables on first start.
-version: 0.1.0-preview
+version: 0.1.1
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/

@@ -49,7 +49,7 @@ services:
     cpus: 1
   app:
     <<: *base
-    image: ghcr.io/kraskuscrypto/kraskus-ltc-doge-solo@sha256:26fbc5c83c0e1e3b081eb2ae9a1717b2a8b4d05c2139918a7b78b985a7b6033f
+    image: "ghcr.io/kraskuscrypto/kraskus-ltc-doge-solo@sha256:24742ec1f1fb893b5ac1085aace5acddf9b7856f112a8f2199981fb6e8130f60"
     environment:
       SCRYPT_NETWORK: main
       SCRYPT_MAINNET_QUALIFIED: '1'

@@ -201,7 +201,7 @@ services:
   ui:
     volumes:
       - ${APP_DATA_DIR}/runtime:/runtime:ro
-    image: ghcr.io/kraskuscrypto/kraskus-kda-solo-ui@sha256:65a3f22a0bb16ca79111299e729131e759d9feb468e283550a749b6d8ba52116
+    image: "ghcr.io/kraskuscrypto/kraskus-kda-solo-ui@sha256:71d5cdf7ee27ff2d300173d30d42631493bf32ff5ebee1bdb60c4a587fc215e6"
     pull_policy: missing
     restart: unless-stopped
     depends_on:
