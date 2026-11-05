@@ -47,7 +47,7 @@ services:
     cpus: 1.0
   app:
     <<: *hardening
-    image: *image
+    image: "ghcr.io/kraskuscrypto/kraskus-ecx-solo@sha256:a24e344e7edfe747d4aaab65ef915c66cb0a2a7c18cf340f66d20285740a4291"
     depends_on: {init: {condition: service_completed_successfully}}
     environment:
       ECX_NETWORK: main

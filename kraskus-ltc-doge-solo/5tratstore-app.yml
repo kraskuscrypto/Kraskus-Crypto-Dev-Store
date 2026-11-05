@@ -13,7 +13,7 @@ description: >-
   chain, excluding chainstate and other data. New synchronization requires
   at least 100 GiB free; ongoing operation pauses below 20 GiB free.
   Linux amd64 only. First start downloads signature-verified official nodes.
-version: 0.1.4-beta
+version: 0.1.5
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/

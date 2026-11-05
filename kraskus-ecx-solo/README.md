@@ -13,3 +13,7 @@ The image is pinned to the immutable GHCR digest in release-manifest.json. Do no
 The developer destination is public; the separate developer wallet and recovery files are never included in this recipe. No miner payout address is prefilled.
 
 Remaining mainnet gates: dedicated storage, live-chain/enforcer qualification, physical ASIC tests and explicit mining activation. Regtest does not prove all firmware or all live Drivechain proposal/withdrawal combinations.
+
+## Kraskus Pool integration — Under Development
+
+The Pool tab previews planned solo/pool switching, scheduled times with an explicit time zone, invite-only private mining groups, optional connection fallback and clear mode/fee/reward status. These controls are not implemented yet; support depends on the coin and pool. The introduction does not change current mining, payout addresses or fees. See pool-tab-update.json for the exact UI image and validation scope.

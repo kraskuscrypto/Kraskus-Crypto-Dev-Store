@@ -79,3 +79,7 @@ scripts/validate-compose.sh mysterium-node
 
 See `REFERENCE-APP-STANDARD.md` for the packaging, security, provenance, and
 onboarding standard used by Kraskus apps.
+
+## Planned Pool integration
+
+The coin apps preview Under Development solo/pool mode selection, schedules, private mining groups, optional fallback and clear mode/fee/reward status. These app controls are planned, not available switches. Public pool availability is coin-specific.
