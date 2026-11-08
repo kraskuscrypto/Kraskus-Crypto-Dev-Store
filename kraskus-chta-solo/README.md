@@ -15,3 +15,16 @@ The node and CKPool images are unchanged; their earlier qualification is retaine
 ## Kraskus Pool integration — Under Development
 
 The Pool tab previews planned solo/pool switching, scheduled times with an explicit time zone, invite-only private mining groups, optional connection fallback and clear mode/fee/reward status. These controls are not implemented yet; support depends on the coin and pool. The introduction does not change current mining, payout addresses or fees. See pool-tab-update.json for the exact UI image and validation scope.
+
+
+## 0.6.4 developer-fee recipient
+
+The 1% developer fee on both app ports now uses the Kraskus business receive
+address `CP51oti5sjsimKWDBhGws8RkZL6Qm6YnbN`. This update replaces only the
+initializer/API image. The current UI, node and mining components are retained.
+Customer payout addresses and mining on/off state are preserved, including
+customer payouts that use the previous fee address. Existing addresses and
+funds are retained. No sweeping, key import or business Wallet sending occurs.
+
+Release proposal only: installed upgrade verification is pending VM100 recovery.
+Do not rerun the historical native-wallet migration for this fee update.

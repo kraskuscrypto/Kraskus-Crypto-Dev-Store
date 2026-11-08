@@ -7,7 +7,7 @@
       }
     },
     "init": {
-      "image": "ghcr.io/kraskuscrypto/kraskus-chta-ui@sha256:29184caacc0c243369f761ed994ab41efa1f3ac1a09f82150f233106bb702dd0",
+      "image": "ghcr.io/kraskuscrypto/kraskus-chta-solo@sha256:ab644e3440a69f95fae99c25e01f12f9058a3a4c49942e40bb9d5fdb223e8188",
       "restart": "no",
       "user": "0:0",
       "command": [
@@ -117,7 +117,7 @@
       ]
     },
     "kraskus": {
-      "image": "ghcr.io/kraskuscrypto/kraskus-chta-solo@sha256:c7f42ca98fda18bc4dee91b94c6039626c5909e384f3ff5d73e9d5c04937288a",
+      "image": "ghcr.io/kraskuscrypto/kraskus-chta-solo@sha256:ab644e3440a69f95fae99c25e01f12f9058a3a4c49942e40bb9d5fdb223e8188",
       "restart": "unless-stopped",
       "command": [
         "python3",
