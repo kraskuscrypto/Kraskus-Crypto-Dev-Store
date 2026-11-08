@@ -1,6 +1,6 @@
 > **BEFORE UPDATING: move any funds held in the old native wallet to another wallet you control, confirm receipt, and securely back up the wallet and recovery information. This release removes native-wallet controls. Never purge legacy app data to upgrade.**
 
-# CheetahCoin by Kraskus 0.6.2
+# CheetahCoin by Kraskus 0.6.4
 
 External-payout mining with the owner-selected BCH interaction standard, CHTA artwork and real telemetry.
 
