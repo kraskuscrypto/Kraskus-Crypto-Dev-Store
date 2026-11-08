@@ -1,9 +1,9 @@
 schemaVersion: 1
 status: approved
 appId: kraskus-chta-solo
-appVersion: 0.6.3
-reviewedAt: "2026-11-05"
-reviewedBy: "Owner-authorized Main promotion; Codex verification"
+appVersion: 0.6.4
+reviewedAt: "2026-11-08"
+reviewedBy: "Owner-authorized fee recipient update; Codex offline image qualification"
 upstream:
   sourceUrl: https://github.com/kraskuscrypto/Kraskus-Mining-Platform
   license: mixed
@@ -36,15 +36,18 @@ security:
   devicesReviewed: true
   networkEndpointsReviewed: true
 notes: >-
-  Main promotion authorized by owner on 2026-11-04 after beta feedback.
-  Fresh bind-mounted creation, initializer, recreation and synthetic legacy-file
-  preservation passed. Application code and mining binaries match previously
-  qualified images; base packages refreshed and exact images rescanned.
-  BTC explicit Start capability approved; new installs remain paused.
-  DGB native wallet disabled; external mining lanes retain their existing rules.
-  Security exceptions are image/package-specific and documented with reachability
-  evidence, not a zero-vulnerability claim. No new physical-miner test or full
-  clean-room OS lifecycle is claimed. See MAIN-RELEASE.md.
+  Backend-only developer-fee recipient update, source
+  a3a01724cef61d596dba1b4643fe69d001e15c8e. The unchanged 1% allocation on both
+  app ports uses CP51oti5sjsimKWDBhGws8RkZL6Qm6YnbN. Customer payout settings,
+  mining activation, credentials, legacy data and funds are preserved.
+  Exact backend image passed 155 tests, source-byte verification, fresh and
+  upgrade bind-mount checks, and 2026-11-08 database scans with zero
+  vulnerabilities or embedded secrets. Current UI, Core and CKPool images
+  remain unchanged and retain their earlier qualification.
+  VM100 is offline for separate recovery. Installation/start/update on the
+  recovered VM remain unverified; this proposal must remain a draft until
+  installed upgrade verification passes. No new physical-miner or full
+  clean-room OS lifecycle test is claimed. No Wallet sending is enabled.
 
 uiConsistency:
   source: d2e118347f219f46bc27552db2a79839cc3d29c7
