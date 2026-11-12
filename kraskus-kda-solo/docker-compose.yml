@@ -29,7 +29,7 @@ services:
       - kda_private
 
   init:
-    image: ghcr.io/kraskuscrypto/kraskus-kda-solo-adapter@sha256:fe7df29f764a18ebcda70c3d463b355045af003992ceef5e0f6b1e45173c3c38
+    image: ghcr.io/kraskuscrypto/kraskus-kda-solo-adapter@sha256:d1c81a8593a67a9df34604fbce7b75bcb4252e1ce7d8758737f8ac5c31053976
     pull_policy: missing
     restart: "no"
     user: "0:0"
@@ -44,7 +44,7 @@ services:
       - no-new-privileges:true
 
   bootstrap-init:
-    image: ghcr.io/kraskuscrypto/kraskus-kda-solo-adapter@sha256:fe7df29f764a18ebcda70c3d463b355045af003992ceef5e0f6b1e45173c3c38
+    image: ghcr.io/kraskuscrypto/kraskus-kda-solo-adapter@sha256:d1c81a8593a67a9df34604fbce7b75bcb4252e1ce7d8758737f8ac5c31053976
     pull_policy: missing
     restart: "no"
     user: "0:0"
@@ -168,7 +168,7 @@ services:
       - kda_private
 
   adapter:
-    image: ghcr.io/kraskuscrypto/kraskus-kda-solo-adapter@sha256:fe7df29f764a18ebcda70c3d463b355045af003992ceef5e0f6b1e45173c3c38
+    image: ghcr.io/kraskuscrypto/kraskus-kda-solo-adapter@sha256:d1c81a8593a67a9df34604fbce7b75bcb4252e1ce7d8758737f8ac5c31053976
     pull_policy: missing
     restart: unless-stopped
     stop_grace_period: 20s
