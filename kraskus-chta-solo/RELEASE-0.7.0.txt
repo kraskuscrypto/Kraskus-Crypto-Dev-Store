@@ -1,0 +1,25 @@
+CHTA 0.7.0 Dev candidate — SOLO/POOL integration
+
+Keep the miner pointed at its existing app host:1926 (normal) or :1927 (low hash).
+Choose Local SOLO, Kraskus PPLNS, Kraskus SOLO or Paused in Kraskus Pool.
+Includes daily/overnight schedules, named time zones, a one-hour override,
+optional readiness-checked local fallback, and app-scoped remote worker statistics.
+
+Local SOLO retains its existing developer split. Forwarded work pays only the
+1% pool fee. No second forwarding fee is charged. No native wallet is exposed.
+Legacy wallet data/funds, external destination, credentials and chain data remain.
+
+UPGRADE NOTICE: the routing entrance starts PAUSED on every restart or upgrade.
+The owner must review the saved route/address before work resumes. The app's
+old enabled flag cannot bypass this check. Switching reconnects miner sessions.
+
+Normal ASIC pilot passed local SOLO, both pool modes, schedules/fallback and exact
+restoration. Low-difficulty software/native checks passed; physical NMminer testing
+and actual mainnet block discovery are not claimed. Stale remote statistics are
+marked unavailable rather than replaced by local SOLO numbers.
+
+Qualified backend/UI images published by GitHub Actions run 43267462366. No installed app or miner was changed by this catalog publication.
+Only the backend and UI change; existing node/CKPool image pins are retained.
+
+Source archive commit: 5d4eadb76831d4a83f0e1c44ced580cbe725ce36
+Published image manifest: qualified-chta-routing-070-20261112

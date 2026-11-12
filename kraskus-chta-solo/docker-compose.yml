@@ -7,7 +7,7 @@
       }
     },
     "init": {
-      "image": "ghcr.io/kraskuscrypto/kraskus-chta-ui@sha256:29184caacc0c243369f761ed994ab41efa1f3ac1a09f82150f233106bb702dd0",
+      "image": "ghcr.io/kraskuscrypto/kraskus-chta-solo:0.7.0@sha256:02db3138ae60f594a2d672bb38de6a170dd66f2ccf22d7c7f6a6a717ffd7bdf2",
       "restart": "no",
       "user": "0:0",
       "command": [
@@ -73,9 +73,6 @@
         "normal",
         "/kraskus-config/ckpool.conf"
       ],
-      "ports": [
-        "1926:3333"
-      ],
       "volumes": [
         "${APP_DATA_DIR}/config:/kraskus-config:ro",
         "${APP_DATA_DIR}/pool:/www"
@@ -102,9 +99,6 @@
         "lowdiff",
         "/kraskus-config/ckpool-lowdiff.conf"
       ],
-      "ports": [
-        "1927:3333"
-      ],
       "volumes": [
         "${APP_DATA_DIR}/config:/kraskus-config:ro",
         "${APP_DATA_DIR}/pool-lowhash:/www"
@@ -117,7 +111,7 @@
       ]
     },
     "kraskus": {
-      "image": "ghcr.io/kraskuscrypto/kraskus-chta-solo@sha256:c7f42ca98fda18bc4dee91b94c6039626c5909e384f3ff5d73e9d5c04937288a",
+      "image": "ghcr.io/kraskuscrypto/kraskus-chta-solo:0.7.0@sha256:02db3138ae60f594a2d672bb38de6a170dd66f2ccf22d7c7f6a6a717ffd7bdf2",
       "restart": "unless-stopped",
       "command": [
         "python3",
@@ -162,7 +156,8 @@
         "KRASKUS_CHTA_LOWHASH_USERS_DIR": "/ckpool-lowhash-data/users",
         "KRASKUS_CHTA_LOWHASH_CKPOOL_STATUS_FILE": "/ckpool-lowhash-data/pool/pool.status",
         "KRASKUS_CHTA_LOWHASH_SUPERVISOR_STATE_FILE": "/ckpool-lowhash-data/supervisor-state.json",
-        "KRASKUS_APP_TOKEN_FILE": "/kraskus-config/app-token/token"
+        "KRASKUS_APP_TOKEN_FILE": "/kraskus-config/app-token/token",
+        "KRASKUS_CHTA_POOL_ROUTING": "1"
       },
       "volumes": [
         "${APP_DATA_DIR}/config:/kraskus-config",
@@ -183,10 +178,14 @@
       ],
       "security_opt": [
         "no-new-privileges:true"
+      ],
+      "ports": [
+        "1926:1926/tcp",
+        "1927:1927/tcp"
       ]
     },
     "ui": {
-      "image": "ghcr.io/kraskuscrypto/kraskus-chta-ui@sha256:3bbcc32242e801eac02cea9b3f08c49e9243c1c0b9d85e47d76b2d4073851cb3",
+      "image": "ghcr.io/kraskuscrypto/kraskus-chta-ui:0.7.0@sha256:80f4a0b6feb82159f2ed5d6734a68c7b87741116f54e70f002a669bbf69dbfbb",
       "restart": "unless-stopped",
       "depends_on": {
         "init": {
@@ -225,9 +224,7 @@
     }
   },
   "networks": {
-    "chta": {
-      "name": "kraskus-chta-solo-v2-qualification"
-    }
+    "chta": {}
   },
   "x-5tratumos-secure-proxy": {
     "version": 1,
