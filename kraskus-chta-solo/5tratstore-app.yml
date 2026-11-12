@@ -2,21 +2,18 @@ id: kraskus-chta-solo
 name: CheetahCoin by Kraskus
 tagline: CheetahCoin full node and SHA256 solo mining
 description: >-
-  BEFORE UPDATING: move any funds held in the old native wallet to another wallet you control, confirm receipt, and securely back up the wallet and recovery information. This release removes native-wallet controls. Never purge legacy app data to upgrade. CheetahCoin Core node and solo mining with external payout addresses.
-  Home, Mining, Blocks, Blockchain, Kraskus Pool (under development), and Settings
-  use the BCH-standard interaction template with CHTA artwork and themes. Normal miners
-  use port 1926; very-low-hash devices use port 1927 at difficulty 0.002. Enter and
-  confirm your external CHTA reward address, wait for node readiness and explicitly
-  start mining. The fixed 1% developer fee is allocated by the existing CKPool coinbase
-  policy. There is no user-facing native wallet, seed or send function. Existing wallet
-  data and funds are retained during the protected migration. Core 2.5.0 and both
-  CKPool images are unchanged. Existing storage settings are preserved; prune changes
-  are not supported by this supervisor.
-version: 0.6.3
+  BEFORE UPDATING: move any funds held in the old native wallet to another wallet you control, confirm receipt, and securely back up the wallet and recovery information. Never purge legacy app data to upgrade. No native wallet is exposed; existing wallet data and funds are retained.
+  CHTA node with external rewards and Local SOLO, Kraskus PPLNS or Kraskus SOLO
+  through the same miner host and ports: 1926 normal and 1927 low hash. Includes
+  scheduled switching, optional readiness-checked local fallback and app-scoped
+  forwarded-worker statistics. Every restart or upgrade starts routing paused until
+  you review the saved choice. Local SOLO keeps its existing developer split;
+  forwarding pays only the 1% pool fee. Node and CKPool images are unchanged.
+version: 0.7.0
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
-repo: https://github.com/kraskuscrypto/Kraskus-Mining-Platform/tree/d2e118347f219f46bc27552db2a79839cc3d29c7/releases/ui-consistency-20261103/ui/chta
+repo: https://github.com/kraskuscrypto/Kraskus-Mining-Platform/releases/tag/qualified-chta-routing-070-20261112
 support: https://kraskuscrypto.com/
 icon: assets/cheetahcoin.png
 port: 33064

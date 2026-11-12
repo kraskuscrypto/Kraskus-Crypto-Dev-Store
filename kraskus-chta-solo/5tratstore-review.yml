@@ -1,9 +1,9 @@
 schemaVersion: 1
 status: approved
 appId: kraskus-chta-solo
-appVersion: 0.6.3
-reviewedAt: "2026-11-05"
-reviewedBy: "Owner-authorized Main promotion; Codex verification"
+appVersion: 0.7.0
+reviewedAt: "2026-11-12"
+reviewedBy: "Owner-authorized Dev publication; exact-image qualification"
 upstream:
   sourceUrl: https://github.com/kraskuscrypto/Kraskus-Mining-Platform
   license: mixed
@@ -36,18 +36,12 @@ security:
   devicesReviewed: true
   networkEndpointsReviewed: true
 notes: >-
-  Main promotion authorized by owner on 2026-11-04 after beta feedback.
-  Fresh bind-mounted creation, initializer, recreation and synthetic legacy-file
-  preservation passed. Application code and mining binaries match previously
-  qualified images; base packages refreshed and exact images rescanned.
-  BTC explicit Start capability approved; new installs remain paused.
-  DGB native wallet disabled; external mining lanes retain their existing rules.
-  Security exceptions are image/package-specific and documented with reachability
-  evidence, not a zero-vulnerability claim. No new physical-miner test or full
-  clean-room OS lifecycle is claimed. See MAIN-RELEASE.md.
-
-uiConsistency:
-  source: d2e118347f219f46bc27552db2a79839cc3d29c7
-  responsivePages: 18
-  bestShareFormattingCases: 9
-  runtimeChange: UI-only
+  Dev publication authorized by the owner on 2026-11-12. 121 routing/protocol
+  executions passed in the exact backend image; 258 current external-wallet app
+  checks passed after a test-only fixture correction. Empty bind initialization,
+  populated upgrade preservation and safely paused restart passed. Normal ASIC
+  pilot covered local SOLO, both pool modes, schedules/fallback and exact restore.
+  Physical NMminer hardware and actual mainnet block/payout are not newly claimed.
+  New backend/UI scans report zero vulnerabilities; unchanged node/CKPool images
+  retain their existing security history. No clean-room OS lifecycle is claimed.
+  See RELEASE-0.7.0.txt. Upgrade/restart requires explicit routing review/resume.

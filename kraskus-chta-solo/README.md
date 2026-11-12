@@ -1,17 +1,15 @@
-> **BEFORE UPDATING: move any funds held in the old native wallet to another wallet you control, confirm receipt, and securely back up the wallet and recovery information. This release removes native-wallet controls. Never purge legacy app data to upgrade.**
+# CheetahCoin by Kraskus 0.7.0
 
-# CheetahCoin by Kraskus 0.6.2
+Local SOLO and Kraskus PPLNS/SOLO through the same miner host and ports.
+Includes schedules, optional local fallback and app-scoped forwarded-worker data.
 
-External-payout mining with the owner-selected BCH interaction standard, CHTA artwork and real telemetry.
+**Every restart and upgrade starts routing paused. Review your saved mode and
+external reward address in Kraskus Pool before resuming.** Local SOLO keeps the
+existing developer split; forwarded work pays only the 1% pool fee.
 
-Ports1926 (normal vardiff) and1927 (low-hash, fixed0.002) and the1% developer allocation are preserved. Start mining is explicit and requires a valid external address and a ready node. Fresh installations have no payout destination and stay paused. Kraskus Pool is under development. Prune configuration remains unchanged and is read-only in this app.
+No native wallet is exposed. Back up legacy wallets and move funds to a wallet
+you control before upgrading from a native-wallet release. Never purge app data:
+legacy wallets, backups, credentials, chain data and external settings are retained.
 
-Native-wallet controls and routes have been removed. **Existing native-wallet installations require the protected migration**, which backs up wallet/config data before replacing only API/UI services. Wallet files and funds are retained on the node; no automatic transfer occurs. The owner’s chosen reward address is an installation-specific choice, never a fresh-install default.
-
-Source: https://github.com/kraskuscrypto/Kraskus-Mining-Platform/tree/0bf9f796de6df870291806698c26d0d2b92c3148/apps/chta-solo
-
-The node and CKPool images are unchanged; their earlier qualification is retained. No new hardware or full-block test is claimed for this conversion. The new API/UI images passed143 checks and security scans. Fresh installation on an independent host remains untested for this release.
-
-## Kraskus Pool integration — Under Development
-
-The Pool tab previews planned solo/pool switching, scheduled times with an explicit time zone, invite-only private mining groups, optional connection fallback and clear mode/fee/reward status. These controls are not implemented yet; support depends on the coin and pool. The introduction does not change current mining, payout addresses or fees. See pool-tab-update.json for the exact UI image and validation scope.
+See [release details](RELEASE-0.7.0.txt) for qualification scope and limitations.
+Node and CKPool image pins are unchanged from the preceding Dev Store recipe.
