@@ -1,7 +1,7 @@
 schemaVersion: 1
 status: approved
 appId: kraskus-chta-solo
-appVersion: 0.7.0
+appVersion: 0.7.1
 reviewedAt: "2026-11-12"
 reviewedBy: "Owner-authorized Dev publication; exact-image qualification"
 upstream:

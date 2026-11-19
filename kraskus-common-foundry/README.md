@@ -46,3 +46,8 @@ The official RPC, the RPC proxy, the adapter and the UI are internal only.
 **Known issue (wording only):** before the node's first start, the endpoint check reads "this node build has no solo endpoint". The node simply hasn't reported yet.
 
 The icon is the official Common Foundry CF emblem.
+
+
+## Community links
+
+This UI update adds [Discord](https://discord.gg/P8qb9PXG7) and [X](https://x.com/KraskusCrypto) to the app header. Links open in a separate tab. Mining, wallets, fees and payout behavior are unchanged. Existing app data is retained.

@@ -125,7 +125,7 @@ services:
       - cmfd_public
 
   ui:
-    image: ghcr.io/kraskuscrypto/kraskus-common-foundry-ui:0.1.4@sha256:dd7061dd51509a8a867c84304e8c8cd4ff47a20c278aec4b900daf766d36018f
+    image: "ghcr.io/kraskuscrypto/kraskus-common-foundry-ui@sha256:c1efc4c20e8e4eafc04afdc36b5d4bbbde75044f50f7bde643489243a5790ce2"
     pull_policy: missing
     restart: unless-stopped
     depends_on:

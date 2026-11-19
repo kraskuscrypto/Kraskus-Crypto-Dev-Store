@@ -13,3 +13,8 @@ legacy wallets, backups, credentials, chain data and external settings are retai
 
 See [release details](RELEASE-0.7.0.txt) for qualification scope and limitations.
 Node and CKPool image pins are unchanged from the preceding Dev Store recipe.
+
+
+## Community links
+
+This UI update adds [Discord](https://discord.gg/P8qb9PXG7) and [X](https://x.com/KraskusCrypto) to the app header. Links open in a separate tab. Mining, wallets, fees and payout behavior are unchanged. Existing app data is retained.
