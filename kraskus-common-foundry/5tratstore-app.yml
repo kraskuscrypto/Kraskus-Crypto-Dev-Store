@@ -12,7 +12,7 @@ description: >-
   internal hardware cannot complete the final real prover/mining
   qualification; this release is intended for external tester validation
   before Main publication. No developer fee.
-version: 0.1.4
+version: 0.1.5
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/

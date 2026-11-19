@@ -9,7 +9,7 @@ description: >-
   forwarded-worker statistics. Every restart or upgrade starts routing paused until
   you review the saved choice. Local SOLO keeps its existing developer split;
   forwarding pays only the 1% pool fee. Node and CKPool images are unchanged.
-version: 0.7.0
+version: 0.7.1
 category: Mining
 developer: Kraskus Crypto
 website: https://kraskuscrypto.com/
