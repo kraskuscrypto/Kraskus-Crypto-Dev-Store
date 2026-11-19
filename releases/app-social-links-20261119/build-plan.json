@@ -1,0 +1,28 @@
+[
+  {
+    "catalog": "umbrel-catalog",
+    "app": "kraskus-xmr-solo",
+    "service": "ui",
+    "image": "ghcr.io/kraskuscrypto/kraskus-5trat-xmr-ui@sha256:9eebdf4da3f1171cf6f3141c0bd2dc175c8d16d28ce118f0c6ecf70568f5ea10",
+    "key": "35b08788a5f3",
+    "port": 8080,
+    "root": "/usr/share/nginx/html",
+    "changed": [
+      {
+        "path": "/usr/share/nginx/html/index.html",
+        "relative": "index.html",
+        "before_sha256": "bfd2e62c06b3bfab7789e0801ef9395b5643de58fae983585642c49dc661e263",
+        "after_sha256": "bb7722b1761f4b1827f435950871de92066fb75e42771ee554827266463d3cd1"
+      },
+      {
+        "path": "/usr/share/nginx/html/app.css",
+        "relative": "app.css",
+        "before_sha256": "4c7bd2f3d64d5c30106cd0d7f60ce6092de7e9c7847fe9a7a03ad679a8c8e9d0",
+        "after_sha256": "1bb22d9f5aac2a184ab88710a72c5ac384d6f6fbd55949f222935fc0a2308645"
+      }
+    ],
+    "candidate_tag": "ghcr.io/kraskuscrypto/kraskus-5trat-xmr-ui:20261119-social-35b08788a5f3",
+    "react": false,
+    "publisher": "kraskuscrypto/Kraskus-Crypto-Dev-Store"
+  }
+]
