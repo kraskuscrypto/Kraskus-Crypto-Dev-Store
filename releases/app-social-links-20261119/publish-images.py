@@ -18,7 +18,9 @@ for row in plan:
  finally:run('docker','rm',cid)
  run('docker','build','--platform=linux/amd64','--network=none','--tag',tag,str(context))
  before=inspect(base);after=inspect(tag)
- assert before['Config']==after['Config'],'runtime configuration changed'
+ diff={k:{'before':before['Config'].get(k),'after':after['Config'].get(k)} for k in set(before['Config'])|set(after['Config']) if before['Config'].get(k)!=after['Config'].get(k)}
+ if diff: print('Config differences:', {k:v if k in ('ArgsEscaped','OnBuild','Shell','StopSignal') else 'values omitted' for k,v in diff.items()},flush=True)
+ assert not diff,'runtime configuration changed'
  assert after['RootFS']['Layers'][:-1]==before['RootFS']['Layers'],'base filesystem changed'
  # Inspect the sole added layer: it may contain only the approved header assets.
  with tempfile.TemporaryDirectory() as tmp:
